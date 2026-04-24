@@ -365,12 +365,39 @@ export function HeroSection() {
           Terminal typing animation is preserved on mobile via the
           `lines='1'` / `lines='2'` slots — each renders its own
           TerminalLine which runs its own IO-driven type-out. */}
-      <div className="md:hidden">
-        <HeroTerminalBlock
-          line2Ready={line2Ready}
-          lines="1"
-          fontSize={HERO_FONT_SIZE_MOBILE}
-        />
+      {/* Mobile line 1, wrapped in a CSS grid cell alongside an invisible
+          ghost copy of the fully-typed state. The ghost is `aria-hidden
+          + invisible` (reserves layout, paints transparent) and
+          structurally mirrors the live mobile TerminalLine — same
+          font-mono, same flex wrapper, same font-size, same `>  text_`
+          shape WITHOUT framing brackets (the mobile variant drops
+          `[ ]` entirely per Alex's 2026-04-24 spec). Both children
+          occupy `col-start-1 row-start-1`, so the cell's height tracks
+          the ghost and the paper-app below no longer slides down as
+          the TerminalLine types out (Alex's 2026-04-24 spec: "all the
+          space the text will need to deploy to already be there").
+          Desktop doesn't need this pre-reserve: the hero's desktop
+          layout pins the paper-app to its own grid column and the
+          terminal doesn't push it. */}
+      <div className="md:hidden grid">
+        <div
+          aria-hidden
+          className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+          style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+        >
+          <span>
+            <span className="select-none">&gt;</span>
+            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for the ai future'}
+            <span className="inline-block">_</span>
+          </span>
+        </div>
+        <div className="col-start-1 row-start-1">
+          <HeroTerminalBlock
+            line2Ready={line2Ready}
+            lines="1"
+            fontSize={HERO_FONT_SIZE_MOBILE}
+          />
+        </div>
       </div>
       <div className="md:hidden">
         {/* Post-it overhang composition (2026-04-24 Alex spec):

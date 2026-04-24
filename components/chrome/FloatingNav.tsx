@@ -56,15 +56,30 @@ export function FloatingNav() {
             </span>
           </Link>
           <div className="flex items-center gap-6">
-            {/* Holding-page nav: only the primary CTA.
-                Points at the dedicated `/contact` route (added 2026-04-24
-                for the two-route holding-page launch). Mobile renders a
-                smaller-typography variant — 14px vs the codified 20px —
-                so the nav reads as logo-dominant with the CTA as a
-                quieter sibling. Desktop keeps the 20px canonical size.
-                Two TerminalCTA renders + md: gating is the simplest way
-                to drive a breakpoint-specific fontSize through a prop
-                that's a single number (no responsive style hatch on the
+            {/* Secondary FAQ link. Lowercase mono, quiet next to the
+                primary CTA per PLAN.md's locked top-nav order "square
+                logo + FAQ link + [ talk to a HUMAN ] CTA." Routes to
+                `/faq`. Font-size ladders: 13px mobile / 14px desktop —
+                ~1px smaller than the CTA at each breakpoint so FAQ
+                reads as the quieter sibling. Uses `text-ide-fg-mute`
+                with a hover bump to `text-ide-fg` for the same
+                recede-and-respond feel the rest of the site's
+                tertiary links use. */}
+            <Link
+              href="/faq"
+              className="font-mono text-[13px] md:text-[14px] text-ide-fg-mute hover:text-ide-fg transition-colors lowercase"
+            >
+              faq
+            </Link>
+            {/* Holding-page nav: primary CTA to the dedicated `/contact`
+                route (added 2026-04-24 for the two-route holding-page
+                launch). Mobile renders a smaller-typography variant —
+                14px vs the codified 20px — so the nav reads as
+                logo-dominant with the CTA as a quieter sibling.
+                Desktop keeps the 20px canonical size. Two TerminalCTA
+                renders + md: gating is the simplest way to drive a
+                breakpoint-specific fontSize through a prop that's a
+                single number (no responsive style hatch on the
                 primitive). */}
             <span className="md:hidden">
               <TerminalCTA

@@ -279,6 +279,24 @@ export type TerminalLineProps = {
    * the two cadences used on-site today.
    */
   doneBlinkClassName?: string
+  /**
+   * When false, the framing `[` and `]` never render in any phase —
+   * the line reads as `>_` (idle) / `>  text_` (typing/done) with no
+   * bracket chrome at all. Default true (the codified terminal voice).
+   *
+   * Added 2026-04-24 for the hero's mobile line 1: Alex's spec was
+   * "the purple angle bracket will be the first character, followed
+   * by two spaces" — so the `[` prefix is dropped on mobile and the
+   * `>` prompt sits as column-1 of the content area. Desktop still
+   * passes `showBrackets` default-true with `hangingPrompt` so the
+   * framing brackets hang in the outer gutter.
+   *
+   * Setting `showBrackets={false}` together with `hangingPrompt={true}`
+   * is unsupported — the hanging math assumes a 5ch prefix width that
+   * accounts for `[` + space. Keep them paired: hanging uses brackets,
+   * no-hanging-on-mobile drops them.
+   */
+  showBrackets?: boolean
 }
 
 export function TerminalLine({
@@ -303,6 +321,7 @@ export function TerminalLine({
   doneCursorGlyphDelayMs = 0,
   blinkOnDone = false,
   doneBlinkClassName = 'animate-terminal-blink',
+  showBrackets = true,
 }: TerminalLineProps) {
   // Resolve the caller's segments, then prepend `leadingSpaces` NBSPs to
   // the front of the first segment. This is how every TerminalLine in the
@@ -506,8 +525,8 @@ export function TerminalLine({
   //                    "pulse the whole line" deployment.
   const hangCh = 3 + leadingSpaces
   const showCursor = inView && (phase !== 'done' || persistCursor)
-  const bracketsVisible = phase !== 'done'
-  const bracketsInLayout = hangingPrompt || bracketsVisible
+  const bracketsVisible = showBrackets && phase !== 'done'
+  const bracketsInLayout = showBrackets && (hangingPrompt || bracketsVisible)
   const blinkingWhole = blinkOnDone && phase === 'done'
 
   // Cursor glyph resolution by phase:

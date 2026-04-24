@@ -213,6 +213,22 @@ export function HeroTerminalBlock({
 }) {
   const resolvedFontSize = fontSize ?? HERO_FONT_SIZE_DESKTOP
 
+  // Hanging-prompt + framing brackets are DESKTOP-only treatments. On
+  // mobile (`lines='1'` / `lines='2'`), the canvas gutter isn't wide
+  // enough to host a prefix that hangs outside the content canvas —
+  // the `[` and `>` clip off the left edge of the viewport. So mobile:
+  //   - `hangingPrompt={false}` — the prefix flows inline from the
+  //     content edge, no outer-gutter break-out.
+  //   - `showBrackets={false}` — the framing `[` and `]` drop entirely
+  //     (not just hide on done), so the purple `>` prompt IS the first
+  //     character at column 1, followed by the codified two leading
+  //     NBSPs. Alex's 2026-04-24 spec: "the purple angle bracket will
+  //     be the first character, followed by two spaces."
+  // Desktop still gets both bracket chrome AND the hanging prefix in
+  // the canvas's outer gutter — the codified hero voice.
+  const useHangingPrompt = lines === 'both'
+  const showBrackets = lines === 'both'
+
   const line1 = (
     <TerminalLine
       segments={[
@@ -228,7 +244,8 @@ export function HeroTerminalBlock({
       ]}
       fontSize={resolvedFontSize}
       align="left"
-      hangingPrompt
+      hangingPrompt={useHangingPrompt}
+      showBrackets={showBrackets}
       persistCursor={!line2Ready}
     />
   )
@@ -246,7 +263,8 @@ export function HeroTerminalBlock({
       ]}
       fontSize={resolvedFontSize}
       align="left"
-      hangingPrompt
+      hangingPrompt={useHangingPrompt}
+      showBrackets={showBrackets}
       persistCursor
       doneCursorGlyph={'v'}
       doneCursorGlyphDelayMs={2120}
