@@ -135,8 +135,13 @@ export type TerminalLineProps = {
   cursorColor?: string
   /** Tailwind text-color class for the framing `[` and `]`. Default `"text-orange"`. */
   bracketColor?: string
-  /** Font size in px. Default 24 — the codified H2.5 size. */
-  fontSize?: number
+  /**
+   * Font size. Default 24 — the codified H2.5 size. Pass a number for
+   * a fixed px size, or a CSS string (e.g. `'clamp(22px, 5.5vw, 36px)'`)
+   * for responsive sizing. The hanging-prompt math uses `ch` units so
+   * it stays correct across font-size changes.
+   */
+  fontSize?: number | string
   /**
    * Number of leading non-breaking spaces prepended to the typed content.
    * Default 2 — the codified `>  text` gap. These NBSPs get typed out as
@@ -558,12 +563,16 @@ export function TerminalLine({
               // first visible character of typed text lands at the parent's
               // left edge (= wordmark edge); wrapped lines also align
               // there; `>` hangs outside.
-              fontSize: `${fontSize}px`,
+              fontSize:
+                typeof fontSize === 'number' ? `${fontSize}px` : fontSize,
               marginLeft: `-${hangCh}ch`,
               paddingLeft: `${hangCh}ch`,
               textIndent: `-${hangCh}ch`,
             }
-          : { fontSize: `${fontSize}px` }
+          : {
+              fontSize:
+                typeof fontSize === 'number' ? `${fontSize}px` : fontSize,
+            }
       }
       aria-label={`terminal: [ >${fullText} ]`}
     >

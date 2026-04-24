@@ -170,8 +170,25 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * mounts, the second flex item appears and `justify-between` spreads
  * the two to top/bottom without moving line 1.
  */
+type HeroLines = 'both' | '1' | '2'
+
+/**
+ * Mobile font-size for the hero terminal lines. Desktop stays at the
+ * locked 36px; mobile shrinks via clamp so the typed line wraps to a
+ * reasonable number of mobile-screen lines without the per-character
+ * `ch` math (in TerminalLine's hanging-prompt mode) blowing past the
+ * viewport. Picks 22px at 375px wide, scales up to 36px at 654px+ wide
+ * (just below the md breakpoint at 768px, where the desktop fontSize
+ * takes over). Inline styles set the actual computed size — see
+ * HeroSection for the responsive choice.
+ */
+const HERO_FONT_SIZE_MOBILE = 'clamp(22px, 5.5vw, 36px)'
+const HERO_FONT_SIZE_DESKTOP = 36
+
 export function HeroTerminalBlock({
   line2Ready = false,
+  lines = 'both',
+  fontSize,
 }: {
   /**
    * When true, line 1's `_` cursor goes dark and a second TerminalLine
@@ -180,65 +197,84 @@ export function HeroTerminalBlock({
    * component is still renderable in isolation.
    */
   line2Ready?: boolean
+  /**
+   * Which lines to render. Default 'both' = the desktop-canonical
+   * stacked layout. Pass '1' or '2' for the mobile stack where the
+   * paper-app sits BETWEEN line 1 and line 2 in the page flow — see
+   * HeroSection for the mobile composition.
+   */
+  lines?: HeroLines
+  /**
+   * Override the font-size passed down to both TerminalLine
+   * primitives. Default `36` (the locked desktop size). Pass a string
+   * (e.g. `'clamp(22px, 5.5vw, 36px)'`) for a responsive mobile size.
+   */
+  fontSize?: number | string
 }) {
+  const resolvedFontSize = fontSize ?? HERO_FONT_SIZE_DESKTOP
+
+  const line1 = (
+    <TerminalLine
+      segments={[
+        { text: 'attract' },
+        { text: ',', color: 'text-purple' },
+        { text: ' upskill' },
+        { text: ',', color: 'text-purple' },
+        { text: ' and retain top ' },
+        { text: 'HUMAN', color: 'text-orange' },
+        { text: ' talent and prepare your company for the ' },
+        { text: 'ai', color: 'text-green' },
+        { text: ' future' },
+      ]}
+      fontSize={resolvedFontSize}
+      align="left"
+      hangingPrompt
+      persistCursor={!line2Ready}
+    />
+  )
+
+  // cursor-cascade-3 revision 2 (2026-04-22 late evening). See
+  // tailwind.config.js → keyframes['cursor-cascade-3'] for the
+  // self-stepping rationale.
+  const line2 = line2Ready ? (
+    <TerminalLine
+      segments={[
+        { text: 'here' },
+        { text: "'", color: 'text-purple' },
+        { text: 's' },
+        { text: ' how it works\u00a0', color: 'text-purple' },
+      ]}
+      fontSize={resolvedFontSize}
+      align="left"
+      hangingPrompt
+      persistCursor
+      doneCursorGlyph={'v'}
+      doneCursorGlyphDelayMs={2120}
+      doneBlinkClassName="animate-cursor-cascade-3"
+    />
+  ) : null
+
+  if (lines === '1') {
+    // Single-line mode: no flex column / no h-full / no justify-between.
+    // Used by the mobile stack so line 1 sits directly above the paper-app
+    // and line 2 sits directly below it without forcing a stretched
+    // container.
+    return <div className="w-full pr-0">{line1}</div>
+  }
+
+  if (lines === '2') {
+    return <div className="w-full pr-0">{line2}</div>
+  }
+
+  // 'both' — desktop default. Bottom-justified two-line stack inside
+  // the col-span-2 left slot of the canvas grid. See JSDoc above for
+  // the h-full + justify-between layout rationale.
   return (
     <div className="w-3/4 pr-8 flex flex-col gap-[3em]">
-      <TerminalLine
-        segments={[
-          { text: 'attract' },
-          { text: ',', color: 'text-purple' },
-          { text: ' upskill' },
-          { text: ',', color: 'text-purple' },
-          { text: ' and retain top ' },
-          { text: 'HUMAN', color: 'text-orange' },
-          { text: ' talent and prepare your company for the ' },
-          { text: 'ai', color: 'text-green' },
-          { text: ' future' },
-        ]}
-        fontSize={36}
-        align="left"
-        hangingPrompt
-        persistCursor={!line2Ready}
-      />
-
-      {line2Ready && (
-        // cursor-cascade-3 revision 2 (2026-04-22 late evening). The
-        // post-`_→v`-swap cursor hops through 3 y positions (y=0, 54px,
-        // 108px) on a 3.18s cycle, one 1.06s blink per position. First
-        // pass used `steps(6, end)` + `lh` units + a `100% → y=0`
-        // loop-back; Alex's video showed smooth oscillation (down,
-        // then back up through the same positions) instead of discrete
-        // hops. Root cause: (1) the comma inside `steps(6, end)`
-        // collided with Tailwind's `animation:` shorthand concatenation
-        // so the timing function was dropped; (2) even with steps
-        // working, the `100% → 0%` loop interpolated translateY upward
-        // on non-stepped timing, producing the return-slide. Revision 2
-        // fixes both: keyframes are "self-stepping" (paired identical
-        // plateaus bridged by 0.01%-wide jumps, so any linear/ease
-        // interpolation across the bridge is sub-frame invisible), and
-        // the final keyframe HOLDS at y=108px opacity 0 so the CSS
-        // loop boundary snaps back to y=0 in zero time while invisible.
-        // Switched off `lh` units for pixels (54/108) to remove the
-        // line-height-resolution variable from the stack. See
-        // `tailwind.config.js` → `keyframes['cursor-cascade-3']` for
-        // the full rationale. Reversible by swapping
-        // `doneBlinkClassName` back to `'animate-tail-blink'`.
-        <TerminalLine
-          segments={[
-            { text: 'here' },
-            { text: "'", color: 'text-purple' },
-            { text: 's' },
-            { text: ' how it works\u00a0', color: 'text-purple' },
-          ]}
-          fontSize={36}
-          align="left"
-          hangingPrompt
-          persistCursor
-          doneCursorGlyph={'v'}
-          doneCursorGlyphDelayMs={2120}
-          doneBlinkClassName="animate-cursor-cascade-3"
-        />
-      )}
+      {line1}
+      {line2}
     </div>
   )
 }
+
+export { HERO_FONT_SIZE_MOBILE }

@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { PaperApp } from '@/components/paper/PaperApp'
-import { HeroTerminalBlock } from '@/components/sections/HeroTerminalBlock'
+import {
+  HERO_FONT_SIZE_MOBILE,
+  HeroTerminalBlock,
+} from '@/components/sections/HeroTerminalBlock'
 import { Postit } from '@/components/special/Postit'
 
 /**
@@ -192,6 +195,22 @@ const POSTIT_OFFSCREEN_TRANSLATE = '100vh'
  */
 const POSTIT_LAND_PEEK_MS = 1500
 
+/**
+ * Truncated-holding-page launch (2026-04-24 — Alex): line 2 is hidden
+ * while the site runs on the two-route holding page, because the
+ * TrialCTA preamble terminal line now carries the scroll-pointer role
+ * that line 2 used to play. All line-2 code (HeroTerminalBlock
+ * `lines='2'` path, `line2Ready` state machinery, baton-pass timing in
+ * useEffect) is intentionally preserved — flip this to `true` to
+ * restore the two-line hero when the full site ships.
+ *
+ * With line 2 disabled, `line2Ready` stays `false` forever, which means
+ * line 1's `persistCursor={!line2Ready}` resolves to `true` — its
+ * blinking `_` cursor keeps going indefinitely after typing completes.
+ * That's the desired behavior when line 1 stands alone.
+ */
+const SHOW_LINE_2 = false
+
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const [phase, setPhase] = useState<'idle' | 'rising' | 'landed'>('idle')
@@ -204,15 +223,27 @@ export function HeroSection() {
     const el = sectionRef.current
     if (!el) return
 
-    // Reduced-motion: skip animation, land from frame one. Line 2 is
-    // mounted immediately alongside — no baton-pass choreography, both
+    // Mobile (<md = <768px): skip the rise-and-slap entirely. The post-it
+    // lives in normal flow below the paper-app on mobile (see the layout
+    // classes further down) and there's no absolute-positioned overlay
+    // for the rise to operate on. Land from frame one so line 2 mounts
+    // straight away and the done-state layout is the first paint. Terminal
+    // typing animation (driven by the TerminalLine primitives' own IOs) is
+    // untouched — it still types on mobile, just without the post-it
+    // choreography gating it.
+    const isMobile =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 767px)').matches
+
+    // Reduced-motion OR mobile: skip animation, land from frame one. Line 2
+    // is mounted immediately alongside — no baton-pass choreography, both
     // hero lines render in their done state from the first paint.
     const reduced =
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) {
+    if (reduced || isMobile) {
       setPhase('landed')
-      setLine2Ready(true)
+      if (SHOW_LINE_2) setLine2Ready(true)
       return
     }
 
@@ -235,12 +266,17 @@ export function HeroSection() {
             // line 2 mounts into the DOM below line 1. Line 2's own
             // IntersectionObserver fires on mount and kicks the
             // codified 2120ms idle-blink then the type-out.
-            line2Timer = setTimeout(
-              () => {
-                setLine2Ready(true)
-              },
-              POSTIT_RISE_DELAY_MS + POSTIT_RISE_MS - POSTIT_LAND_PEEK_MS,
-            )
+            // Gated on SHOW_LINE_2: while line 2 is disabled for the
+            // holding-page launch, we skip the baton pass entirely so
+            // line 1's cursor persists indefinitely.
+            if (SHOW_LINE_2) {
+              line2Timer = setTimeout(
+                () => {
+                  setLine2Ready(true)
+                },
+                POSTIT_RISE_DELAY_MS + POSTIT_RISE_MS - POSTIT_LAND_PEEK_MS,
+              )
+            }
             io.disconnect()
             return
           }
@@ -280,93 +316,119 @@ export function HeroSection() {
     willChange: 'transform',
   }
 
+  // Post-it copy is shared across the desktop overlay and the mobile
+  // contained version. Extracting it here keeps the two render paths
+  // from drifting on the load-bearing copy.
+  const postitHeading = (
+    <>
+      ai fluency
+      <br />
+      lessons
+    </>
+  )
+  const postitBody = (
+    <>
+      the #1 l&d topic
+      <br />
+      of 2026
+    </>
+  )
+
+  // Perks list — same content in both layouts; reused inline in each
+  // paper-app instance.
+  const perks = (
+    <div className="space-y-8 py-2">
+      <h2 className="font-display text-[34px] font-bold leading-none text-ink tracking-display-tight">
+        Perks & Benefits
+      </h2>
+      <ul className="space-y-4 text-[18px] leading-snug text-ink">
+        <li>- MultiSport Card</li>
+        <li>- Flexible Home Office</li>
+        <li>- English Lessons</li>
+      </ul>
+    </div>
+  )
+
   return (
     <section
       ref={sectionRef}
-      className="grid grid-cols-canvas gap-6 pt-8 pb-8 items-stretch relative"
+      className="flex flex-col gap-6 pt-4 pb-8 relative md:grid md:grid-cols-canvas md:gap-6 md:pt-8 md:items-stretch"
     >
-      {/* Left: HeroTerminalBlock — typed hero lines on the IDE substrate.
-          Renders line 1 from mount; line 2 appears after the baton-pass
-          signal fires (see POSTIT_LAND_PEEK_MS above). The wrapper is
-          `flex flex-col` so HeroTerminalBlock's own `h-full flex
-          flex-col justify-between` can pin line 1 to the top and line
-          2 to the bottom of the (stretched) row height. */}
-      <div className="col-span-2 pr-6 flex flex-col">
+      {/* ─── MOBILE STACK (block md:hidden) ─────────────────────────────
+          Order per Alex 2026-04-24: line 1 → paper-app (with Post-it
+          contained INSIDE the body, below the perks list) → line 2.
+          Post-it is load-bearing copy, so it stays in the layout — just
+          repositioned from the desktop overhanging overlay to a
+          contained block inside the paper-app on mobile. No rise-and-
+          slap animation here (the useEffect above sets
+          phase='landed' immediately on mobile).
+          Terminal typing animation is preserved on mobile via the
+          `lines='1'` / `lines='2'` slots — each renders its own
+          TerminalLine which runs its own IO-driven type-out. */}
+      <div className="md:hidden">
+        <HeroTerminalBlock
+          line2Ready={line2Ready}
+          lines="1"
+          fontSize={HERO_FONT_SIZE_MOBILE}
+        />
+      </div>
+      <div className="md:hidden">
+        {/* Post-it overhang composition (2026-04-24 Alex spec):
+            paper-app ends with ~1/3 of the 240px post-it hanging below
+            its bottom edge. Implementation:
+              (a) Inside paper-app body, reserve 160px (= 2/3 of post-it
+                  height) below the perks list via a transparent spacer.
+                  This is the vertical span the post-it's top 2/3 will
+                  occupy, so the perks content isn't covered.
+              (b) Wrap paper-app in a `relative` container with
+                  `pb-[80px]` (= 1/3 of post-it height) so the hanging
+                  1/3 has room without colliding with the next section.
+              (c) Position post-it absolutely at `bottom-0` in the
+                  wrapper and center it horizontally — its bottom edge
+                  aligns with the wrapper's padding-bottom bottom, its
+                  top edge sits 160px above the paper-app's bottom
+                  (i.e. 2/3 inside, 1/3 below — Alex's spec).
+            Desktop overlay (absolute + rise-and-slap) is untouched. */}
+        <div className="relative pb-[80px]">
+          <PaperApp width="narrow">
+            {perks}
+            <div aria-hidden style={{ height: 160 }} />
+          </PaperApp>
+          <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none">
+            <Postit rotation={-5} heading={postitHeading}>
+              {postitBody}
+            </Postit>
+          </div>
+        </div>
+      </div>
+      {SHOW_LINE_2 && (
+        <div className="md:hidden">
+          <HeroTerminalBlock
+            line2Ready={line2Ready}
+            lines="2"
+            fontSize={HERO_FONT_SIZE_MOBILE}
+          />
+        </div>
+      )}
+
+      {/* ─── DESKTOP TWO-COL (hidden md:contents) ───────────────────────
+          Left col-span-2: HeroTerminalBlock with both lines stacked.
+          Right col: paper-app translated left by PAPER_SHIFT_PX with
+          the Post-it as an absolute overlay rising from below the fold.
+          Wrapped in `md:contents` so the inner divs become direct
+          children of the section's grid (canvas grid takes effect at
+          md+ only). */}
+      <div className="hidden md:col-span-2 md:flex md:flex-col md:pr-6">
         <HeroTerminalBlock line2Ready={line2Ready} />
       </div>
-
-      {/* Right: paper app + Post-it overlay. Wrapper is translated left
-          by PAPER_SHIFT_PX from load — NOT animated, baked in so the
-          user never sees the paper "settle." Post-it's absolute
-          positioning resolves to this wrapper.
-
-          `pb-[120px]`: reserves bottom space inside the wrapper for the
-          Post-it's overhang below the paper app. Since the Post-it is
-          absolutely positioned, it doesn't contribute to its parent's
-          natural height — without this padding the section's row would
-          end at the paper app's bottom and the Post-it would visually
-          spill into the next section (and line 2, pinned to row
-          bottom, would land ABOVE the Post-it's bottom). With 120px
-          the wrapper's natural height = paper-app-height + 120px ≈
-          post-it's rotated bottom edge (post-it is 240×240 with
-          top-left at paper-app center, rotated −5°; lowest visible
-          point sits ~240 − paper_app_height/2 ≈ 100px below paper-app
-          bottom; 120px adds a small cushion for the curl/shadow).
-          Tune if paper-app content ever changes height meaningfully. */}
-      <div
-        className="relative pb-[120px]"
-        style={{ transform: `translateX(-${PAPER_SHIFT_PX}px)` }}
-      >
-        <PaperApp width="narrow">
-          <div className="space-y-8 py-2">
-            <h2 className="font-display text-[34px] font-bold leading-none text-ink tracking-display-tight">
-              Perks & Benefits
-            </h2>
-            {/* Pass 5: vertical perks list replaces the 1x3 IconTile grid.
-                Reads as a fast vertical saccade in the ~1s window between
-                typing finishing and the Post-it landing. The 3rd item
-                gets partly occluded by the Post-it overhang; that's
-                intentional (Alex 2026-04-21). */}
-            <ul className="space-y-4 text-[18px] leading-snug text-ink">
-              <li>- MultiSport Card</li>
-              <li>- Flexible Home Office</li>
-              <li>- English Lessons</li>
-            </ul>
-          </div>
-        </PaperApp>
-
-        {/* Post-it overlay — animated rise from below the fold.
-            Outer wrapper sits at (top:50%, left:50%) of the paper-app
-            wrapper. That places the wrapper's content origin — and thus
-            the Post-it's pre-rotation top-left corner — at paper-app
-            dead center. Post-it itself carries
-            `rotationOrigin='top left'` so its -5° tilt pivots around
-            that same anchor: the top-left corner stays pinned to
-            paper-center throughout idle / rising / landed; only the
-            body swings.
-
-            During idle this wrapper is translateY(100vh) — off-screen
-            below the fold. On viewport entry, a 900ms timer fires;
-            the transition kicks in and animates to translateY(0) over
-            2700ms with a small overshoot at the end. */}
+      <div className="relative hidden md:block md:pb-[120px] md:[transform:translateX(-120px)]">
+        <PaperApp width="narrow">{perks}</PaperApp>
         <div
           className="absolute top-1/2 left-1/2 pointer-events-none z-50"
           style={postitWrapperStyle}
         >
-          <Postit
-            rotation={-5}
-            rotationOrigin="top left"
-            heading={
-              <>
-                ai fluency
-                <br />
-                lessons
-              </>
-            }
-          >
-            the #1 l&d topic
-            <br />
-            of 2026
+          <Postit rotation={-5} rotationOrigin="top left" heading={postitHeading}>
+            {postitBody}
           </Postit>
         </div>
       </div>

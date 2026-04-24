@@ -4,19 +4,35 @@ import Link from 'next/link'
 /**
  * Footer — thin IDE-substrate footer strip.
  *
- * Per ss5: three columns inside the page canvas.
+ * Mobile (<md): centered stacked logo only. No tagline, no copyright —
+ * the holding page carries no meta chrome on mobile per Alex 2026-04-24.
+ *
+ * Desktop (md+): per ss5, three columns inside the page canvas.
  *   left   — alderman.ai stacked mark (links to /)
  *   center — brand tagline slot (placeholder, Alex writes)
  *   right  — © + year + " · still HUMAN" meta
  *
- * Uses the page's 6-col grid — content sits in the middle 4/6 to match the
- * rest of the site. Low-contrast (ide-fg-mute) so it reads as chrome, not
- * a content section.
+ * Uses the page's 6-col grid — desktop content sits in the middle 4/6 to
+ * match the rest of the site. Low-contrast (ide-fg-mute) so it reads as
+ * chrome, not a content section.
  */
 export function Footer() {
   return (
     <footer className="border-t border-ide-rule">
-      <div className="grid grid-cols-page py-8">
+      {/* Mobile: centered stacked logo only. */}
+      <div className="flex justify-center py-10 md:hidden">
+        <Link href="/" aria-label="alderman.ai home">
+          <Image
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt="alderman.ai"
+            width={36}
+            height={55}
+            className="h-[56px] w-auto"
+          />
+        </Link>
+      </div>
+      {/* Desktop: 3-column chrome inside the page canvas. */}
+      <div className="hidden md:grid md:grid-cols-page md:py-8">
         <div aria-hidden />
         <div className="col-span-4 grid grid-cols-3 items-center gap-6">
           <div className="flex items-center">

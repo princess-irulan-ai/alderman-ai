@@ -15,12 +15,14 @@ export function PageFrame({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-ide-2">
       <div className="grid grid-cols-page">
-        {/* left 1/6 margin — IDE substrate */}
-        <div aria-hidden />
-        {/* 4/6 content canvas */}
-        <div className="col-span-4">{children}</div>
-        {/* right 1/6 margin — IDE substrate */}
-        <div aria-hidden />
+        {/* left 1/6 margin — IDE substrate. Hidden below md; the locked
+            6-col page grid only applies from tablet up. On mobile the
+            content canvas is full-width with a 16px gutter. */}
+        <div aria-hidden className="hidden md:block" />
+        {/* Content canvas — full width on mobile with px-4 gutter;
+            middle 4/6 of the locked page grid from md up. */}
+        <div className="col-span-6 px-4 md:col-span-4 md:px-0">{children}</div>
+        <div aria-hidden className="hidden md:block" />
       </div>
     </div>
   )

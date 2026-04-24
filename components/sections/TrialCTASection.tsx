@@ -14,8 +14,8 @@ import { TerminalCTA } from '@/components/ui/TerminalCTA'
  * file doesn't exist in `public/` yet — 404 until Alex drops it in,
  * at which point this CTA goes live without any code change.
  *
- * Second CTA uses `href="#"` as a placeholder — swap for a real
- * mailto / contact target when ready.
+ * Second CTA points to `/contact` (added 2026-04-24 for the two-route
+ * holding-page launch).
  *
  * Section carries `id="brochure"` so `FloatingNav`'s `#brochure`
  * anchor scrolls here.
@@ -62,7 +62,7 @@ export function TrialCTASection() {
             ]}
           />
           <TerminalCTA
-            href="#"
+            href="/contact"
             lowercase={false}
             bracketBlink={terminalDone}
             segments={[
