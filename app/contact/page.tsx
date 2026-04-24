@@ -4,6 +4,7 @@ import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
 import { PaperApp } from '@/components/paper/PaperApp'
+import { ContactOutroBlock } from '@/components/sections/ContactOutroBlock'
 import { LabelBracket } from '@/components/ui/LabelBracket'
 
 /**
@@ -133,15 +134,12 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* 4. Outro — ContactOutroBlock lands here next session
-            (PLAN.md task 2). Component will be `'use client'` with a
-            `terminalDone` gate, a TerminalLine ("but if you don't want
-            to talk to a HUMAN, just upload this faq.md to your favorite
-            ai platform"), and two bracket-blink-gated TerminalCTAs:
-            download-faq + download-brochure. Pattern mirrors
-            `TrialCTASection`. Bottom pb-32 mirrored from v1's
-            operating-hours seam closer — keep until the outro ships. */}
-        <div className="py-8 pb-16 md:py-16 md:pb-32" aria-hidden />
+        {/* 4. Outro — terminal line + download-faq + download-brochure.
+            Mirrors TrialCTASection's choreography. */}
+        <ContactOutroBlock />
+
+        {/* Bottom breathing room before footer. */}
+        <div className="pb-16 md:pb-32" aria-hidden />
       </PageFrame>
       <Footer />
     </>
