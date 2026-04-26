@@ -25,12 +25,13 @@ export default function HomePage() {
               hangingPrompt
               showBrackets={false}
               align="left"
+              persistCursor
               segments={[
                 { text: 'look, i get it, ' },
                 { text: 'PEOPLE', color: 'text-orange' },
                 { text: ' are scared and they don’t want to learn ' },
                 { text: 'ai', color: 'text-green' },
-                { text: ', but i have a plan.' },
+                { text: ', but i have a plan' },
               ]}
             />
           </div>
