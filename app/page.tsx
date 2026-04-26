@@ -15,16 +15,22 @@ export default function HomePage() {
         <HeroSection />
         <WhatYouGetSection />
         {/* H2.5 — terminal-line seam between H2 and the TrialCTA paper-app.
-            Sits on the dark IDE substrate, leads into "the plan." Default
-            ide-fg / purple-prompt / orange-brackets primitive colours. */}
+            Sits on the dark IDE substrate, leads into "the plan." Uses
+            hangingPrompt + showBrackets={false} so the `>` hangs in the
+            outer gutter and the typed text aligns to the canvas left
+            edge — matches the hero lines above. */}
         <section className="grid grid-cols-canvas gap-6 py-8 md:py-12">
-          <div className="col-span-3 flex justify-center">
+          <div className="col-span-3">
             <TerminalLine
+              hangingPrompt
+              showBrackets={false}
+              align="left"
               segments={[
-                {
-                  text:
-                    "look, i get it, people are scared and they don't want to learn this stuff, but i have a plan.",
-                },
+                { text: 'look, i get it, ' },
+                { text: 'PEOPLE', color: 'text-orange' },
+                { text: ' are scared and they don’t want to learn ' },
+                { text: 'ai', color: 'text-green' },
+                { text: ', but i have a plan.' },
               ]}
             />
           </div>
