@@ -35,7 +35,7 @@ export function TrialCTASection() {
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
               ... since I was a signals intelligence officer for the US
-              gov
+              government
             </p>
           </div>
 
