@@ -199,6 +199,19 @@ export function FloatingNav() {
               >
                 about me
               </Link>
+              {/* CTA mirror — also visible in the main bar, but Alex's
+                  spec is to repeat it inside the hamburger so the panel
+                  is a complete index of nav destinations. Plain-text
+                  styling matches the other panel items; HUMAN keeps
+                  the brand-rule uppercase + orange. */}
+              <Link
+                href="/contact"
+                onClick={() => setMenuOpen(false)}
+                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+              >
+                talk to a{' '}
+                <span className="uppercase font-medium text-orange">HUMAN</span>
+              </Link>
             </div>
           </div>
         </div>
