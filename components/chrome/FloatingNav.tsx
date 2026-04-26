@@ -186,7 +186,7 @@ export function FloatingNav() {
       {menuOpen && (
         <div
           id="mobile-nav-menu"
-          className="md:hidden bg-ide/75 border-t border-ide-rule"
+          className="md:hidden bg-ide/85 border-t border-ide-rule"
         >
           <div className="grid grid-cols-page">
             <div className="col-span-6 px-[var(--gutter-mobile)] py-6 flex flex-col gap-5">
