@@ -53,7 +53,7 @@ export function TrialCTASection() {
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
         <div
-          className="absolute right-1/2 top-full -mt-4 pointer-events-none origin-top-right"
+          className="absolute right-1/2 top-full -mt-8 pointer-events-none origin-top-right"
           style={{ transform: 'scale(calc(50vw / 250px))' }}
         >
           <Postit
@@ -61,7 +61,7 @@ export function TrialCTASection() {
             rotation={5}
             heading={
               <span
-                className="font-display font-bold"
+                className="font-display font-normal"
                 style={{ fontSize: '30px', lineHeight: 1.05 }}
               >
                 including 8+ years of teaching ESL in the Czech Republic
