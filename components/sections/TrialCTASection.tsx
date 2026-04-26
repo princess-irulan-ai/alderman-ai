@@ -91,8 +91,8 @@ export function TrialCTASection() {
           href="/faq"
           bracketBlink
           segments={[
-            { text: 'go to ' },
-            { text: 'faq', color: 'text-orange' },
+            { text: 'see ' },
+            { text: 'faq/pricing', color: 'text-orange' },
           ]}
         />
       </div>
