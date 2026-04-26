@@ -129,7 +129,7 @@ export function FloatingNav() {
               href="/about"
               className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
             >
-              about me
+              about your <span className="text-orange">instructor</span>
             </Link>
             {pipe}
             {cta(20)}
@@ -186,7 +186,7 @@ export function FloatingNav() {
       {menuOpen && (
         <div
           id="mobile-nav-menu"
-          className="md:hidden bg-ide/90 border-t border-ide-rule"
+          className="md:hidden bg-ide/75 border-t border-ide-rule"
         >
           <div className="grid grid-cols-page">
             <div className="col-span-6 px-[var(--gutter-mobile)] py-6 flex flex-col gap-5">
@@ -202,7 +202,7 @@ export function FloatingNav() {
                 onClick={() => setMenuOpen(false)}
                 className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
               >
-                about me
+                about your <span className="text-orange">instructor</span>
               </Link>
               {/* CTA mirror — also visible in the main bar, but Alex's
                   spec is to repeat it inside the hamburger so the panel
