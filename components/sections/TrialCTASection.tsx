@@ -64,7 +64,9 @@ export function TrialCTASection() {
                 className="font-display font-normal"
                 style={{ fontSize: '30px', lineHeight: 1.05 }}
               >
-                including 8+ years of teaching ESL in the Czech Republic
+                including 8+ years of{' '}
+                <span className="font-bold">teaching ESL</span> in the
+                Czech Republic
               </span>
             }
           />
