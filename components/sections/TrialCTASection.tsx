@@ -39,26 +39,29 @@ export function TrialCTASection() {
             </p>
           </div>
         </PaperApp>
-        {/* Bottom-left post-it overhang — mirror image of the hero's
-            BR post-it. flipX puts the rounded corner + curl on the
-            BL; rotation=+5° flips the hero's -5° tilt the opposite
-            way. Anchored with its TOP-RIGHT corner at the paper-app's
-            bottom-center (right-1/2 top-full origin-top-right), so
-            the scaled+rotated tip lands at the viewport's left edge
-            on mobile (mirror of the hero math). `mt-8` pushes the
-            wrapper 32px below the paper-app bottom edge so the
-            rotation-extended visual top clears the subtitle's last
-            line ("US government"). */}
+        {/* Bottom-left post-it — mirror of the hero's BR post-it. Sits
+            ON the paper-app (overlaps its bottom-left corner area)
+            and overhangs DOWN-LEFT past the paper-app's BL corner.
+              - `right-1/2` anchors the post-it's right edge at the
+                paper-app's horizontal center.
+              - `top-full -mt-8` puts the wrapper's top 32px ABOVE
+                the paper-app's bottom edge — i.e. inside the
+                paper-app's bottom padding zone, just below the
+                subtitle's last line. The post-it's body extends
+                DOWN from that anchor.
+              - `origin-top-right` scales from that anchor so the
+                rotated+scaled tip lands at the viewport's left edge
+                on mobile (mirror of the hero math). */}
         <div
-          className="absolute right-1/2 top-full mt-16 pointer-events-none origin-top-right"
+          className="absolute right-1/2 top-full -mt-4 pointer-events-none origin-top-right"
           style={{ transform: 'scale(calc(50vw / 250px))' }}
         >
           <Postit
             flipX
             rotation={5}
             heading={
-              <span style={{ fontSize: '24px', lineHeight: 1.15 }}>
-                over eight years of teaching ESL
+              <span style={{ fontSize: '20px', lineHeight: 1.15 }}>
+                including 8+ years of teaching ESL in the Czech Republic
               </span>
             }
           />
@@ -70,7 +73,7 @@ export function TrialCTASection() {
           reserves enough vertical room for the post-it (~50vw tall +
           mt-8 push + buffer); desktop keeps the original md:mt-14
           since the post-it overhang scales differently up there. */}
-      <div className="md:col-span-3 mt-[280px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
+      <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
         <TerminalCTA
           href="/alderman-ai-brochure.pdf"
           bracketBlink
