@@ -65,9 +65,15 @@ export function FloatingNav() {
                 with a hover bump to `text-ide-fg` for the same
                 recede-and-respond feel the rest of the site's
                 tertiary links use. */}
+            {/* Non-CTA menu items. Currently just `faq`; About Me etc.
+                will join here. Each item is paper-white by default,
+                purple on hover. A muted `|` pipe goes BETWEEN items
+                (none rendered today since there's only one). The
+                primary CTA on the right is excluded from the pipe
+                pattern by design. */}
             <Link
               href="/faq"
-              className="font-mono text-[13px] md:text-[14px] text-ide-fg-mute hover:text-ide-fg transition-colors lowercase"
+              className="font-mono text-[13px] md:text-[14px] text-paper hover:text-purple transition-colors lowercase"
             >
               faq
             </Link>
@@ -87,6 +93,8 @@ export function FloatingNav() {
                 fontSize={14}
                 lowercase={false}
                 bracketBlink
+                showPrompt={false}
+                className="!border-0"
                 segments={[
                   { text: 'talk to a ' },
                   {
@@ -102,6 +110,8 @@ export function FloatingNav() {
                 href="/contact"
                 lowercase={false}
                 bracketBlink
+                showPrompt={false}
+                className="!border-0"
                 segments={[
                   { text: 'talk to a ' },
                   {

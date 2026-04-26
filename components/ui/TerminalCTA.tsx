@@ -103,6 +103,14 @@ export type TerminalCTAProps = {
   bracketBlink?: boolean
   /** Extra classes applied to the outer clickable wrapper. */
   className?: string
+  /**
+   * When `false`, the leading `>_` prompt is dropped entirely so the
+   * CTA reads as `[ body text ]` with just the framing brackets.
+   * Default `true` — the codified bracketed-terminal voice. Used by
+   * the mobile floating nav, where horizontal room is tight and the
+   * `>_` is the first thing to drop to keep `talk to a HUMAN` legible.
+   */
+  showPrompt?: boolean
 }
 
 export function TerminalCTA({
@@ -117,6 +125,7 @@ export function TerminalCTA({
   lowercase = true,
   bracketBlink = false,
   className = '',
+  showPrompt = true,
 }: TerminalCTAProps) {
   const bracketBlinkClass = bracketBlink
     ? 'animate-bracket-blink motion-reduce:animate-none'
@@ -152,11 +161,15 @@ export function TerminalCTA({
         [
       </span>
 
-      {/* Middle: `>_` prompt + body text. No space between `>` and `_`. */}
+      {/* Middle: optional `>_` prompt + body text. No space between
+          `>` and `_`. The prompt is suppressed when `showPrompt` is
+          false (mobile nav uses this to free horizontal room). */}
       <span className="inline-flex items-baseline gap-[1ch]">
-        <span className={`${promptColor} select-none`} aria-hidden>
-          &gt;_
-        </span>
+        {showPrompt && (
+          <span className={`${promptColor} select-none`} aria-hidden>
+            &gt;_
+          </span>
+        )}
         <span className={lowercase ? 'lowercase' : ''}>
           {activeSegments.map((seg, i) => (
             <span
