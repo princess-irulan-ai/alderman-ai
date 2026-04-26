@@ -113,18 +113,16 @@ export function FloatingNav() {
             </span>
           </Link>
 
-          {/* DESKTOP RIGHT GROUP: faq/pricing | about your instructor | [CTA]
+          {/* DESKTOP RIGHT GROUP: faq | about your instructor | [CTA]
               Pipes go between items, not around the CTA. Hidden on
               mobile — mobile uses a separate flex group with CTA +
               hamburger instead. */}
           <div className="hidden md:flex items-center gap-6">
             <Link
               href="/faq"
-              className="font-mono text-[14px] transition-colors hover:opacity-80"
+              className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
             >
-              <span className="uppercase text-purple">FAQ</span>
-              <span className="text-paper"> / </span>
-              <span className="text-orange">Pricing</span>
+              faq
             </Link>
             {pipe}
             <Link
