@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+
 import { PaperApp } from '@/components/paper/PaperApp'
 
 /**
@@ -53,10 +57,22 @@ import { PaperApp } from '@/components/paper/PaperApp'
 /**
  * Silhouette — top-half human shape. Circle head + rounded-shoulder torso,
  * flat bottom at "waist." 20x24 local bounding box.
+ *
+ * `color` is a Tailwind fill-* utility class (e.g. `fill-green`,
+ * `fill-orange`, `fill-purple`). Defaults to `fill-ink-soft` (the
+ * neutral muted-ink the figures originally shipped with).
  */
-function Silhouette({ x, y }: { x: number; y: number }) {
+function Silhouette({
+  x,
+  y,
+  color = 'fill-ink-soft',
+}: {
+  x: number
+  y: number
+  color?: string
+}) {
   return (
-    <g transform={`translate(${x},${y})`} className="fill-ink-soft">
+    <g transform={`translate(${x},${y})`} className={color}>
       <circle cx="10" cy="5" r="3.6" />
       <path d="M4,24 L4,11 Q4,8 10,8 Q16,8 16,11 L16,24 Z" />
     </g>
@@ -67,11 +83,24 @@ function Silhouette({ x, y }: { x: number; y: number }) {
  * StudentWithLaptop — silhouette with an open laptop held up in front.
  * Screen's back panel is what the viewer sees. Top of head visible above
  * the laptop's top edge; torso fully obstructed.
+ *
+ * `color` recolors the head + laptop base (the parts that stand in for
+ * the figure itself). The laptop screen stays paper-2 / ink-soft outline
+ * regardless — the screen represents reflective glass and shouldn't pick
+ * up the figure's group colour.
  */
-function StudentWithLaptop({ x, y }: { x: number; y: number }) {
+function StudentWithLaptop({
+  x,
+  y,
+  color = 'fill-ink-soft',
+}: {
+  x: number
+  y: number
+  color?: string
+}) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <circle cx="10" cy="5" r="3.6" className="fill-ink-soft" />
+      <circle cx="10" cy="5" r="3.6" className={color} />
       <rect
         x="0"
         y="6.5"
@@ -87,7 +116,7 @@ function StudentWithLaptop({ x, y }: { x: number; y: number }) {
         width="24"
         height="1.8"
         rx="0.4"
-        className="fill-ink-soft"
+        className={color}
       />
     </g>
   )
@@ -116,14 +145,32 @@ function AssessIllustration() {
   const topOrigins = [33, 51, 69, 87]
   // Bottom row: 5 silhouettes at spacing 18.
   const bottomOrigins = [24, 42, 60, 78, 96]
+  // Pseudo-random colour distribution — 3 green, 3 orange, 3 purple
+  // across 9 silhouettes (no obvious banding or pairs). Read top-to-
+  // bottom, left-to-right.
+  //   top:    orange, green, purple, orange   (cumulative: 1G 2O 1P)
+  //   bottom: green,  purple, orange, green, purple  (final: 3G 3O 3P)
+  const topColors = [
+    'fill-orange',
+    'fill-green',
+    'fill-purple',
+    'fill-orange',
+  ]
+  const bottomColors = [
+    'fill-green',
+    'fill-purple',
+    'fill-orange',
+    'fill-green',
+    'fill-purple',
+  ]
   return (
     <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
       <OuterFrame />
-      {topOrigins.map((x) => (
-        <Silhouette key={`t-${x}`} x={x} y={TOP_ROW_Y} />
+      {topOrigins.map((x, i) => (
+        <Silhouette key={`t-${x}`} x={x} y={TOP_ROW_Y} color={topColors[i]} />
       ))}
-      {bottomOrigins.map((x) => (
-        <Silhouette key={`b-${x}`} x={x} y={BOTTOM_ROW_Y} />
+      {bottomOrigins.map((x, i) => (
+        <Silhouette key={`b-${x}`} x={x} y={BOTTOM_ROW_Y} color={bottomColors[i]} />
       ))}
     </svg>
   )
@@ -135,20 +182,29 @@ const GROUP_CXS = {
   bottomRight: 108,
 } as const
 
+// Per-cluster colour assignment shared by Sort + Lessons. The narrative
+// ("team gets sorted -> those groups have lessons") reads more cleanly
+// when the same cluster keeps the same colour across icons 2 and 3.
+const CLUSTER_COLORS = {
+  topCenter: 'fill-orange',
+  bottomLeft: 'fill-purple',
+  bottomRight: 'fill-green',
+} as const
+
 function SortIllustration() {
   const groups = [
-    { cx: GROUP_CXS.topCenter,   y: TOP_ROW_Y },
-    { cx: GROUP_CXS.bottomLeft,  y: BOTTOM_ROW_Y },
-    { cx: GROUP_CXS.bottomRight, y: BOTTOM_ROW_Y },
+    { cx: GROUP_CXS.topCenter,   y: TOP_ROW_Y,    color: CLUSTER_COLORS.topCenter   },
+    { cx: GROUP_CXS.bottomLeft,  y: BOTTOM_ROW_Y, color: CLUSTER_COLORS.bottomLeft  },
+    { cx: GROUP_CXS.bottomRight, y: BOTTOM_ROW_Y, color: CLUSTER_COLORS.bottomRight },
   ]
   return (
     <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
       <OuterFrame />
-      {groups.map(({ cx, y }) => (
+      {groups.map(({ cx, y, color }) => (
         <g key={`${cx}-${y}`}>
-          <Silhouette x={cx - 28} y={y} />
-          <Silhouette x={cx - 10} y={y} />
-          <Silhouette x={cx + 8} y={y} />
+          <Silhouette x={cx - 28} y={y} color={color} />
+          <Silhouette x={cx - 10} y={y} color={color} />
+          <Silhouette x={cx + 8} y={y} color={color} />
         </g>
       ))}
     </svg>
@@ -158,22 +214,90 @@ function SortIllustration() {
 function LessonsIllustration() {
   // Top group: student origin y = TOP_ROW_Y    -> cyTop = TOP_ROW_Y - 1 = 29
   // Bottom groups: peer origin y = BOTTOM_ROW_Y -> cyTop = BOTTOM_ROW_Y - 24 = 66
+  // Cluster colours mirror SortIllustration so each ability group keeps
+  // its colour identity across the two icons.
   const groups = [
-    { cx: GROUP_CXS.topCenter,   cyTop: TOP_ROW_Y - 1 },
-    { cx: GROUP_CXS.bottomLeft,  cyTop: BOTTOM_ROW_Y - 24 },
-    { cx: GROUP_CXS.bottomRight, cyTop: BOTTOM_ROW_Y - 24 },
+    { cx: GROUP_CXS.topCenter,   cyTop: TOP_ROW_Y - 1,       color: CLUSTER_COLORS.topCenter   },
+    { cx: GROUP_CXS.bottomLeft,  cyTop: BOTTOM_ROW_Y - 24,   color: CLUSTER_COLORS.bottomLeft  },
+    { cx: GROUP_CXS.bottomRight, cyTop: BOTTOM_ROW_Y - 24,   color: CLUSTER_COLORS.bottomRight },
   ]
   return (
     <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
       <OuterFrame />
-      {groups.map(({ cx, cyTop }) => (
+      {groups.map(({ cx, cyTop, color }) => (
         <g key={`${cx}-${cyTop}`}>
-          <StudentWithLaptop x={cx - 10} y={cyTop + 1} />
-          <Silhouette x={cx - 19} y={cyTop + 24} />
-          <Silhouette x={cx - 1} y={cyTop + 24} />
+          <StudentWithLaptop x={cx - 10} y={cyTop + 1} color={color} />
+          <Silhouette x={cx - 19} y={cyTop + 24} color={color} />
+          <Silhouette x={cx - 1} y={cyTop + 24} color={color} />
         </g>
       ))}
     </svg>
+  )
+}
+
+/**
+ * CyclingTriptych — single-stage rotating display of the three illustration
+ * + headline pairs. Replaces the static three-column grid: holds each stage
+ * for `STAGE_DURATION_MS` (default 2000), then advances to the next.
+ *
+ * One stage visible at a time. Subtle fade on stage change to soften the
+ * cut. Respects `prefers-reduced-motion`: pins to the first stage if the
+ * user opts out.
+ *
+ * Title height is reserved via `min-h-[1.5em]` (the headlines are all
+ * single-line at this font-size) so the layout doesn't jump as titles
+ * rotate. Illustration block is capped at `max-w-[280px]` so a single
+ * centered icon doesn't balloon when given the whole paper-app body
+ * width on desktop.
+ */
+const STAGES = [
+  { title: 'ASSESS YOUR TEAM', Illustration: AssessIllustration },
+  { title: 'SORT BY ABILITY', Illustration: SortIllustration },
+  { title: '1-2x WEEKLY LESSONS', Illustration: LessonsIllustration },
+] as const
+
+const STAGE_DURATION_MS = 2000
+const FADE_MS = 250
+
+function CyclingTriptych() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [fadeIn, setFadeIn] = useState(true)
+
+  useEffect(() => {
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+
+    const id = setInterval(() => {
+      // Fade out, swap stage at half-fade, fade back in.
+      setFadeIn(false)
+      setTimeout(() => {
+        setActiveIndex((i) => (i + 1) % STAGES.length)
+        setFadeIn(true)
+      }, FADE_MS)
+    }, STAGE_DURATION_MS)
+
+    return () => clearInterval(id)
+  }, [])
+
+  const { title, Illustration } = STAGES[activeIndex]
+
+  return (
+    <div className="pt-2">
+      <div
+        className="mx-auto max-w-[280px] space-y-4 md:space-y-5 text-center transition-opacity"
+        style={{
+          opacity: fadeIn ? 1 : 0,
+          transitionDuration: `${FADE_MS}ms`,
+        }}
+      >
+        <h3 className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink min-h-[1.5em]">
+          {title}
+        </h3>
+        <Illustration />
+      </div>
+    </div>
   )
 }
 
@@ -195,26 +319,7 @@ export function WhatYouGetSection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 pt-2">
-            <div className="space-y-4 md:space-y-5 text-center">
-              <h3 className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink">
-                ASSESS YOUR TEAM
-              </h3>
-              <AssessIllustration />
-            </div>
-            <div className="space-y-4 md:space-y-5 text-center">
-              <h3 className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink">
-                SORT BY ABILITY
-              </h3>
-              <SortIllustration />
-            </div>
-            <div className="space-y-4 md:space-y-5 text-center">
-              <h3 className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink">
-                1-2x WEEKLY LESSONS
-              </h3>
-              <LessonsIllustration />
-            </div>
-          </div>
+          <CyclingTriptych />
         </div>
       </PaperApp>
     </section>
