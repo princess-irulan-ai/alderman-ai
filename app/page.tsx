@@ -34,7 +34,7 @@ export default function HomePage() {
             >
               <span>
                 <span className="select-none">&gt;</span>
-                {'  look, i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect person to teach them '}
+                {'  look, i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect INSTRUCTOR to teach them '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -49,7 +49,9 @@ export default function HomePage() {
                   { text: 'PEOPLE', color: 'text-orange' },
                   { text: ' are scared and they don’t want to learn ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ', but i’m the perfect person to teach them' },
+                  { text: ', but i’m the perfect ' },
+                  { text: 'INSTRUCTOR', color: 'text-orange' },
+                  { text: ' to teach them' },
                 ]}
               />
             </div>
