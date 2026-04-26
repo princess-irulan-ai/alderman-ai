@@ -421,16 +421,27 @@ export function HeroSection() {
               width (Alex spec 2026-04-26). The math: paper-app center
               always lives at 50vw (page padding G is symmetric on
               both sides of the page), so the distance from paper-app
-              center to viewport right is always 50vw. Scaling the
-              post-it source (240px) by `50vw / 240` makes the visible
-              width = 50vw and the visible right edge land exactly at
-              the viewport's right edge regardless of viewport size.
+              center to viewport right is always 50vw.
+              Two subtleties baked into the divisor `250px`:
+                (1) The unit MUST be a length — `calc(50vw / 240)`
+                    (no unit on the divisor) is invalid CSS for
+                    `scale()` because vw/number = length, but
+                    `scale()` requires a unitless ratio. Browsers
+                    silently drop the whole transform. `50vw / 250px`
+                    is length/length = unitless ratio = valid.
+                (2) The post-it is rotated -5° around its center, so
+                    the rotated bounding box is ~260px wide (the
+                    bottom-right tip moves to x≈250 after rotation).
+                    Dividing by 250 (instead of the source's 240)
+                    sizes the scale so the rightmost rotated tip
+                    lands exactly at viewport right (50vw + 250×k =
+                    100vw), not 2vw past it.
               The lower portion of the post-it overhangs the paper-
               app's bottom edge — no overflow clipping on ancestors,
               so it renders freely. */}
           <div
             className="absolute left-1/2 top-[216px] pointer-events-none origin-top-left"
-            style={{ transform: 'scale(calc(50vw / 240))' }}
+            style={{ transform: 'scale(calc(50vw / 250px))' }}
           >
             <Postit rotation={-5} heading={postitHeading}>
               {postitBody}
