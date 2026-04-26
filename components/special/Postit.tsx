@@ -65,6 +65,16 @@ type PostitProps = {
    * go-ahead.
    */
   rotationOrigin?: string
+  /**
+   * When true, the post-it shape is mirrored horizontally
+   * (`scaleX(-1)` on the wrapper). The rounded BR corner + folded
+   * curl visually move from bottom-right to bottom-left, giving a
+   * mirror-image companion to the canonical post-it. Text content
+   * is counter-flipped at the content layer so headings + body
+   * still read normally. Used by the credentials paper-app's
+   * bottom-left post-it overhang (TrialCTASection).
+   */
+  flipX?: boolean
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -154,12 +164,14 @@ export function Postit({
   rotation = -5,
   className = '',
   rotationOrigin = 'center',
+  flipX = false,
 }: PostitProps) {
+  const flipTransform = flipX ? ' scaleX(-1)' : ''
   return (
     <div
       className={`relative inline-block ${className}`}
       style={{
-        transform: `rotate(${rotation}deg)`,
+        transform: `rotate(${rotation}deg)${flipTransform}`,
         transformOrigin: rotationOrigin,
         width: SIZE,
         height: SIZE,
@@ -193,8 +205,14 @@ export function Postit({
         />
       </div>
 
-      {/* Content layer — above the paper, no filter. */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center text-ink">
+      {/* Content layer — above the paper, no filter. When `flipX` is
+          set, the wrapper above mirrored everything via scaleX(-1);
+          counter-flip the content here so headings + body text still
+          read normally. */}
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center text-ink"
+        style={flipX ? { transform: 'scaleX(-1)' } : undefined}
+      >
         {heading && (
           <div className="font-marker text-[34px] md:text-[43px] leading-[1.05] tracking-tight">
             {heading}
