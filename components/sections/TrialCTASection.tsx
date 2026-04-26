@@ -78,7 +78,7 @@ export function TrialCTASection() {
           reserves enough vertical room for the post-it (~50vw tall +
           mt-8 push + buffer); desktop keeps the original md:mt-14
           since the post-it overhang scales differently up there. */}
-      <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
+      <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
         <TerminalCTA
           href="/about"
           bracketBlink
@@ -92,7 +92,9 @@ export function TrialCTASection() {
           bracketBlink
           segments={[
             { text: 'see ' },
-            { text: 'faq/pricing', color: 'text-orange' },
+            { text: 'FAQ', color: 'text-orange', className: 'uppercase' },
+            { text: '/', color: 'text-paper' },
+            { text: 'pricing', color: 'text-orange' },
           ]}
         />
       </div>
