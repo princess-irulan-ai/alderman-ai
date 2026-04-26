@@ -84,7 +84,7 @@ export function TrialCTASection() {
           bracketBlink
           segments={[
             { text: 'learn about ' },
-            { text: 'me', color: 'text-orange' },
+            { text: 'ME', color: 'text-orange', className: 'uppercase' },
           ]}
         />
         <TerminalCTA
@@ -93,7 +93,7 @@ export function TrialCTASection() {
           bracketBlink
           segments={[
             { text: 'see ' },
-            { text: 'faq', color: 'text-orange' },
+            { text: 'FAQ', color: 'text-orange', className: 'uppercase' },
             { text: '/', color: 'text-paper' },
             { text: 'pricing', color: 'text-orange' },
           ]}
