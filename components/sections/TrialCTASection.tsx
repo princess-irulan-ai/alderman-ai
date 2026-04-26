@@ -1,71 +1,47 @@
-'use client'
-
-import { useCallback, useState } from 'react'
-
 import { PaperApp } from '@/components/paper/PaperApp'
-import { TerminalLine } from '@/components/special/TerminalLine'
 import { TerminalCTA } from '@/components/ui/TerminalCTA'
 
 /**
- * TrialCTASection — bottom-of-home CTA seam.
+ * TrialCTASection — bottom-of-home credentials + CTA seam.
  *
- * 2026-04-26 (exploratory): wraps the terminal line + CTAs inside a
- * `PaperApp` so the section reads as cream-paper content rather than
- * floating bare on the IDE substrate. Two CTAs:
- *   - just download the brochure (-> /alderman-ai-brochure.pdf, 404 until
- *     Alex drops the PDF in `public/`)
- *   - go to faq (-> /faq)
- * Old CTAs (download brochure + talk to a HUMAN) are retired here —
- * talk-to-a-HUMAN already lives in the floating nav.
+ * 2026-04-26 (second exploratory pass): the typed terminal preamble
+ * was retired in favour of a static title + subtitle introducing the
+ * instructor's credentials before the brochure / faq CTAs. Brackets
+ * on both CTAs blink continuously — no upstream typing animation
+ * gating them anymore, so they shimmer from page load.
  *
- * Section carries `id="brochure"` so the in-nav `#brochure` anchor
+ * Section retains `id="brochure"` so the in-nav `#brochure` anchor
  * still scrolls here.
  *
- * Visible choreography:
- *   1. Pre-viewport: TerminalLine inert as `[ > ]`, CTAs static.
- *   2. On viewport entry: TerminalLine blinks 2× then types the line.
- *   3. On typing complete: line's brackets drop, CTAs' orange brackets
- *      begin ticker-blinking at 2.12s.
+ * Two CTAs:
+ *   - just download the brochure -> /alderman-ai-brochure.pdf (404 until
+ *     Alex drops the PDF in `public/`)
+ *   - go to faq -> /faq
  *
- * Paper substrate colour overrides: textColor swaps from the
- * ide-substrate default `text-ide-fg` to `text-ink` so the typed line
- * + CTA bodies read on cream paper. Prompt + cursor + bracket colours
- * (purple / purple / orange) work on both substrates and are left
- * default.
+ * No client state needed any more — server component.
  */
 export function TrialCTASection() {
-  const [terminalDone, setTerminalDone] = useState(false)
-
-  const handleComplete = useCallback(() => {
-    setTerminalDone(true)
-  }, [])
-
   return (
     <section
       id="brochure"
       className="md:grid md:grid-cols-canvas md:gap-6 pt-10 pb-16 md:py-16 scroll-mt-24"
-      aria-label="Brochure download call-to-action"
+      aria-label="Credentials and brochure download"
     >
       <PaperApp width="wide">
-        <div className="flex flex-col items-center gap-10 py-2">
-          <TerminalLine
-            onComplete={handleComplete}
-            textColor="text-ink"
-            cursorColor="text-ink-soft"
-            segments={[
-              { text: 'download the brochure to see what we' },
-              { text: "'", color: 'text-purple' },
-              { text: 're building for your ' },
-              { text: 'ai', color: 'text-green' },
-              { text: ' future ' },
-              { text: '...', color: 'text-purple' },
-            ]}
-          />
+        <div className="flex flex-col gap-10 py-2">
+          <div className="space-y-4 md:space-y-5">
+            <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+              20 years of experience in mastery of cutting-edge software
+            </h2>
+            <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+              Decades of teaching experience
+            </p>
+          </div>
 
           <div className="flex flex-wrap items-baseline justify-center gap-10">
             <TerminalCTA
               href="/alderman-ai-brochure.pdf"
-              bracketBlink={terminalDone}
+              bracketBlink
               textColor="text-ink"
               segments={[
                 { text: 'just download the ' },
@@ -74,7 +50,7 @@ export function TrialCTASection() {
             />
             <TerminalCTA
               href="/faq"
-              bracketBlink={terminalDone}
+              bracketBlink
               textColor="text-ink"
               segments={[
                 { text: 'go to ' },
