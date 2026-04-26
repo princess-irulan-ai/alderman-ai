@@ -18,22 +18,41 @@ export default function HomePage() {
             Sits on the dark IDE substrate, leads into "the plan." Uses
             hangingPrompt + showBrackets={false} so the `>` hangs in the
             outer gutter and the typed text aligns to the canvas left
-            edge — matches the hero lines above. */}
+            edge — matches the hero lines above.
+
+            Wrapped in a CSS grid alongside an invisible ghost copy of
+            the fully-typed line, both pinned to col-start-1 row-start-1
+            so the cell height tracks the ghost. Same pattern hero line
+            1 uses — locks the line's height from the first paint so the
+            TrialCTA paper-app below doesn't shift downward as the line
+            types out. */}
         <section className="grid grid-cols-canvas gap-6 py-8 md:py-12">
-          <div className="col-span-3">
-            <TerminalLine
-              hangingPrompt
-              showBrackets={false}
-              align="left"
-              persistCursor
-              segments={[
-                { text: 'look, i get it, ' },
-                { text: 'PEOPLE', color: 'text-orange' },
-                { text: ' are scared and they don’t want to learn ' },
-                { text: 'ai', color: 'text-green' },
-                { text: ', but i have a plan' },
-              ]}
-            />
+          <div className="col-span-3 grid">
+            <div
+              aria-hidden
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+            >
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  look, i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect person to teach them '}
+                <span className="inline-block">_</span>
+              </span>
+            </div>
+            <div className="col-start-1 row-start-1">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                segments={[
+                  { text: 'look, i get it, ' },
+                  { text: 'PEOPLE', color: 'text-orange' },
+                  { text: ' are scared and they don’t want to learn ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ', but i’m the perfect person to teach them' },
+                ]}
+              />
+            </div>
           </div>
         </section>
         <TrialCTASection />
