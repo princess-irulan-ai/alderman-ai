@@ -196,12 +196,12 @@ export function Postit({
       {/* Content layer — above the paper, no filter. */}
       <div className="absolute inset-0 flex flex-col items-center justify-center px-5 text-center text-ink">
         {heading && (
-          <div className="font-marker text-[43px] leading-[1.05] tracking-tight">
+          <div className="font-marker text-[34px] md:text-[43px] leading-[1.05] tracking-tight">
             {heading}
           </div>
         )}
         {children && (
-          <div className="font-marker text-[18px] leading-snug mt-5">
+          <div className="font-body text-[20px] leading-snug mt-5">
             {children}
           </div>
         )}

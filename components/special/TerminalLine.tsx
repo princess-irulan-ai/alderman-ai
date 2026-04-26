@@ -523,7 +523,11 @@ export function TerminalLine({
   //                    pulse carries the cursor along with everything
   //                    else. Used nowhere today; kept for any future
   //                    "pulse the whole line" deployment.
-  const hangCh = 3 + leadingSpaces
+  // 3ch when brackets render (`[` + space + `>`); 1ch when they don't
+  // (just `>`). Pre-2026-04-26 was hardcoded 3+leadingSpaces, which
+  // worked for desktop (brackets always on) but pushed the typed text
+  // off the left of the viewport on mobile when brackets were off.
+  const hangCh = (showBrackets ? 3 : 1) + leadingSpaces
   const showCursor = inView && (phase !== 'done' || persistCursor)
   const bracketsVisible = showBrackets && phase !== 'done'
   const bracketsInLayout = showBrackets && (hangingPrompt || bracketsVisible)

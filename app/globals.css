@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* G — mobile gutter (left + right). Used by PageFrame's mobile
+       padding and any element that needs to align to the same gutter
+       (e.g. logo glyph offset). Change here to adjust globally. */
+    --gutter-mobile: 12%;
+  }
   html {
     background-color: #1e1f1a; /* ide-2 — prevents white flash */
   }

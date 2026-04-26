@@ -209,7 +209,7 @@ const POSTIT_LAND_PEEK_MS = 1500
  * blinking `_` cursor keeps going indefinitely after typing completes.
  * That's the desired behavior when line 1 stands alone.
  */
-const SHOW_LINE_2 = false
+const SHOW_LINE_2 = true
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement | null>(null)
@@ -328,7 +328,7 @@ export function HeroSection() {
   )
   const postitBody = (
     <>
-      the #1 l&d topic
+      the #1 L&D topic
       <br />
       of 2026
     </>
@@ -338,13 +338,13 @@ export function HeroSection() {
   // paper-app instance.
   const perks = (
     <div className="space-y-8 py-2">
-      <h2 className="font-display text-[34px] font-bold leading-none text-ink tracking-display-tight">
+      <h2 className="font-display text-[22px] md:text-[34px] font-bold leading-none text-ink tracking-display-tight whitespace-nowrap uppercase">
         Perks & Benefits
       </h2>
       <ul className="space-y-4 text-[18px] leading-snug text-ink">
-        <li>- MultiSport Card</li>
-        <li>- Flexible Home Office</li>
         <li>- English Lessons</li>
+        <li>- Flexible Home Office</li>
+        <li>- MultiSport Card</li>
       </ul>
     </div>
   )
@@ -387,7 +387,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for the ai future'}
+            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for the ai future\u00a0'}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -399,29 +399,39 @@ export function HeroSection() {
           />
         </div>
       </div>
-      <div className="md:hidden">
-        {/* Post-it overhang composition (2026-04-24 Alex spec):
-            paper-app ends with ~1/3 of the 240px post-it hanging below
-            its bottom edge. Implementation:
-              (a) Inside paper-app body, reserve 160px (= 2/3 of post-it
-                  height) below the perks list via a transparent spacer.
-                  This is the vertical span the post-it's top 2/3 will
-                  occupy, so the perks content isn't covered.
-              (b) Wrap paper-app in a `relative` container with
-                  `pb-[80px]` (= 1/3 of post-it height) so the hanging
-                  1/3 has room without colliding with the next section.
-              (c) Position post-it absolutely at `bottom-0` in the
-                  wrapper and center it horizontally — its bottom edge
-                  aligns with the wrapper's padding-bottom bottom, its
-                  top edge sits 160px above the paper-app's bottom
-                  (i.e. 2/3 inside, 1/3 below — Alex's spec).
-            Desktop overlay (absolute + rise-and-slap) is untouched. */}
-        <div className="relative pb-[80px]">
+      <div className="md:hidden mt-8">
+        {/* Post-it composition (2026-04-26 Alex spec, supersedes 04-24):
+            paper-app fully contains the post-it in its bottom-right
+            corner — no bottom overhang. Width is no longer centered;
+            the wrapper fills the page-padding gutters so the paper-app
+            left/right edges align with the menu logo and CTA. The
+            post-it is a sibling of PaperApp inside a `relative`
+            container so its position can sit outside PaperApp's
+            `overflow-hidden` body if needed (e.g. slight right
+            overhang). 240px spacer below perks reserves vertical room
+            for the post-it inside the paper-app body. */}
+        <div className="relative">
           <PaperApp width="narrow">
             {perks}
-            <div aria-hidden style={{ height: 160 }} />
           </PaperApp>
-          <div className="absolute left-0 right-0 bottom-0 flex justify-center pointer-events-none">
+          {/* Post-it positioned with its visible top-left corner in
+              the gap between "Flexible Home Office" and "English
+              Lessons" — y≈216px in paper-app coords. Visible right
+              edge reaches the viewport's right edge at every mobile
+              width (Alex spec 2026-04-26). The math: paper-app center
+              always lives at 50vw (page padding G is symmetric on
+              both sides of the page), so the distance from paper-app
+              center to viewport right is always 50vw. Scaling the
+              post-it source (240px) by `50vw / 240` makes the visible
+              width = 50vw and the visible right edge land exactly at
+              the viewport's right edge regardless of viewport size.
+              The lower portion of the post-it overhangs the paper-
+              app's bottom edge — no overflow clipping on ancestors,
+              so it renders freely. */}
+          <div
+            className="absolute left-1/2 top-[216px] pointer-events-none origin-top-left"
+            style={{ transform: 'scale(calc(50vw / 240))' }}
+          >
             <Postit rotation={-5} heading={postitHeading}>
               {postitBody}
             </Postit>
@@ -429,7 +439,15 @@ export function HeroSection() {
         </div>
       </div>
       {SHOW_LINE_2 && (
-        <div className="md:hidden">
+        // Mobile line 2 sits below the post-it's overhang. The post-it
+        // visual height = 50vw (per the calc-scale spec), and overhangs
+        // the paper-app by (50vw - 80px) since the post-it top is at
+        // y=216 inside the paper-app and the paper-app body bottoms at
+        // y≈296. Add (50vw + 17px) of mt to clear the overhang and
+        // leave ~4 line-heights of breathing room (the 24px from gap-6
+        // is included in the total). At 390 viewport the gap totals
+        // 50vw+41 = ~236px between paper-app bottom and line 2 top.
+        <div className="md:hidden mt-[calc(50vw+17px)]">
           <HeroTerminalBlock
             line2Ready={line2Ready}
             lines="2"

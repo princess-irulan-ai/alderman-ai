@@ -30,7 +30,7 @@ export function FloatingNav() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-ide/90">
       <div className="grid grid-cols-page">
         <div aria-hidden className="hidden md:block" />
-        <div className="col-span-6 flex items-center justify-between px-4 py-4 md:col-span-4 md:px-0 md:py-6">
+        <div className="col-span-6 flex items-center justify-between px-4 py-[2px] md:col-span-4 md:px-0 md:py-6">
           <Link href="/" className="flex items-center" aria-label="alderman.ai">
             {/* Mobile: stacked-logo SVG (`alderman-ai-stacked-logo-v1.svg`).
                 The text wordmark + nav CTA together exceed the 343px
@@ -44,7 +44,7 @@ export function FloatingNav() {
               src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
               alt=""
               aria-hidden
-              className="block h-12 w-auto md:hidden"
+              className="block h-[76px] w-[76px] md:hidden"
             />
             {/* Desktop: text wordmark sized to 16px — ~80% of the nav
                 CTA's 20px, so it reads as a quieter sibling to the

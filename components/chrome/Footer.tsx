@@ -25,9 +25,9 @@ export function Footer() {
           <Image
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt="alderman.ai"
-            width={36}
-            height={55}
-            className="h-[56px] w-auto"
+            width={90}
+            height={138}
+            className="h-[140px] w-auto"
           />
         </Link>
       </div>

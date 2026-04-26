@@ -182,7 +182,12 @@ type HeroLines = 'both' | '1' | '2'
  * takes over). Inline styles set the actual computed size — see
  * HeroSection for the responsive choice.
  */
-const HERO_FONT_SIZE_MOBILE = 'clamp(22px, 5.5vw, 36px)'
+// 2026-04-26 Alex: fixed at 22px on mobile (was clamp 22-36) so the
+// hero's hanging-prompt math has a predictable hang width — clamp made
+// the hang grow with viewport at a different rate than G, breaking
+// edge alignment between viewports. Fixed font keeps proportions
+// stable across all mobile widths.
+const HERO_FONT_SIZE_MOBILE = '22px'
 const HERO_FONT_SIZE_DESKTOP = 36
 
 export function HeroTerminalBlock({
@@ -226,7 +231,14 @@ export function HeroTerminalBlock({
   //     be the first character, followed by two spaces."
   // Desktop still gets both bracket chrome AND the hanging prefix in
   // the canvas's outer gutter — the codified hero voice.
-  const useHangingPrompt = lines === 'both'
+  // Hanging prompt is now enabled on mobile too (Alex 2026-04-26):
+  // typed text aligns with the page-padding gutter; the `>` hangs in
+  // the gutter to its left. Brackets stay desktop-only — mobile
+  // doesn't have room to hang the full `[ >  ` prefix without clipping.
+  // The page-padding gutter on mobile is now proportional
+  // (`--gutter-mobile` in globals.css, currently 5%), wide enough at
+  // realistic mobile viewports to host the codified leadingSpaces=2.
+  const useHangingPrompt = true
   const showBrackets = lines === 'both'
 
   const line1 = (
@@ -240,7 +252,7 @@ export function HeroTerminalBlock({
         { text: 'HUMAN', color: 'text-orange' },
         { text: ' talent and prepare your company for the ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' future' },
+        { text: ' future ' },
       ]}
       fontSize={resolvedFontSize}
       align="left"

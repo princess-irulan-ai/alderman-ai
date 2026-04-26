@@ -3,6 +3,9 @@ module.exports = {
   content: ['./app/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      screens: {
+        md: '1000px',
+      },
       colors: {
         // IDE register
         ide: '#272822',

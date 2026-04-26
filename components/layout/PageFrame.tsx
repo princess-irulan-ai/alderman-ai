@@ -17,11 +17,14 @@ export function PageFrame({ children }: { children: ReactNode }) {
       <div className="grid grid-cols-page">
         {/* left 1/6 margin — IDE substrate. Hidden below md; the locked
             6-col page grid only applies from tablet up. On mobile the
-            content canvas is full-width with a 16px gutter. */}
+            content canvas is full-width with a proportional gutter
+            (`--gutter-mobile`, defined in globals.css). */}
         <div aria-hidden className="hidden md:block" />
-        {/* Content canvas — full width on mobile with px-4 gutter;
-            middle 4/6 of the locked page grid from md up. */}
-        <div className="col-span-6 px-4 md:col-span-4 md:px-0">{children}</div>
+        {/* Content canvas — full width on mobile with G (gutter-mobile)
+            on each side; middle 4/6 of the locked page grid from md up.
+            G is the single key metric that defines mobile alignment;
+            change `--gutter-mobile` in globals.css to adjust. */}
+        <div className="col-span-6 px-[var(--gutter-mobile)] md:col-span-4 md:px-0">{children}</div>
         <div aria-hidden className="hidden md:block" />
       </div>
     </div>
