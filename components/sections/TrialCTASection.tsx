@@ -31,7 +31,7 @@ export function TrialCTASection() {
         <div className="flex flex-col gap-10 py-2">
           <div className="space-y-4 md:space-y-5">
             <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-              I&rsquo;ve been doing this for 20 years.
+              I&rsquo;ve been doing this for 20 years
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
               I&rsquo;ve taught countless people at the intersection of
