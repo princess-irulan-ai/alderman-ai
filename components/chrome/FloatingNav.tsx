@@ -142,7 +142,7 @@ export function FloatingNav() {
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-menu"
               onClick={() => setMenuOpen((v) => !v)}
-              className="p-2 -mr-2 text-paper hover:text-purple transition-colors"
+              className="p-2 -mr-2 text-purple hover:text-paper transition-colors"
             >
               <svg
                 width="24"
