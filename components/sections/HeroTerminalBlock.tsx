@@ -240,6 +240,16 @@ export function HeroTerminalBlock({
   // realistic mobile viewports to host the codified leadingSpaces=2.
   const useHangingPrompt = true
   const showBrackets = lines === 'both'
+  // Mobile renders line 1 and line 2 separately (lines='1' / lines='2');
+  // desktop renders both stacked (lines='both'). The terminal-line
+  // behaviour diverges between the two:
+  //   - Mobile: every hero line ends with a plain blinking `_` after a
+  //     1ch gap. Line 1's persistCursor stays true even after line 2
+  //     mounts (no baton-pass dimming). Line 2 drops the `v`-cascade
+  //     `doneCursorGlyph` swap so the cursor stays as `_`.
+  //   - Desktop: keeps the original baton-pass + `v` scroll-nudge
+  //     cascade unchanged.
+  const isMobile = lines !== 'both'
 
   const line1 = (
     <TerminalLine
@@ -252,19 +262,19 @@ export function HeroTerminalBlock({
         { text: 'HUMAN', color: 'text-orange' },
         { text: ' talent and prepare your company for your ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' transformation ' },
+        { text: ' transformation' },
       ]}
       fontSize={resolvedFontSize}
       align="left"
       hangingPrompt={useHangingPrompt}
       showBrackets={showBrackets}
-      persistCursor={!line2Ready}
+      persistCursor={isMobile || !line2Ready}
     />
   )
 
-  // cursor-cascade-3 revision 2 (2026-04-22 late evening). See
-  // tailwind.config.js → keyframes['cursor-cascade-3'] for the
-  // self-stepping rationale.
+  // Desktop: cursor swaps `_` -> `v` after typing and cascades down
+  // (see tailwind.config.js -> cursor-cascade-3). Mobile: keep the `_`
+  // blinking — no glyph swap, no cascade.
   const line2 = line2Ready ? (
     <TerminalLine
       segments={[
@@ -278,9 +288,13 @@ export function HeroTerminalBlock({
       hangingPrompt={useHangingPrompt}
       showBrackets={showBrackets}
       persistCursor
-      doneCursorGlyph={'v'}
-      doneCursorGlyphDelayMs={2120}
-      doneBlinkClassName="animate-cursor-cascade-2 md:animate-cursor-cascade-3"
+      {...(isMobile
+        ? {}
+        : {
+            doneCursorGlyph: 'v',
+            doneCursorGlyphDelayMs: 2120,
+            doneBlinkClassName: 'animate-cursor-cascade-3',
+          })}
     />
   ) : null
 
