@@ -50,7 +50,7 @@ export function TrialCTASection() {
             rotation-extended visual top clears the subtitle's last
             line ("US government"). */}
         <div
-          className="absolute right-1/2 top-full mt-8 pointer-events-none origin-top-right"
+          className="absolute right-1/2 top-full mt-16 pointer-events-none origin-top-right"
           style={{ transform: 'scale(calc(50vw / 250px))' }}
         >
           <Postit
@@ -70,7 +70,7 @@ export function TrialCTASection() {
           reserves enough vertical room for the post-it (~50vw tall +
           mt-8 push + buffer); desktop keeps the original md:mt-14
           since the post-it overhang scales differently up there. */}
-      <div className="md:col-span-3 mt-[250px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
+      <div className="md:col-span-3 mt-[280px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
         <TerminalCTA
           href="/alderman-ai-brochure.pdf"
           bracketBlink
