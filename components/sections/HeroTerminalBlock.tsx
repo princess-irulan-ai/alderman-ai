@@ -250,9 +250,9 @@ export function HeroTerminalBlock({
         { text: ',', color: 'text-purple' },
         { text: ' and retain top ' },
         { text: 'HUMAN', color: 'text-orange' },
-        { text: ' talent and prepare your company for the ' },
+        { text: ' talent and prepare your company for your ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' future ' },
+        { text: ' transformation ' },
       ]}
       fontSize={resolvedFontSize}
       align="left"

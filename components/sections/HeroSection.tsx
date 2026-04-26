@@ -387,7 +387,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for the ai future\u00a0'}
+            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for your ai transformation\u00a0'}
             <span className="inline-block">_</span>
           </span>
         </div>
