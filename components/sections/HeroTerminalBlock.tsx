@@ -280,7 +280,7 @@ export function HeroTerminalBlock({
       persistCursor
       doneCursorGlyph={'v'}
       doneCursorGlyphDelayMs={2120}
-      doneBlinkClassName="animate-cursor-cascade-3"
+      doneBlinkClassName="animate-cursor-cascade-2 md:animate-cursor-cascade-3"
     />
   ) : null
 

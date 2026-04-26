@@ -457,7 +457,7 @@ export function HeroSection() {
         // 2026-04-26 pull-up reduced this by ~2 line-heights (52px) so
         // line 2 sits closer to the post-it. New formula: 50vw - 35px,
         // leaving ~1 line-height of clearance.
-        <div className="md:hidden mt-[calc(50vw-35px)]">
+        <div className="md:hidden mt-[calc(50vw-61px)]">
           <HeroTerminalBlock
             line2Ready={line2Ready}
             lines="2"

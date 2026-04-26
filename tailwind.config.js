@@ -136,6 +136,28 @@ module.exports = {
         // Cadence: total cycle 3.18s = 3 × 1.06s. Each of the three
         // positions gets exactly one 1.06s blink (0.53s ON + 0.53s OFF),
         // matching the codified `terminal-blink` rhythm.
+        // Two-position cousin of `cursor-cascade-3`, tuned for mobile.
+        // Mobile hero uses fontSize 22px (line-height ~26px); the desktop
+        // 54/108px translates were designed for fontSize 36 and feel
+        // jarringly large on mobile. This variant cycles between just two
+        // positions — y=0 and y=26px (~1 line at mobile font-size) — and
+        // loops in 2 × 1.06s = 2.12s. Same self-stepping keyframe shape:
+        // each phase is a held plateau with sub-frame bridge jumps to
+        // hard-step between positions regardless of easing.
+        'cursor-cascade-2': {
+          // Slot 1 — v visible at y=0
+          '0%':       { opacity: '1', transform: 'translateY(0)' },
+          '24.99%':   { opacity: '1', transform: 'translateY(0)' },
+          // Slot 2 — v invisible at y=0
+          '25%':      { opacity: '0', transform: 'translateY(0)' },
+          '49.99%':   { opacity: '0', transform: 'translateY(0)' },
+          // Slot 3 — v visible at y=26px (1 line at mobile fontSize 22)
+          '50%':      { opacity: '1', transform: 'translateY(26px)' },
+          '74.99%':   { opacity: '1', transform: 'translateY(26px)' },
+          // Slot 4 — v invisible at y=26px, held through loop boundary
+          '75%':      { opacity: '0', transform: 'translateY(26px)' },
+          '100%':     { opacity: '0', transform: 'translateY(26px)' },
+        },
         'cursor-cascade-3': {
           // Slot 1 — v visible at y=0
           '0%':       { opacity: '1', transform: 'translateY(0)' },
@@ -180,6 +202,7 @@ module.exports = {
         // the intermediate y values instead of hopping between 3). With
         // self-stepping keyframes, linear + no stepping now gives the
         // same 3-position hop `steps()` was supposed to give.
+        'cursor-cascade-2': 'cursor-cascade-2 2.12s linear infinite',
         'cursor-cascade-3': 'cursor-cascade-3 3.18s linear infinite',
       },
     },

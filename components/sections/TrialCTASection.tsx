@@ -43,7 +43,7 @@ export function TrialCTASection() {
   return (
     <section
       id="brochure"
-      className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-16 md:py-16 scroll-mt-24"
+      className="md:grid md:grid-cols-canvas md:gap-6 pt-10 pb-16 md:py-16 scroll-mt-24"
       aria-label="Brochure download call-to-action"
     >
       <PaperApp width="wide">
