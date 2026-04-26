@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 import { Wordmark } from '@/components/chrome/Wordmark'
 import { TerminalCTA } from '@/components/ui/TerminalCTA'
@@ -6,40 +9,91 @@ import { TerminalCTA } from '@/components/ui/TerminalCTA'
 /**
  * FloatingNav — the fixed top nav.
  *
- * Sits above scroll. Wordmark left, secondary link + TerminalCTA right.
- * Right edge aligns to the inner edge of the right 1/6 margin (= right edge
- * of the content canvas), so the CTA and paper apps share a right-edge
- * gutter.
+ * Sits above scroll. Logo on the left, menu items on the right.
+ *
+ * Layout (2026-04-26 pass):
+ *   - Desktop (md+): `faq | about me | [talk to a HUMAN]` — three items
+ *     separated by muted `|` pipes between them. CTA still bracketed and
+ *     bracket-blinking.
+ *   - Mobile (<md): `[talk to a HUMAN] [☰]` — CTA stays visible
+ *     alongside a hamburger. The hamburger reveals a slide-down panel
+ *     containing the secondary items (faq + about me). CTA is excluded
+ *     from the hamburger because it's already visible outside it.
  *
  * Background: `bg-ide/90` — the IDE substrate colour at 90% opacity, so
- * the nav reads as a near-solid bar when paper apps sit under it (was
- * fully transparent, which let the paper cream bleed through). Kept the
- * final 10% of translucency so the edge under the bar still whispers
- * through, rather than slabbing flat onto the page.
+ * the nav reads as a near-solid bar when paper apps sit under it. Kept
+ * the final 10% of translucency so the edge under the bar still
+ * whispers through, rather than slabbing flat onto the page.
  *
- * CTA: the nav uses `TerminalCTA` — the same bracketed primitive as the
- * H2.5 inline CTAs. Opted in to `bracketBlink` so the orange `[` and `]`
- * pulse continuously (there's no upstream TerminalLine to wait for up
- * here). `lowercase={false}` so `HUMAN` stays in its brand-rule caps.
+ * CTA: the nav uses `TerminalCTA` with `bracketBlink` so the orange
+ * `[ ]` pulse continuously, `lowercase={false}` so `HUMAN` stays in its
+ * brand-rule caps, `showPrompt={false}` so the leading `>_` is dropped,
+ * and `!border-0` so the muted bordered frame is suppressed.
+ *
+ * Client component: we need useState for the mobile hamburger toggle.
  *
  * Spec: site-plan.md homepage block 1, os-model-concept.md "Navigation is
  * not chrome."
  */
 export function FloatingNav() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Close the mobile menu on Escape and when the viewport crosses up to
+  // the desktop breakpoint (where the panel is hidden anyway, but
+  // leaving `menuOpen` true would re-open it on resize back to mobile).
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    function handleResize() {
+      if (window.matchMedia('(min-width: 1000px)').matches) setMenuOpen(false)
+    }
+    window.addEventListener('keydown', handleKey)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('keydown', handleKey)
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const cta = (fontSize: number) => (
+    <TerminalCTA
+      href="/contact"
+      fontSize={fontSize}
+      lowercase={false}
+      bracketBlink
+      showPrompt={false}
+      className="!border-0"
+      segments={[
+        { text: 'talk to a ' },
+        {
+          text: 'HUMAN',
+          color: 'text-orange',
+          className: 'font-medium',
+        },
+      ]}
+    />
+  )
+
+  // Pipe separator between non-CTA menu items on desktop. Muted ide-fg
+  // colour so it reads as background chrome, not as a clickable item.
+  const pipe = (
+    <span
+      aria-hidden
+      className="font-mono text-[14px] text-ide-fg-mute select-none"
+    >
+      |
+    </span>
+  )
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-ide/90">
       <div className="grid grid-cols-page">
         <div aria-hidden className="hidden md:block" />
         <div className="col-span-6 flex items-center justify-between px-4 py-[2px] md:col-span-4 md:px-0 md:py-6">
           <Link href="/" className="flex items-center" aria-label="alderman.ai">
-            {/* Mobile: stacked-logo SVG (`alderman-ai-stacked-logo-v1.svg`).
-                The text wordmark + nav CTA together exceed the 343px
-                mobile content width, so on mobile the wordmark swaps for
-                the vertically-stacked logo to free up horizontal room.
-                Sized at 48px tall — bumped up from the original 36px
-                (2026-04-24 pass) so the logo reads as the dominant
-                brand anchor on mobile, with the nav CTA shrunk to a
-                quieter secondary weight. */}
+            {/* Mobile: stacked-logo SVG. Sized 76px so the logo reads as
+                the dominant brand anchor on mobile. */}
             <img
               src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
               alt=""
@@ -48,84 +102,107 @@ export function FloatingNav() {
             />
             {/* Desktop: text wordmark sized to 16px — ~80% of the nav
                 CTA's 20px, so it reads as a quieter sibling to the
-                primary action on the right. Text-based (not SVG) so it
-                stays on the same font-size scale as the nav link next
-                to it. */}
+                primary action on the right. */}
             <span className="hidden md:inline">
               <Wordmark size={16} />
             </span>
           </Link>
-          <div className="flex items-center gap-6">
-            {/* Secondary FAQ link. Lowercase mono, quiet next to the
-                primary CTA per PLAN.md's locked top-nav order "square
-                logo + FAQ link + [ talk to a HUMAN ] CTA." Routes to
-                `/faq`. Font-size ladders: 13px mobile / 14px desktop —
-                ~1px smaller than the CTA at each breakpoint so FAQ
-                reads as the quieter sibling. Uses `text-ide-fg-mute`
-                with a hover bump to `text-ide-fg` for the same
-                recede-and-respond feel the rest of the site's
-                tertiary links use. */}
-            {/* Non-CTA menu items. Currently just `faq`; About Me etc.
-                will join here. Each item is paper-white by default,
-                purple on hover. A muted `|` pipe goes BETWEEN items
-                (none rendered today since there's only one). The
-                primary CTA on the right is excluded from the pipe
-                pattern by design. */}
+
+          {/* DESKTOP RIGHT GROUP: faq | about me | [CTA]
+              Pipes go between items, not around the CTA. Hidden on
+              mobile — mobile uses a separate flex group with CTA +
+              hamburger instead. */}
+          <div className="hidden md:flex items-center gap-6">
             <Link
               href="/faq"
-              className="font-mono text-[13px] md:text-[14px] text-paper hover:text-purple transition-colors lowercase"
+              className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
             >
               faq
             </Link>
-            {/* Holding-page nav: primary CTA to the dedicated `/contact`
-                route (added 2026-04-24 for the two-route holding-page
-                launch). Mobile renders a smaller-typography variant —
-                14px vs the codified 20px — so the nav reads as
-                logo-dominant with the CTA as a quieter sibling.
-                Desktop keeps the 20px canonical size. Two TerminalCTA
-                renders + md: gating is the simplest way to drive a
-                breakpoint-specific fontSize through a prop that's a
-                single number (no responsive style hatch on the
-                primitive). */}
-            <span className="md:hidden">
-              <TerminalCTA
-                href="/contact"
-                fontSize={14}
-                lowercase={false}
-                bracketBlink
-                showPrompt={false}
-                className="!border-0"
-                segments={[
-                  { text: 'talk to a ' },
-                  {
-                    text: 'HUMAN',
-                    color: 'text-orange',
-                    className: 'font-medium',
-                  },
-                ]}
-              />
-            </span>
-            <span className="hidden md:inline-flex">
-              <TerminalCTA
-                href="/contact"
-                lowercase={false}
-                bracketBlink
-                showPrompt={false}
-                className="!border-0"
-                segments={[
-                  { text: 'talk to a ' },
-                  {
-                    text: 'HUMAN',
-                    color: 'text-orange',
-                    className: 'font-medium',
-                  },
-                ]}
-              />
-            </span>
+            {pipe}
+            <Link
+              href="/about"
+              className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
+            >
+              about me
+            </Link>
+            {pipe}
+            {cta(20)}
+          </div>
+
+          {/* MOBILE RIGHT GROUP: [CTA] [☰]
+              CTA stays visible outside the hamburger because it's the
+              primary action; the hamburger only houses the secondary
+              menu items (faq + about me). Hidden on desktop. */}
+          <div className="md:hidden flex items-center gap-3">
+            {cta(14)}
+            <button
+              type="button"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-menu"
+              onClick={() => setMenuOpen((v) => !v)}
+              className="p-2 -mr-2 text-paper hover:text-purple transition-colors"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden
+              >
+                {menuOpen ? (
+                  <>
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                    <line x1="6" y1="18" x2="18" y2="6" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="4" y1="7" x2="20" y2="7" />
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <line x1="4" y1="17" x2="20" y2="17" />
+                  </>
+                )}
+              </svg>
+            </button>
           </div>
         </div>
         <div aria-hidden className="hidden md:block" />
       </div>
+
+      {/* MOBILE SLIDE-DOWN PANEL — secondary menu items.
+          Sits below the nav row, full bleed across the IDE substrate,
+          padded to align with the page-padding gutter G. Each link
+          mirrors the desktop styling (paper-white default, purple on
+          hover, lowercase). Tapping a link closes the panel. */}
+      {menuOpen && (
+        <div
+          id="mobile-nav-menu"
+          className="md:hidden bg-ide border-t border-ide-rule"
+        >
+          <div className="grid grid-cols-page">
+            <div className="col-span-6 px-[var(--gutter-mobile)] py-6 flex flex-col gap-5">
+              <Link
+                href="/faq"
+                onClick={() => setMenuOpen(false)}
+                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+              >
+                faq
+              </Link>
+              <Link
+                href="/about"
+                onClick={() => setMenuOpen(false)}
+                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+              >
+                about me
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
