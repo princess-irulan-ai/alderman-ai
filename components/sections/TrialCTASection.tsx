@@ -81,6 +81,7 @@ export function TrialCTASection() {
       <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
         <TerminalCTA
           href="/about"
+          fontSize={17}
           bracketBlink
           segments={[
             { text: 'learn about ' },
