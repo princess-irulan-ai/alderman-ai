@@ -452,13 +452,12 @@ export function HeroSection() {
       {SHOW_LINE_2 && (
         // Mobile line 2 sits below the post-it's overhang. The post-it
         // visual height = 50vw (per the calc-scale spec), and overhangs
-        // the paper-app by (50vw - 80px) since the post-it top is at
-        // y=216 inside the paper-app and the paper-app body bottoms at
-        // y≈296. Add (50vw + 17px) of mt to clear the overhang and
-        // leave ~4 line-heights of breathing room (the 24px from gap-6
-        // is included in the total). At 390 viewport the gap totals
-        // 50vw+41 = ~236px between paper-app bottom and line 2 top.
-        <div className="md:hidden mt-[calc(50vw+17px)]">
+        // the paper-app by (50vw - 80px). Original mt was 50vw + 17px
+        // (~4 line-heights of breathing room below the post-it bottom);
+        // 2026-04-26 pull-up reduced this by ~2 line-heights (52px) so
+        // line 2 sits closer to the post-it. New formula: 50vw - 35px,
+        // leaving ~1 line-height of clearance.
+        <div className="md:hidden mt-[calc(50vw-35px)]">
           <HeroTerminalBlock
             line2Ready={line2Ready}
             lines="2"

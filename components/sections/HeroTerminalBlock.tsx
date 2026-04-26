@@ -271,7 +271,7 @@ export function HeroTerminalBlock({
         { text: 'here' },
         { text: "'", color: 'text-purple' },
         { text: 's' },
-        { text: ' how it works\u00a0', color: 'text-purple' },
+        { text: ' how it works', color: 'text-purple' },
       ]}
       fontSize={resolvedFontSize}
       align="left"
