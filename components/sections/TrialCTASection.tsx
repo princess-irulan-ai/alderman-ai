@@ -34,8 +34,8 @@ export function TrialCTASection() {
               I&rsquo;ve been doing this for 20 years
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              I&rsquo;ve been teaching cutting-edge software since I was
-              an intelligence analyst for the US government
+              ... teaching cutting-edge software since I was an
+              intelligence analyst for the US government
             </p>
           </div>
 
