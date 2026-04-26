@@ -60,7 +60,10 @@ export function TrialCTASection() {
             flipX
             rotation={5}
             heading={
-              <span style={{ fontSize: '20px', lineHeight: 1.15 }}>
+              <span
+                className="font-display font-bold"
+                style={{ fontSize: '30px', lineHeight: 1.05 }}
+              >
                 including 8+ years of teaching ESL in the Czech Republic
               </span>
             }
