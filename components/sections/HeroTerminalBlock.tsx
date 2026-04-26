@@ -269,6 +269,7 @@ export function HeroTerminalBlock({
       hangingPrompt={useHangingPrompt}
       showBrackets={showBrackets}
       persistCursor={isMobile || !line2Ready}
+      startDelayMs={1620}
     />
   )
 
@@ -288,6 +289,7 @@ export function HeroTerminalBlock({
       hangingPrompt={useHangingPrompt}
       showBrackets={showBrackets}
       persistCursor
+      startDelayMs={1620}
       {...(isMobile
         ? {}
         : {

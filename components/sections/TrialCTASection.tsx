@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { PaperApp } from '@/components/paper/PaperApp'
 import { Postit } from '@/components/special/Postit'
 import { TerminalCTA } from '@/components/ui/TerminalCTA'
@@ -73,12 +75,28 @@ export function TrialCTASection() {
         </div>
       </div>
 
-      {/* CTAs on the dark IDE substrate, sitting below the paper-app
-          AND clear of the BL post-it overhang. mt-[250px] on mobile
-          reserves enough vertical room for the post-it (~50vw tall +
-          mt-8 push + buffer); desktop keeps the original md:mt-14
-          since the post-it overhang scales differently up there. */}
-      <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
+      {/* Tagline — first item below the BL post-it overhang. Mobile mt
+          = post-it overhang (~152px) + canonical 32px gap. JetBrains Mono. */}
+      <div className="md:col-span-3 mt-[184px] md:mt-8 flex flex-col items-center">
+        <p className="font-mono text-[24px] md:text-[34px] leading-tight text-ide-fg/85 text-center">
+          enabling <span className="text-green">ai</span> value
+          with{' '}<span className="text-orange">HUMAN</span> values
+        </p>
+      </div>
+
+      {/* Circular portrait — sits below the tagline. mt-8 = 32px. */}
+      <div className="md:col-span-3 mt-8 md:mt-8 flex flex-col items-center">
+        <Image
+          src="/brand-assets/photography/still-human-circle-portrait.svg"
+          alt="Alex Alderman — still HUMAN"
+          width={300}
+          height={300}
+          className="h-[360px] w-[360px] md:h-[440px] md:w-[440px]"
+        />
+      </div>
+
+      {/* CTAs on the dark IDE substrate, below the portrait. mt-8 = 32px. */}
+      <div className="md:col-span-3 mt-8 md:mt-8 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
         <TerminalCTA
           href="/about"
           fontSize={18}

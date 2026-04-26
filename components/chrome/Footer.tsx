@@ -38,7 +38,7 @@ export function Footer() {
           className="font-mono text-[14px] text-paper lowercase"
           style={{ marginTop: '33px' }}
         >
-          <span className="text-purple text-[18px] not-italic">©</span> alex
+          <span className="text-purple text-[20px] not-italic">©</span> alex
         </span>
         <Link href="/" aria-label="alderman.ai home">
           <Image

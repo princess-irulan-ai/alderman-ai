@@ -31,10 +31,11 @@ export default function HomePage() {
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 24 }}
             >
               <span>
                 <span className="select-none">&gt;</span>
-                {'  look, i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect INSTRUCTOR to teach them '}
+                {'  i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect INSTRUCTOR to teach them '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -44,12 +45,20 @@ export default function HomePage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
+                startDelayMs={1620}
                 segments={[
-                  { text: 'look, i get it, ' },
+                  { text: 'i get it' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' ' },
                   { text: 'PEOPLE', color: 'text-orange' },
-                  { text: ' are scared and they don’t want to learn ' },
+                  { text: ' are scared and they don' },
+                  { text: '’', color: 'text-purple' },
+                  { text: 't want to learn ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ', but i’m the perfect ' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' but i' },
+                  { text: '’', color: 'text-purple' },
+                  { text: 'm the perfect ' },
                   { text: 'INSTRUCTOR', color: 'text-orange' },
                   { text: ' to teach them' },
                 ]}

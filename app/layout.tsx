@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Barlow, JetBrains_Mono, Kalam } from 'next/font/google'
+import { Barlow, JetBrains_Mono } from 'next/font/google'
 
 import './globals.css'
 
@@ -17,13 +17,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const kalam = Kalam({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-kalam',
-  display: 'swap',
-})
-
 export const metadata: Metadata = {
   title: 'alderman.ai — ai fluency instructor and HUMAN advocate',
   description:
@@ -38,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${barlow.variable} ${jetbrainsMono.variable} ${kalam.variable}`}
+      className={`${barlow.variable} ${jetbrainsMono.variable}`}
     >
       <body className="bg-ide-2 font-body text-ide-fg antialiased">
         {children}

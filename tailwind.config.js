@@ -30,7 +30,6 @@ module.exports = {
         display: ['var(--font-barlow)', 'system-ui', 'sans-serif'],
         body: ['var(--font-barlow)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'Menlo', 'monospace'],
-        marker: ['var(--font-kalam)', 'cursive'],
       },
       letterSpacing: {
         tightest: '-0.04em',
