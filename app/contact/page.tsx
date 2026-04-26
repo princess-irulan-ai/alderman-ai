@@ -37,12 +37,8 @@ export default function ContactPage() {
             mobile to match the holding page's mobile hero pt-4 rhythm. */}
         <div className="h-[80px] md:h-[120px]" aria-hidden />
 
-        {/* 1. Hero — text-only. Chip + display + subtitle, left-aligned.
-            Alignment mirrors the current /contact v1 block (and the open
-            design question in PLAN.md re: hero line 1 alignment applies
-            here too — flag for Alex on review). */}
+        {/* 1. Hero — text-only. Display + subtitle, left-aligned. */}
         <section className="pb-12 md:pt-8 md:pb-16">
-          <p className="font-mono text-[13px] text-ide-fg-mute mb-6">[ contact ]</p>
           <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             talk to a <span className="text-orange">HUMAN</span>.
           </h1>
@@ -66,12 +62,8 @@ export default function ContactPage() {
                     href="https://calendar.app.google/uBw7TdkAFi4rF4Nu8"
                     target="_blank"
                     rel="noreferrer"
-                    className="group flex flex-col gap-1 border-l-2 border-orange py-2 pl-6 transition-colors hover:bg-ink/5"
+                    className="group flex border-l-2 border-orange py-2 pl-6 transition-colors hover:bg-ink/5"
                   >
-                    <span className="flex items-center gap-2 text-ink-soft">
-                      <span className="text-purple">&gt;_</span>
-                      book.audit()
-                    </span>
                     <span className="text-[19px] text-orange group-hover:underline">
                       calendar.app.google — 20-min slot
                     </span>
@@ -80,12 +72,8 @@ export default function ContactPage() {
                 <li>
                   <a
                     href="mailto:alex@alderman.ai"
-                    className="group flex flex-col gap-1 border-l-2 border-purple py-2 pl-6 transition-colors hover:bg-ink/5"
+                    className="group flex border-l-2 border-purple py-2 pl-6 transition-colors hover:bg-ink/5"
                   >
-                    <span className="flex items-center gap-2 text-ink-soft">
-                      <span className="text-purple">&gt;_</span>
-                      email.send()
-                    </span>
                     <span className="text-[19px] text-purple group-hover:underline">
                       alex@alderman.ai
                     </span>
@@ -94,12 +82,8 @@ export default function ContactPage() {
                 <li>
                   <a
                     href="tel:+420725830908"
-                    className="group flex flex-col gap-1 border-l-2 border-green py-2 pl-6 transition-colors hover:bg-ink/5"
+                    className="group flex border-l-2 border-green py-2 pl-6 transition-colors hover:bg-ink/5"
                   >
-                    <span className="flex items-center gap-2 text-ink-soft">
-                      <span className="text-purple">&gt;_</span>
-                      phone.ring()
-                    </span>
                     <span className="text-[19px] text-green group-hover:underline">
                       +420 725 830 908
                     </span>
