@@ -87,8 +87,13 @@ export function FloatingNav() {
   )
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-ide/90">
-      <div className="grid grid-cols-page">
+    <nav className="fixed top-0 left-0 right-0 z-50">
+      {/* Header row carries the IDE-substrate background. Pulled
+          OUT of the parent <nav> so the slide-down panel below
+          doesn't double up on the bg-ide/90 (two 90%-opacity layers
+          stack to ~99% opacity, killing the see-through). The
+          panel now sits over the live page content directly. */}
+      <div className="grid grid-cols-page bg-ide/90">
         <div aria-hidden className="hidden md:block" />
         <div className="col-span-6 flex items-center justify-between px-4 py-[2px] md:col-span-4 md:px-0 md:py-6">
           <Link href="/" className="flex items-center" aria-label="alderman.ai">
