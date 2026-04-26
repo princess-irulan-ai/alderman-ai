@@ -256,7 +256,7 @@ const STAGES = [
   { title: '1-2x WEEKLY LESSONS', Illustration: LessonsIllustration },
 ] as const
 
-const STAGE_DURATION_MS = 2000
+const STAGE_DURATION_MS = 1500
 const FADE_MS = 250
 
 function CyclingTriptych() {
