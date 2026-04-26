@@ -80,11 +80,11 @@ export function TrialCTASection() {
           since the post-it overhang scales differently up there. */}
       <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-wrap items-baseline justify-center gap-10">
         <TerminalCTA
-          href="/alderman-ai-brochure.pdf"
+          href="/about"
           bracketBlink
           segments={[
-            { text: 'just download the ' },
-            { text: 'brochure', color: 'text-orange' },
+            { text: 'learn about ' },
+            { text: 'me', color: 'text-orange' },
           ]}
         />
         <TerminalCTA
