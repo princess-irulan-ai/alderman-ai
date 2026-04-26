@@ -181,21 +181,21 @@ export function FloatingNav() {
       {menuOpen && (
         <div
           id="mobile-nav-menu"
-          className="md:hidden bg-ide border-t border-ide-rule"
+          className="md:hidden bg-ide/90 border-t border-ide-rule"
         >
           <div className="grid grid-cols-page">
             <div className="col-span-6 px-[var(--gutter-mobile)] py-6 flex flex-col gap-5">
               <Link
                 href="/faq"
                 onClick={() => setMenuOpen(false)}
-                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+                className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
               >
                 faq
               </Link>
               <Link
                 href="/about"
                 onClick={() => setMenuOpen(false)}
-                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+                className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
               >
                 about me
               </Link>
@@ -207,7 +207,7 @@ export function FloatingNav() {
               <Link
                 href="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+                className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
               >
                 talk to a{' '}
                 <span className="uppercase font-medium text-orange">HUMAN</span>
