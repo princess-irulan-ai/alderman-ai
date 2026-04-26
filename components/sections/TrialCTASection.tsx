@@ -89,10 +89,11 @@ export function TrialCTASection() {
         />
         <TerminalCTA
           href="/faq"
+          fontSize={19}
           bracketBlink
           segments={[
             { text: 'see ' },
-            { text: 'FAQ', color: 'text-orange', className: 'uppercase' },
+            { text: 'faq', color: 'text-orange' },
             { text: '/', color: 'text-paper' },
             { text: 'pricing', color: 'text-orange' },
           ]}
