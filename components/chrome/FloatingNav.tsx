@@ -204,7 +204,8 @@ export function FloatingNav() {
                 onClick={() => setMenuOpen(false)}
                 className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
               >
-                about your <span className="text-orange">instructor</span>
+                about <span className="text-paper">your</span>{' '}
+                <span className="text-orange">instructor</span>
               </Link>
               {/* talk-to-a-HUMAN was previously mirrored here; dropped
                   2026-04-26 per Alex — it's already visible in the main
