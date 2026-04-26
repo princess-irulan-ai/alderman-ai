@@ -81,17 +81,19 @@ export function TrialCTASection() {
       <div className="md:col-span-3 mt-[210px] md:mt-14 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
         <TerminalCTA
           href="/about"
-          fontSize={17}
+          fontSize={18}
           bracketBlink
+          className="whitespace-nowrap"
           segments={[
-            { text: 'learn about ' },
+            { text: ' learn  about  ' },
             { text: 'ME', color: 'text-orange', className: 'uppercase' },
           ]}
         />
         <TerminalCTA
           href="/faq"
-          fontSize={17}
+          fontSize={18}
           bracketBlink
+          className="whitespace-nowrap"
           segments={[
             { text: 'see ' },
             { text: 'faq', color: 'text-paper' },
