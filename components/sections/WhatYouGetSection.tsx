@@ -52,75 +52,22 @@ import { PaperApp } from '@/components/paper/PaperApp'
  *   - Section uses `md:grid md:grid-cols-canvas md:gap-6` so the
  *     canvas grid only kicks in at md+, matching the rest of the
  *     mobile-first sections on this site.
- */
-
-/**
- * Silhouette — top-half human shape. Circle head + rounded-shoulder torso,
- * flat bottom at "waist." 20x24 local bounding box.
  *
- * `color` is a Tailwind fill-* utility class (e.g. `fill-green`,
- * `fill-orange`, `fill-purple`). Defaults to `fill-ink-soft` (the
- * neutral muted-ink the figures originally shipped with).
+ * Cycling animation refactor 2026-04-27:
+ *   The triptych used to swap between three separate Illustration
+ *   components on each stage tick — a hard fade-out / swap / fade-in
+ *   that read as "9 silhouettes vanish, 9 different silhouettes
+ *   appear." Replaced with a unified-silhouette model: ONE list of 9
+ *   silhouettes, each with a stable colour identity, each with an
+ *   (x, y) target per stage. CSS transitions on `transform` interpolate
+ *   the position smoothly between stages, so the user reads it as the
+ *   same 9 people moving through 3 keyframes. Only the title still
+ *   pulses on stage change (existing `fadeStyle`); silhouettes never
+ *   fade. The OuterFrame stays static beneath. The laptop overlays in
+ *   stage C cross-fade in on top of their silhouette so the bottom
+ *   tier of figures gain "I'm holding a laptop" status without a hard
+ *   element swap.
  */
-function Silhouette({
-  x,
-  y,
-  color = 'fill-ink-soft',
-}: {
-  x: number
-  y: number
-  color?: string
-}) {
-  return (
-    <g transform={`translate(${x},${y})`} className={color}>
-      <circle cx="10" cy="5" r="3.6" />
-      <path d="M4,24 L4,11 Q4,8 10,8 Q16,8 16,11 L16,24 Z" />
-    </g>
-  )
-}
-
-/**
- * StudentWithLaptop — silhouette with an open laptop held up in front.
- * Screen's back panel is what the viewer sees. Top of head visible above
- * the laptop's top edge; torso fully obstructed.
- *
- * `color` recolors the head + laptop base (the parts that stand in for
- * the figure itself). The laptop screen stays paper-2 / ink-soft outline
- * regardless — the screen represents reflective glass and shouldn't pick
- * up the figure's group colour.
- */
-function StudentWithLaptop({
-  x,
-  y,
-  color = 'fill-ink-soft',
-}: {
-  x: number
-  y: number
-  color?: string
-}) {
-  return (
-    <g transform={`translate(${x},${y})`}>
-      <circle cx="10" cy="5" r="3.6" className={color} />
-      <rect
-        x="0"
-        y="6.5"
-        width="20"
-        height="14"
-        rx="0.8"
-        className="fill-paper-2 stroke-ink-soft"
-        strokeWidth="0.8"
-      />
-      <rect
-        x="-2"
-        y="20.5"
-        width="24"
-        height="1.8"
-        rx="0.4"
-        className={color}
-      />
-    </g>
-  )
-}
 
 const ILLUSTRATION_VIEWBOX = '0 0 140 140'
 const TOP_ROW_Y = 30
@@ -140,128 +87,299 @@ function OuterFrame() {
   )
 }
 
-function AssessIllustration() {
-  // Top row: 4 silhouettes at visual-center spacing 18.
-  const topOrigins = [33, 51, 69, 87]
-  // Bottom row: 5 silhouettes at spacing 18.
-  const bottomOrigins = [24, 42, 60, 78, 96]
-  // Pseudo-random colour distribution — 3 green, 3 orange, 3 purple
-  // across 9 silhouettes (no obvious banding or pairs). Read top-to-
-  // bottom, left-to-right.
-  //   top:    orange, green, purple, orange   (cumulative: 1G 2O 1P)
-  //   bottom: green,  purple, orange, green, purple  (final: 3G 3O 3P)
-  const topColors = [
-    'fill-orange',
-    'fill-green',
-    'fill-purple',
-    'fill-orange',
-  ]
-  const bottomColors = [
-    'fill-green',
-    'fill-purple',
-    'fill-orange',
-    'fill-green',
-    'fill-purple',
-  ]
-  return (
-    <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
-      <OuterFrame />
-      {topOrigins.map((x, i) => (
-        <Silhouette key={`t-${x}`} x={x} y={TOP_ROW_Y} color={topColors[i]} />
-      ))}
-      {bottomOrigins.map((x, i) => (
-        <Silhouette key={`b-${x}`} x={x} y={BOTTOM_ROW_Y} color={bottomColors[i]} />
-      ))}
-    </svg>
-  )
-}
-
+// Cluster centres for stages B (Sort) and C (Lessons). Cluster colour
+// identity: topCenter -> orange, bottomLeft -> purple, bottomRight ->
+// green. Same as the pre-refactor `CLUSTER_COLORS` mapping; the
+// narrative ("orange/purple/green ability cohorts") needs to be
+// stable across stages B and C.
 const GROUP_CXS = {
   topCenter: 70,
   bottomLeft: 32,
   bottomRight: 108,
 } as const
 
-// Per-cluster colour assignment shared by Sort + Lessons. The narrative
-// ("team gets sorted -> those groups have lessons") reads more cleanly
-// when the same cluster keeps the same colour across icons 2 and 3.
-const CLUSTER_COLORS = {
-  topCenter: 'fill-orange',
-  bottomLeft: 'fill-purple',
-  bottomRight: 'fill-green',
-} as const
+/**
+ * Per-silhouette keyframe positions across the three stages.
+ *
+ * Each entry is one of the 9 figures, with a stable `color` (3 green,
+ * 3 orange, 3 purple) and a position for each stage. Stage A positions
+ * mirror the original `AssessIllustration` layout. Stage B positions
+ * cluster the same-coloured figures using the original
+ * `SortIllustration` triangle layout (left/middle/right within each
+ * cluster). Stage C uses the original `LessonsIllustration` layout —
+ * one figure per cluster sits at the laptop-holder slot (the middle
+ * `cx - 10` x-position from Sort, raised up to the upper row of the
+ * cluster), the other two flank as peers.
+ *
+ * Identity mapping rationale: the Assess colour pattern dictates which
+ * three figures are orange / purple / green, so they have to land in
+ * the topCenter / bottomLeft / bottomRight clusters respectively in
+ * stages B and C (since the cluster-colour mapping is fixed). Within
+ * each cluster I pick one figure to be the laptop-holder in stage C
+ * (`isLaptopHolder` flag) and place the other two as peers.
+ */
+// 4 stages as of 2026-04-28 CEFR introduction: existing 3 plus a new
+// "level" stage between assess and sort, in which a small CEFR-style
+// level label fades in above each silhouette's head. Labels travel with
+// the silhouettes through Sort. In Lessons, only the laptop-holder's
+// label persists (per-cluster signal); the two peer labels fade out.
+// "CEFR" is never written anywhere in the UI — the introduction is
+// meant to be subtle (CEFR notation is public-domain, not trademarked,
+// but we don't claim alignment).
+type Stage = 'assess' | 'level' | 'sort' | 'lessons'
 
-function SortIllustration() {
-  const groups = [
-    { cx: GROUP_CXS.topCenter,   y: TOP_ROW_Y,    color: CLUSTER_COLORS.topCenter   },
-    { cx: GROUP_CXS.bottomLeft,  y: BOTTOM_ROW_Y, color: CLUSTER_COLORS.bottomLeft  },
-    { cx: GROUP_CXS.bottomRight, y: BOTTOM_ROW_Y, color: CLUSTER_COLORS.bottomRight },
-  ]
-  return (
-    <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
-      <OuterFrame />
-      {groups.map(({ cx, y, color }) => (
-        <g key={`${cx}-${y}`}>
-          <Silhouette x={cx - 28} y={y} color={color} />
-          <Silhouette x={cx - 10} y={y} color={color} />
-          <Silhouette x={cx + 8} y={y} color={color} />
-        </g>
-      ))}
-    </svg>
-  )
+type SilhouetteSpec = {
+  id: string
+  color: 'fill-green' | 'fill-orange' | 'fill-purple'
+  // Position per stage. (x, y) is the top-left of the 20x24 silhouette
+  // local bounding box, same as the old `Silhouette` x/y props.
+  positions: Record<Stage, { x: number; y: number }>
+  // True if this figure becomes the laptop-holder in stage C. Drives
+  // the cross-faded laptop overlay rendering.
+  isLaptopHolder: boolean
 }
 
-function LessonsIllustration() {
-  // Top group: student origin y = TOP_ROW_Y    -> cyTop = TOP_ROW_Y - 1 = 29
-  // Bottom groups: peer origin y = BOTTOM_ROW_Y -> cyTop = BOTTOM_ROW_Y - 24 = 66
-  // Cluster colours mirror SortIllustration so each ability group keeps
-  // its colour identity across the two icons.
-  const groups = [
-    { cx: GROUP_CXS.topCenter,   cyTop: TOP_ROW_Y - 1,       color: CLUSTER_COLORS.topCenter   },
-    { cx: GROUP_CXS.bottomLeft,  cyTop: BOTTOM_ROW_Y - 24,   color: CLUSTER_COLORS.bottomLeft  },
-    { cx: GROUP_CXS.bottomRight, cyTop: BOTTOM_ROW_Y - 24,   color: CLUSTER_COLORS.bottomRight },
-  ]
+// Sort/Lessons cluster slot offsets relative to cluster cx.
+// Sort layout (all in same row, y = TOP_ROW_Y or BOTTOM_ROW_Y):
+//   left   = cx - 28
+//   middle = cx - 10
+//   right  = cx + 8
+// Lessons layout puts the laptop-holder at cx - 10 on the upper row of
+// the cluster; the two peers stay on the lower row at cx - 19 and cx - 1.
+const SLOT_LEFT = -28
+const SLOT_MIDDLE = -10
+const SLOT_RIGHT = 8
+const LESSON_PEER_LEFT = -19
+const LESSON_PEER_RIGHT = -1
+
+// Stage C row offsets per cluster:
+//   topCenter cluster: laptop-holder at TOP_ROW_Y, peers at TOP_ROW_Y + 24 = 54.
+//   bottom clusters:  laptop-holder at BOTTOM_ROW_Y - 23 = 67, peers at BOTTOM_ROW_Y.
+// (Matches the pre-refactor LessonsIllustration: cyTop=29 with student
+// at cyTop+1=30 and peers at cyTop+24=53; bottom cyTop=66 with student
+// at cyTop+1=67 and peers at cyTop+24=90.)
+const TOP_CLUSTER_LAPTOP_Y = TOP_ROW_Y // 30
+const TOP_CLUSTER_PEER_Y = TOP_ROW_Y + 23 // 53
+const BOTTOM_CLUSTER_LAPTOP_Y = BOTTOM_ROW_Y - 23 // 67
+const BOTTOM_CLUSTER_PEER_Y = BOTTOM_ROW_Y // 90
+
+// Helper to build the per-stage positions for a single figure.
+function makeSpec(
+  id: string,
+  color: SilhouetteSpec['color'],
+  assess: { x: number; y: number },
+  cluster: keyof typeof GROUP_CXS,
+  role: 'laptop' | 'peerLeft' | 'peerRight',
+): SilhouetteSpec {
+  const cx = GROUP_CXS[cluster]
+  const sortY = cluster === 'topCenter' ? TOP_ROW_Y : BOTTOM_ROW_Y
+  const sortSlot =
+    role === 'laptop' ? SLOT_MIDDLE : role === 'peerLeft' ? SLOT_LEFT : SLOT_RIGHT
+  const sortPos = { x: cx + sortSlot, y: sortY }
+
+  let lessonsPos: { x: number; y: number }
+  if (role === 'laptop') {
+    lessonsPos = {
+      x: cx + SLOT_MIDDLE,
+      y: cluster === 'topCenter' ? TOP_CLUSTER_LAPTOP_Y : BOTTOM_CLUSTER_LAPTOP_Y,
+    }
+  } else {
+    const slot = role === 'peerLeft' ? LESSON_PEER_LEFT : LESSON_PEER_RIGHT
+    lessonsPos = {
+      x: cx + slot,
+      y: cluster === 'topCenter' ? TOP_CLUSTER_PEER_Y : BOTTOM_CLUSTER_PEER_Y,
+    }
+  }
+
+  return {
+    id,
+    color,
+    positions: {
+      // Stage A and the new A2 (level) share Assess positions — the
+      // level stage just fades labels in, doesn't move the figures.
+      assess,
+      level: assess,
+      sort: sortPos,
+      lessons: lessonsPos,
+    },
+    isLaptopHolder: role === 'laptop',
+  }
+}
+
+// The 9 figures. IDs encode colour + index; comments note their Assess
+// position so the colour distribution audit stays readable.
+//
+// Within each cluster I picked the laptop-holder somewhat arbitrarily
+// (the figure that was in the middle of the original Assess row, where
+// available) — this is a judgement call, since the original Assess +
+// Lessons layouts don't dictate one. Any of the three figures in a
+// cluster could be the laptop-holder; what matters is that it's
+// consistent across the loop.
+const SILHOUETTES: SilhouetteSpec[] = [
+  // --- Oranges -> topCenter cluster (laptop figure has Assess top idx 3) ---
+  makeSpec('o1', 'fill-orange', { x: 33, y: TOP_ROW_Y }, 'topCenter', 'peerLeft'),
+  makeSpec('o2', 'fill-orange', { x: 87, y: TOP_ROW_Y }, 'topCenter', 'laptop'),
+  makeSpec('o3', 'fill-orange', { x: 60, y: BOTTOM_ROW_Y }, 'topCenter', 'peerRight'),
+
+  // --- Purples -> bottomLeft cluster ---
+  makeSpec('p1', 'fill-purple', { x: 69, y: TOP_ROW_Y }, 'bottomLeft', 'peerRight'),
+  makeSpec('p2', 'fill-purple', { x: 42, y: BOTTOM_ROW_Y }, 'bottomLeft', 'laptop'),
+  makeSpec('p3', 'fill-purple', { x: 96, y: BOTTOM_ROW_Y }, 'bottomLeft', 'peerLeft'),
+
+  // --- Greens -> bottomRight cluster ---
+  makeSpec('g1', 'fill-green', { x: 51, y: TOP_ROW_Y }, 'bottomRight', 'peerLeft'),
+  makeSpec('g2', 'fill-green', { x: 24, y: BOTTOM_ROW_Y }, 'bottomRight', 'peerRight'),
+  makeSpec('g3', 'fill-green', { x: 78, y: BOTTOM_ROW_Y }, 'bottomRight', 'laptop'),
+]
+
+// Color -> CEFR-ish level label. Mapping per Alex 2026-04-28: purples
+// = A1, greens = A2, oranges = B1. The label is rendered inside each
+// silhouette's animated `<g>` (so it travels with the body during
+// stage transitions). Color matches the silhouette fill so the chord
+// stays consistent.
+const LEVEL_BY_COLOR: Record<SilhouetteSpec['color'], string> = {
+  'fill-purple': 'A1',
+  'fill-green': 'A2',
+  'fill-orange': 'B1',
+}
+
+/**
+ * AnimatedSilhouette — one of the 9 unified figures. Renders the
+ * silhouette body (always visible), and a laptop overlay that
+ * cross-fades in only when the active stage is C and this figure is
+ * the cluster's laptop-holder. Position is animated via a CSS
+ * transition on the wrapper `<g>` `transform`.
+ *
+ * Note on transform animation: SVG `transform` attribute transitions
+ * are not universally interpolated by browsers. To get smooth motion
+ * we apply the translate via the CSS `transform` property on the `<g>`
+ * (which works in all current browsers via the SVG-2 transform-as-
+ * presentation behaviour) and let the CSS `transition` interpolate it.
+ */
+function AnimatedSilhouette({
+  spec,
+  stage,
+  transitionMs,
+}: {
+  spec: SilhouetteSpec
+  stage: Stage
+  transitionMs: number
+}) {
+  const { x, y } = spec.positions[stage]
+  const showLaptop = stage === 'lessons' && spec.isLaptopHolder
+  // Label opacity logic (V1 picked from sandbox 2026-04-28):
+  //   Stage A (assess): hidden — labels haven't been "discovered" yet.
+  //   Stage A2 (level): fade in for everyone — each person's level shows
+  //     above their head.
+  //   Stage B (sort):   stays visible, travels with the figure to its cluster.
+  //   Stage C (lessons): only the laptop-holder's label persists; the two
+  //     peers' labels fade out so the cluster's level reads as one signal
+  //     above the laptop-holder, not three stacked ones.
+  const labelOpacity =
+    stage === 'assess'
+      ? 0
+      : stage === 'lessons'
+        ? spec.isLaptopHolder
+          ? 1
+          : 0
+        : 1
+  const level = LEVEL_BY_COLOR[spec.color]
+
   return (
-    <svg viewBox={ILLUSTRATION_VIEWBOX} className="h-auto w-full" aria-hidden="true">
-      <OuterFrame />
-      {groups.map(({ cx, cyTop, color }) => (
-        <g key={`${cx}-${cyTop}`}>
-          <StudentWithLaptop x={cx - 10} y={cyTop + 1} color={color} />
-          <Silhouette x={cx - 19} y={cyTop + 24} color={color} />
-          <Silhouette x={cx - 1} y={cyTop + 24} color={color} />
-        </g>
-      ))}
-    </svg>
+    <g
+      style={{
+        transform: `translate(${x}px, ${y}px)`,
+        transition: `transform ${transitionMs}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+      }}
+    >
+      {/* Silhouette body — always visible. Head + rounded-shoulder torso. */}
+      <g className={spec.color}>
+        <circle cx="10" cy="5" r="3.6" />
+        <path d="M4,24 L4,11 Q4,8 10,8 Q16,8 16,11 L16,24 Z" />
+      </g>
+      {/* Laptop overlay — only renders for laptop-holders in stage C.
+          Cross-fades in/out via opacity transition. The screen panel
+          covers the torso (which is fine, the silhouette stays
+          beneath); the laptop base extends past either side as the
+          flat keyboard line. */}
+      <g
+        style={{
+          opacity: showLaptop ? 1 : 0,
+          transition: `opacity ${transitionMs}ms ease-in-out`,
+        }}
+      >
+        <rect
+          x="0"
+          y="6.5"
+          width="20"
+          height="14"
+          rx="0.8"
+          className="fill-paper-2 stroke-ink-soft"
+          strokeWidth="0.8"
+        />
+        <rect
+          x="-2"
+          y="20.5"
+          width="24"
+          height="1.8"
+          rx="0.4"
+          className={spec.color}
+        />
+      </g>
+      {/* CEFR-style level label — sits above the head. Local y of the
+          head crown is ~1.4 (cy=5, r=3.6 -> top of circle at 1.4); y=-1
+          places the baseline of a 6px text just above the crown. The
+          label is a sibling INSIDE the same animated `<g>` so it
+          translates with the figure when stage changes. */}
+      <text
+        x={10}
+        y={-1}
+        textAnchor="middle"
+        className={`font-display ${spec.color}`}
+        style={{
+          fontSize: 6,
+          fontWeight: 700,
+          letterSpacing: 0.2,
+          opacity: labelOpacity,
+          transition: `opacity ${transitionMs}ms ease-in-out`,
+        }}
+      >
+        {level}
+      </text>
+    </g>
   )
 }
 
 /**
- * CyclingTriptych — single-stage rotating display of the three illustration
- * + headline pairs. Replaces the static three-column grid: holds each stage
- * for `STAGE_DURATION_MS` (default 2000), then advances to the next.
+ * CyclingTriptych — single-stage rotating display of the three stage
+ * titles, with all 9 silhouettes smoothly transitioning between
+ * keyframes underneath. The title pulse + the silhouette motion are
+ * decoupled: title fades on stage advance; silhouettes never fade,
+ * they glide.
  *
- * One stage visible at a time. Subtle fade on stage change to soften the
- * cut. Respects `prefers-reduced-motion`: pins to the first stage if the
- * user opts out.
+ * Loop timing: STAGE_HOLD_MS is how long each stage sits at its
+ * keyframe before advancing. TRANSITION_MS is the silhouette glide
+ * duration (also reused for the title pulse). The title's fade-out
+ * starts simultaneously with the silhouette glide; we hold the new
+ * title at full opacity for the rest of the dwell.
  *
- * Title height is reserved via `min-h-[1.5em]` (the headlines are all
- * single-line at this font-size) so the layout doesn't jump as titles
- * rotate. Illustration block is capped at `max-w-[280px]` so a single
- * centered icon doesn't balloon when given the whole paper-app body
- * width on desktop.
+ * Respects `prefers-reduced-motion`: pins to stage A if the user
+ * opts out (no timer started, no transitions kicked off).
  */
-const STAGES = [
-  { title: 'ASSESS YOUR TEAM', Illustration: AssessIllustration },
-  { title: 'SORT BY ABILITY', Illustration: SortIllustration },
-  { title: '1-2x WEEKLY LESSONS', Illustration: LessonsIllustration },
-] as const
+const STAGES: { key: Stage; title: string }[] = [
+  { key: 'assess', title: 'ASSESS YOUR TEAM' },
+  { key: 'level', title: 'IDENTIFY LEVELS' },
+  { key: 'sort', title: 'SORT BY ABILITY' },
+  { key: 'lessons', title: 'WEEKLY LESSONS' },
+]
 
-const STAGE_DURATION_MS = 1500
-const FADE_MS = 250
+const STAGE_HOLD_MS = 2200
+const TRANSITION_MS = 850
+const TITLE_FADE_MS = 350
 
 function CyclingTriptych() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [fadeIn, setFadeIn] = useState(true)
+  const [titleVisible, setTitleVisible] = useState(true)
 
   useEffect(() => {
     const reduced =
@@ -269,33 +387,62 @@ function CyclingTriptych() {
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) return
 
-    const id = setInterval(() => {
-      // Fade out, swap stage at half-fade, fade back in.
-      setFadeIn(false)
-      setTimeout(() => {
-        setActiveIndex((i) => (i + 1) % STAGES.length)
-        setFadeIn(true)
-      }, FADE_MS)
-    }, STAGE_DURATION_MS)
+    let advanceTimeout: ReturnType<typeof setTimeout> | undefined
+    let restoreTimeout: ReturnType<typeof setTimeout> | undefined
 
-    return () => clearInterval(id)
+    const tick = () => {
+      // Fade title out, then advance stage (kicks off the silhouette
+      // glide via state change), then fade title back in.
+      setTitleVisible(false)
+      restoreTimeout = setTimeout(() => {
+        setActiveIndex((i) => (i + 1) % STAGES.length)
+        setTitleVisible(true)
+      }, TITLE_FADE_MS)
+    }
+
+    const interval = setInterval(tick, STAGE_HOLD_MS + TRANSITION_MS)
+
+    return () => {
+      clearInterval(interval)
+      if (advanceTimeout) clearTimeout(advanceTimeout)
+      if (restoreTimeout) clearTimeout(restoreTimeout)
+    }
   }, [])
 
-  const { title, Illustration } = STAGES[activeIndex]
+  const { title, key: stage } = STAGES[activeIndex]
 
   return (
     <div className="pt-2">
-      <div
-        className="mx-auto max-w-[280px] space-y-4 md:space-y-5 text-center transition-opacity"
-        style={{
-          opacity: fadeIn ? 1 : 0,
-          transitionDuration: `${FADE_MS}ms`,
-        }}
-      >
-        <h3 className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink min-h-[1.5em]">
+      <div className="mx-auto max-w-[280px] space-y-4 md:space-y-5 text-center">
+        <h3
+          className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink min-h-[1.5em] transition-opacity"
+          style={{
+            opacity: titleVisible ? 1 : 0,
+            transitionDuration: `${TITLE_FADE_MS}ms`,
+          }}
+        >
           {title}
         </h3>
-        <Illustration />
+        {/* Single SVG containing the static OuterFrame and all 9
+            animated silhouettes. Frame and figures share a viewBox so
+            positions stay aligned across the loop. */}
+        <div className="relative">
+          <svg
+            viewBox={ILLUSTRATION_VIEWBOX}
+            className="block h-auto w-full"
+            aria-hidden="true"
+          >
+            <OuterFrame />
+            {SILHOUETTES.map((spec) => (
+              <AnimatedSilhouette
+                key={spec.id}
+                spec={spec}
+                stage={stage}
+                transitionMs={TRANSITION_MS}
+              />
+            ))}
+          </svg>
+        </div>
       </div>
     </div>
   )
@@ -311,11 +458,10 @@ export function WhatYouGetSection() {
         <div className="space-y-10 md:space-y-12">
           <div className="space-y-4 md:space-y-5">
             <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-              The world&apos;s most valuable language is now ai
+              Onboarding
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              That&apos;s why I teach it the same way I taught English for
-              over 8 years.
+              It&apos;s similar to setting up English lessons for your company.
             </p>
           </div>
 

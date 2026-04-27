@@ -1,7 +1,6 @@
-import Image from 'next/image'
-
 import { PaperApp } from '@/components/paper/PaperApp'
 import { Postit } from '@/components/special/Postit'
+import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalCTA } from '@/components/ui/TerminalCTA'
 
 /**
@@ -26,7 +25,7 @@ export function TrialCTASection() {
   return (
     <section
       id="brochure"
-      className="md:grid md:grid-cols-canvas md:gap-6 pt-10 pb-16 md:py-16 scroll-mt-24"
+      className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-16 md:pt-6 md:pb-16 scroll-mt-24"
       aria-label="Credentials and brochure download"
     >
       <div className="relative md:col-span-3">
@@ -39,6 +38,22 @@ export function TrialCTASection() {
               ... since I was a signals intelligence officer for the US
               government
             </p>
+            {/* Orange APP-variant SectionTile — first live use of the
+                paper-dialect tile. Sits inside the credentials paper-app
+                after the subtitle. PLACEHOLDER copy — Alex listed several
+                eyebrow ideas (Meet your instructor / See my experience /
+                Why trust me / More about me / More about Alex), shipping
+                "instructor" / "see my experience" as a starting point;
+                expect to iterate in the sandbox. */}
+            <div className="mx-auto max-w-[420px] pt-4 md:pt-6">
+              <SectionTile
+                variant="app"
+                accent="orange"
+                eyebrow="instructor"
+                title="See My Experience"
+                href="/about"
+              />
+            </div>
           </div>
         </PaperApp>
         {/* Bottom-left post-it — mirror of the hero's BR post-it. Sits
@@ -84,18 +99,7 @@ export function TrialCTASection() {
         </p>
       </div>
 
-      {/* Circular portrait — sits below the tagline. mt-8 = 32px. */}
-      <div className="md:col-span-3 mt-8 md:mt-8 flex flex-col items-center">
-        <Image
-          src="/brand-assets/photography/still-human-circle-portrait.svg"
-          alt="Alex Alderman — still HUMAN"
-          width={300}
-          height={300}
-          className="h-[360px] w-[360px] md:h-[440px] md:w-[440px]"
-        />
-      </div>
-
-      {/* CTAs on the dark IDE substrate, below the portrait. mt-8 = 32px. */}
+      {/* CTAs on the dark IDE substrate, below the tagline. mt-8 = 32px. */}
       <div className="md:col-span-3 mt-8 md:mt-8 flex flex-col items-center gap-4 md:flex-row md:items-baseline md:justify-center md:gap-10">
         <TerminalCTA
           href="/about"

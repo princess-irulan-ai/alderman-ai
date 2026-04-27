@@ -330,7 +330,14 @@ export function HeroSection() {
     <>
       the #1 L&D topic
       <br />
-      of 2026
+      of{' '}
+      <span className="relative inline-block font-bold">
+        <span
+          aria-hidden
+          className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-sm bg-purple/90"
+        />
+        <span className="relative text-ide-fg">2026</span>
+      </span>
     </>
   )
 
@@ -338,11 +345,19 @@ export function HeroSection() {
   // paper-app instance.
   const perks = (
     <div className="space-y-8 py-2">
-      <h2 className="font-display text-[22px] md:text-[34px] font-bold leading-none text-ink tracking-display-tight whitespace-nowrap uppercase">
-        Perks & Benefits
+      <h2 className="font-display text-[22px] md:text-[34px] font-bold leading-none text-ink tracking-display-tight whitespace-nowrap">
+        <span className="relative inline-block">
+          <span
+            aria-hidden
+            className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-sm bg-purple/90"
+          />
+          <span className="relative">2025</span>
+        </span>{' '}
+        Job Benefits
       </h2>
       <ul className="space-y-4 text-[18px] leading-snug text-ink">
         <li>- English Lessons</li>
+        <li>- 30 Days PTO</li>
         <li>- Flexible Home Office</li>
         <li>- MultiSport Card</li>
       </ul>
@@ -354,6 +369,24 @@ export function HeroSection() {
       ref={sectionRef}
       className="flex flex-col gap-6 pt-4 pb-8 relative md:grid md:grid-cols-canvas md:gap-6 md:pt-8 md:items-stretch"
     >
+      {/* H1 — top-of-hero value prop. Sits above the typed terminal line
+          so the user sees what we do INSTANTLY (no typing animation —
+          static from frame one). Styling matches `/about`'s H1 verbatim
+          (40px / 56px responsive, leading-1.05, tracking-display-tight)
+          so site-wide hero H1s read at the same weight. The only
+          deviation is `md:col-span-3` so this spans the full canvas
+          inside the hero's 3-col grid; on mobile it's just a flex
+          child stacking above the terminal line.
+          Color chord: TEAM orange caps, ai green, rest in default
+          ide-fg. PLACEHOLDER copy — Alex will swap in final wording. */}
+      <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-5 md:col-span-3 md:mb-4">
+        <span className="text-green">ai</span> is a language
+        <br />
+        your <span className="text-orange">COMPANY</span>
+        <br />
+        needs to learn
+      </h1>
+
       {/* ─── MOBILE STACK (block md:hidden) ─────────────────────────────
           Order per Alex 2026-04-24: line 1 → paper-app (with Post-it
           contained INSIDE the body, below the perks list) → line 2.
@@ -387,7 +420,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'\u00a0\u00a0attract, upskill, and retain top HUMAN talent and prepare your company for your ai transformation\u00a0'}
+            {'\u00a0\u00a0take a HUMAN approach to ai adoption and make sure no one gets left behind\u00a0'}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -399,7 +432,7 @@ export function HeroSection() {
           />
         </div>
       </div>
-      <div className="md:hidden mt-8">
+      <div className="md:hidden mt-5">
         {/* Post-it composition (2026-04-26 Alex spec, supersedes 04-24):
             paper-app fully contains the post-it in its bottom-right
             corner — no bottom overhang. Width is no longer centered;
@@ -440,7 +473,7 @@ export function HeroSection() {
               app's bottom edge — no overflow clipping on ancestors,
               so it renders freely. */}
           <div
-            className="absolute left-1/2 top-[216px] pointer-events-none origin-top-left"
+            className="absolute left-1/2 top-[244px] pointer-events-none origin-top-left"
             style={{ transform: 'scale(calc(50vw / 250px))' }}
           >
             <Postit rotation={-5} heading={postitHeading}>
@@ -457,7 +490,7 @@ export function HeroSection() {
         // 2026-04-26 pull-up reduced this by ~2 line-heights (52px) so
         // line 2 sits closer to the post-it. New formula: 50vw - 35px,
         // leaving ~1 line-height of clearance.
-        <div className="md:hidden mt-[calc(50vw-35px)]">
+        <div className="md:hidden mt-[calc(50vw-115px)]">
           <HeroTerminalBlock
             line2Ready={line2Ready}
             lines="2"

@@ -178,6 +178,84 @@ module.exports = {
           '83.33%':   { opacity: '0', transform: 'translateY(108px)' },
           '100%':     { opacity: '0', transform: 'translateY(108px)' },
         },
+        // Horizontal walking cursor for SectionTile's IDE-variant CTA marker.
+        // The `_` glyph hops through 3 fixed positions inside a `[ >_ ]`
+        // bracket pair, then snap-backs to position 0 to loop. Reads as a
+        // little terminal cursor "walking" toward the click target.
+        //
+        // Same self-stepping plateau technique as `cursor-cascade-3`: every
+        // visual position is a held plateau between two identical keyframes,
+        // separated by a 0.01%-cycle bridge. Linear interpolation across a
+        // 0.3ms bridge is sub-frame at any monitor refresh, so transitions
+        // read as hard jumps regardless of the easing function. Final
+        // keyframe at 100% holds the LAST position so the CSS loop boundary
+        // snaps back to 0% (translateX 0) in zero time, no visible left-
+        // slide.
+        //
+        // Solid throughout (no opacity blink) — Alex's spec is "solid
+        // during the walk", distinct from cursor-cascade-3 which fades
+        // out between positions. Three positions; the cursor is visible
+        // at all three.
+        //
+        // Units: 0.6ch / 1.2ch are calibrated for a fixed-width 3-cell
+        // interior (`>_` + 2 spaces of breathing room). Adjust in lockstep
+        // with the bracket interior padding in SectionTile if the marker
+        // ever changes width.
+        //
+        // Cadence: total cycle 1.06s = 3 phases at ~353ms each. Matches
+        // the codified `terminal-blink` rhythm so the walking marker
+        // sits in the same temporal family as every other cursor on the
+        // site. Linear easing — the keyframe shape is self-stepping, so
+        // easing can't introduce visible interpolation.
+        'cursor-walk-3': {
+          // Slot 1 — _ at position 0 (tight against >)
+          '0%':       { transform: 'translateX(0)' },
+          '33.32%':   { transform: 'translateX(0)' },
+          // Slot 2 — _ at position 1 (mid)
+          '33.33%':   { transform: 'translateX(13px)' },
+          '66.65%':   { transform: 'translateX(13px)' },
+          // Slot 3 — _ at position 2 (right edge of interior)
+          '66.66%':   { transform: 'translateX(26px)' },
+          // Held through loop boundary so the snap back to 0 happens with
+          // no interpolation and no visible right→left slide.
+          '100%':     { transform: 'translateX(26px)' },
+          // Travel pinned to MATCH knob-walk-3 (0 / 13px / 26px) per
+          // Alex 2026-04-28 — original 0 / 0.6ch / 1.2ch (~11px) felt
+          // cramped vs the wider knob travel; using identical px values
+          // keeps IDE + App markers in lockstep visually.
+        },
+        // Horizontal walking knob for SectionTile's APP-variant CTA marker.
+        // A small filled circle hops through 3 fixed positions inside a
+        // pill outline, then snap-backs to position 0. Visual analogue of
+        // `cursor-walk-3` translated into the App register.
+        //
+        // Same self-stepping plateau technique — held plateaus between
+        // identical keyframes with sub-frame bridges. Final keyframe holds
+        // the LAST position so the loop boundary snaps back to 0 with no
+        // interpolation. Solid throughout (no opacity blink).
+        //
+        // Units: pixel translateX values, calibrated against the pill's
+        // interior width. Pill is ~44px wide × 18px tall, knob is ~12px,
+        // so the interior travel range is 44 - 12 - (2 × inset) ≈ 26px.
+        // Three positions at 0 / 13px / 26px. Adjust in lockstep with
+        // pill / knob dimensions in SectionTile if either changes.
+        //
+        // Cadence: total cycle 1.06s = 3 phases at ~353ms each. Matches
+        // `cursor-walk-3` exactly so the IDE and App variants of the
+        // marker walk in lockstep when shown side by side. Linear easing
+        // — keyframe shape is self-stepping.
+        'knob-walk-3': {
+          // Slot 1 — knob at left of pill
+          '0%':       { transform: 'translateX(0)' },
+          '33.32%':   { transform: 'translateX(0)' },
+          // Slot 2 — knob at middle
+          '33.33%':   { transform: 'translateX(13px)' },
+          '66.65%':   { transform: 'translateX(13px)' },
+          // Slot 3 — knob at right of pill
+          '66.66%':   { transform: 'translateX(26px)' },
+          // Held through loop boundary for no visible right→left slide.
+          '100%':     { transform: 'translateX(26px)' },
+        },
       },
       animation: {
         'terminal-blink': 'terminal-blink 1.06s steps(1, end) infinite',
@@ -203,6 +281,20 @@ module.exports = {
         // same 3-position hop `steps()` was supposed to give.
         'cursor-cascade-2': 'cursor-cascade-2 2.12s linear infinite',
         'cursor-cascade-3': 'cursor-cascade-3 3.18s linear infinite',
+        // Horizontal walking-cursor / walking-knob animations used by
+        // SectionTile's CTA markers. Both cycle through 3 positions with
+        // a snap-back at the loop boundary; see keyframe comments for
+        // the self-stepping technique. 1.06s cycle = same temporal family
+        // as the codified `terminal-blink` cadence. Linear easing — the
+        // keyframe shape is self-stepping, so easing can't introduce
+        // visible interpolation between positions.
+        // Walking-cursor + walking-knob period bumped 1.06s → 2.12s
+        // (half speed) per Alex 2026-04-28 — original tempo agitated
+        // his eyes; a slower march reads as a calmer "this is clickable"
+        // signal. Both animations stay in lockstep so IDE + App
+        // markers continue to match each other.
+        'cursor-walk-3': 'cursor-walk-3 2.12s linear infinite',
+        'knob-walk-3': 'knob-walk-3 2.12s linear infinite',
       },
     },
   },

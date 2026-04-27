@@ -254,15 +254,11 @@ export function HeroTerminalBlock({
   const line1 = (
     <TerminalLine
       segments={[
-        { text: 'attract' },
-        { text: ',', color: 'text-purple' },
-        { text: ' upskill' },
-        { text: ',', color: 'text-purple' },
-        { text: ' and retain top ' },
+        { text: 'take a ' },
         { text: 'HUMAN', color: 'text-orange' },
-        { text: ' talent and prepare your company for your ' },
+        { text: ' approach to ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' transformation' },
+        { text: ' adoption and make sure no one gets left behind' },
       ]}
       fontSize={resolvedFontSize}
       align="left"
@@ -279,10 +275,11 @@ export function HeroTerminalBlock({
   const line2 = line2Ready ? (
     <TerminalLine
       segments={[
-        { text: 'here' },
-        { text: "'", color: 'text-purple' },
-        { text: 's' },
-        { text: ' how it works', color: 'text-purple' },
+        { text: 'my unique process of teaching ' },
+        { text: 'ai', color: 'text-green' },
+        { text: ' fluency will be more familiar than ' },
+        { text: 'YOU', color: 'text-orange' },
+        { text: ' think' },
       ]}
       fontSize={resolvedFontSize}
       align="left"
@@ -290,13 +287,6 @@ export function HeroTerminalBlock({
       showBrackets={showBrackets}
       persistCursor
       startDelayMs={1620}
-      {...(isMobile
-        ? {}
-        : {
-            doneCursorGlyph: 'v',
-            doneCursorGlyphDelayMs: 2120,
-            doneBlinkClassName: 'animate-cursor-cascade-3',
-          })}
     />
   ) : null
 
