@@ -17,44 +17,27 @@ export default function HomePage() {
         <div className="h-[120px]" aria-hidden />
         <HeroSection />
         <WhatYouGetSection />
-        {/* IDE-purple SectionTile sitting on the dark substrate after
-            WhatYouGetSection's paper-app. First live use of the new
-            tile primitive. Walking-cursor marker carries a soft purple
-            drop-shadow glow per Alex's "kind of purple glow / hovering"
-            spec. Clicks through to /faq (FAQ + pricing). */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-2 md:pt-12 md:pb-3">
-          <div className="col-span-3 md:col-start-2 md:col-span-1">
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="ai fluency"
-              title="see a demo lesson"
-              href="/faq"
-            />
-          </div>
-        </section>
-        {/* H2.5 — terminal-line seam between H2 and the TrialCTA paper-app.
-            Sits on the dark IDE substrate, leads into "the plan." Uses
-            hangingPrompt + showBrackets={false} so the `>` hangs in the
-            outer gutter and the typed text aligns to the canvas left
-            edge — matches the hero lines above.
+        {/* H2.5 — terminal-line seam between the WhatYouGet onboarding
+            triptych and the demo-lesson IDE CTA below. Sits on the dark
+            IDE substrate. Uses hangingPrompt + showBrackets={false} so
+            the `>` hangs in the outer gutter and the typed text aligns
+            to the canvas left edge — matches the hero lines above.
 
             Wrapped in a CSS grid alongside an invisible ghost copy of
             the fully-typed line, both pinned to col-start-1 row-start-1
             so the cell height tracks the ghost. Same pattern hero line
             1 uses — locks the line's height from the first paint so the
-            TrialCTA paper-app below doesn't shift downward as the line
-            types out. */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-2 md:pt-12 md:pb-3">
+            CTA tile below doesn't shift downward as the line types out. */}
+        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
           <div className="col-span-3 grid">
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-              style={{ fontSize: 24 }}
+              style={{ fontSize: 22 }}
             >
               <span>
                 <span className="select-none">&gt;</span>
-                {'  i get it, PEOPLE are scared and they don’t want to learn ai, but i’m the perfect INSTRUCTOR to teach them '}
+                {'  fluency lessons are hands on usage of ai with a HUMAN guiding the process '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -66,27 +49,38 @@ export default function HomePage() {
                 persistCursor
                 startDelayMs={1620}
                 segments={[
-                  { text: 'i get it' },
-                  { text: ',', color: 'text-purple' },
-                  { text: ' ' },
-                  { text: 'PEOPLE', color: 'text-orange' },
-                  { text: ' are scared and they don' },
-                  { text: '’', color: 'text-purple' },
-                  { text: 't want to learn ' },
+                  { text: 'fluency lessons are hands on usage of ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ',', color: 'text-purple' },
-                  { text: ' but i' },
-                  { text: '’', color: 'text-purple' },
-                  { text: 'm the perfect ' },
-                  { text: 'INSTRUCTOR', color: 'text-orange' },
-                  { text: ' to teach them' },
+                  { text: ' with a ' },
+                  { text: 'HUMAN', color: 'text-orange' },
+                  { text: ' guiding the process' },
                 ]}
               />
             </div>
           </div>
         </section>
-        {/* Circular portrait — between the H2.5 seam and the credentials
-            paper-app. Centered on the dark IDE substrate.
+        {/* IDE-purple SectionTile — "see a demo lesson" CTA. Sits on
+            the dark IDE substrate after the H2.5 terminal seam and
+            before the credentials paper-app. Clicks through to /faq
+            (FAQ + pricing). */}
+        <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-16 md:pb-10">
+          <div className="col-span-3 md:col-start-2 md:col-span-1">
+            <SectionTile
+              variant="ide"
+              accent="purple"
+              eyebrow="ai fluency"
+              title="learn about ai lessons"
+              href="/faq"
+              markerStyle="contained"
+            />
+          </div>
+        </section>
+        <TrialCTASection />
+        {/* Circular portrait — between the credentials paper-app (with
+            its BL post-it overhang) and the final "book a full demo"
+            IDE CTA. Centered on the dark IDE substrate. The
+            `mt-[184px] md:mt-8` clears the post-it overhang on mobile
+            (~152px overhang + canonical 32px gap).
 
             The SVG draws a charcoal "frame" ring around the photo at 74%
             of its bbox width (measured: dark frame outer edge spans 36-244
@@ -102,7 +96,7 @@ export default function HomePage() {
             edge instead of from the SVG bbox. `aspect-square` keeps the
             wrapper square so the same proportions hold at both mobile
             (~281px constrained by gutter) and desktop (440px). */}
-        <section className="flex justify-center">
+        <section className="flex justify-center mt-[120px] md:mt-8">
           <div className="relative aspect-square w-full max-w-[360px] md:max-w-[440px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"
@@ -132,7 +126,24 @@ export default function HomePage() {
             />
           </div>
         </section>
-        <TrialCTASection />
+        {/* Final IDE-purple SectionTile — "book a full demo" CTA. Last
+            element on the home page, replaces the old "enabling ai
+            value with human values" tagline + the two flashing-bracket
+            TerminalCTAs that previously closed the page. Eyebrow is a
+            placeholder ("next step") — Alex to drop final copy.
+            Provisional href: /contact. */}
+        <section className="grid grid-cols-canvas gap-6 pt-8 pb-16 md:pt-12 md:pb-20">
+          <div className="col-span-3 md:col-start-2 md:col-span-1">
+            <SectionTile
+              variant="ide"
+              accent="purple"
+              eyebrow="next step"
+              title="book a demo lesson"
+              href="/contact"
+              markerStyle="contained"
+            />
+          </div>
+        </section>
       </PageFrame>
       <Footer />
     </>

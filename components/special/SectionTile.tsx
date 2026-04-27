@@ -80,6 +80,22 @@ export type SectionTileIdeTitleFont = 'mono' | 'barlow'
 export type SectionTileAppPillFill = 'cream' | 'purple'
 
 /**
+ * IDE-only sandbox knob for the notched prototype: which frame surrounds
+ * the walking cursor.
+ *   rectangle — current shipping notched look. 1px orange border around a
+ *               `bg-ide-2` interior holding the walking cursor.
+ *   brackets  — orange `[` and `]` glyphs flanking a `bg-ide-2` interior.
+ *               Same blackout-the-seam trick as `rectangle` (the patch
+ *               between the brackets matches the substrate so the cursor
+ *               doesn't render across the gradient/substrate seam) but
+ *               trades the rectangle frame for the bracket vocabulary the
+ *               classic shipping marker already uses elsewhere on the
+ *               site. 2026-04-29 prototype per Alex's request to see if
+ *               brackets work in the notched position.
+ */
+export type SectionTileIdeNotchedFrame = 'rectangle' | 'brackets'
+
+/**
  * Tile height profile (2026-04-28 — supports the contained-notched
  * variant Alex wanted in the sandbox).
  *   spacious — full body height that classic/contained tiles produce
@@ -134,6 +150,13 @@ export type SectionTileProps = {
    */
   appPillFill?: SectionTileAppPillFill
   /**
+   * IDE-only sandbox knob (notched prototype). Default 'rectangle'
+   * (current shipping notched look). 'brackets' swaps the orange
+   * rectangle frame for `[ ]` bracket glyphs with a blacked-out
+   * interior.
+   */
+  ideNotchedFrame?: SectionTileIdeNotchedFrame
+  /**
    * Tile body height. Only meaningful when `markerStyle='notched'`.
    * Default 'spacious' — body retains the classic/contained
    * dimensions even though the marker is on the border (so the tile
@@ -180,6 +203,15 @@ const ACCENT_GLOW_DROP: Record<SectionTileAccent, string> = {
   purple: 'drop-shadow-[0_0_10px_rgba(174,129,255,0.55)]',
   orange: 'drop-shadow-[0_0_10px_rgba(253,151,31,0.55)]',
   green: 'drop-shadow-[0_0_10px_rgba(166,226,46,0.55)]',
+}
+
+// Accent-tinted box-shadow that fires on tile hover, giving the whole
+// tile a soft glow that reads as a click affordance. Applied only to
+// interactive tiles (those with an `href`). Per Alex 2026-04-29.
+const ACCENT_HOVER_GLOW: Record<SectionTileAccent, string> = {
+  purple: 'hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  orange: 'hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  green: 'hover:shadow-[0_0_28px_rgba(166,226,46,0.45)]',
 }
 
 // Diagonal accent-tint gradient for the tile shell — concentrated at the
@@ -238,6 +270,7 @@ export function SectionTile({
   markerStyle = 'classic',
   ideTitleFont = 'mono',
   appPillFill = 'cream',
+  ideNotchedFrame = 'rectangle',
   tileHeight = 'spacious',
   className = '',
 }: SectionTileProps) {
@@ -255,6 +288,7 @@ export function SectionTile({
   // the absolute-positioned notched marker below.
   const interactive = Boolean(href)
   const hoverBorderClass = interactive ? ACCENT_BORDER_HOVER[accent] : ''
+  const hoverGlowClass = interactive ? ACCENT_HOVER_GLOW[accent] : ''
   // Vertical padding logic:
   //   - Classic / contained: `py-3` (12px each side). Marker sits in
   //     flow below the title, so total tile height = pad + title +
@@ -273,8 +307,8 @@ export function SectionTile({
       : 'pt-3 pb-12'
     : 'py-3'
   const baseShellClass = isIde
-    ? `relative block rounded-tile border-2 border-ide-rule px-5 ${verticalPadClass} transition-colors ${hoverBorderClass}`
-    : `relative block rounded-tile border-2 border-ink/15 px-5 ${verticalPadClass} transition-colors ${hoverBorderClass}`
+    ? `relative block rounded-tile border-2 border-ide-rule px-5 ${verticalPadClass} transition-[box-shadow,border-color] duration-200 ${hoverBorderClass} ${hoverGlowClass}`
+    : `relative block rounded-tile border-2 border-ink/15 px-5 ${verticalPadClass} transition-[box-shadow,border-color] duration-200 ${hoverBorderClass} ${hoverGlowClass}`
   const shellStyle = {
     background: (isIde ? ACCENT_GRADIENT_IDE : ACCENT_GRADIENT_APP)[accent],
   }
@@ -349,6 +383,7 @@ export function SectionTile({
               accent={accent}
               bracketColor={bracketColor}
               markerStyle={markerStyle}
+              ideNotchedFrame={ideNotchedFrame}
             />
           ) : (
             <AppMarker
@@ -360,13 +395,14 @@ export function SectionTile({
         </div>
       ) : (
         <div
-          className={`mt-4 flex ${markerStyle === 'contained' ? 'justify-center' : 'justify-end'}`}
+          className={`mt-4 flex ${markerStyle === 'contained' ? 'pl-[50%]' : 'justify-end'}`}
         >
           {isIde ? (
             <IdeMarker
               accent={accent}
               bracketColor={bracketColor}
               markerStyle={markerStyle}
+              ideNotchedFrame={ideNotchedFrame}
             />
           ) : (
             <AppMarker
@@ -427,10 +463,12 @@ function IdeMarker({
   accent,
   bracketColor,
   markerStyle,
+  ideNotchedFrame = 'rectangle',
 }: {
   accent: SectionTileAccent
   bracketColor: SectionTileBracketColor
   markerStyle: SectionTileMarkerStyle
+  ideNotchedFrame?: SectionTileIdeNotchedFrame
 }) {
   const accentClass = ACCENT_TEXT[accent]
   const bracketClass = BRACKET_TEXT[bracketColor]
@@ -484,7 +522,49 @@ function IdeMarker({
   }
 
   if (markerStyle === 'notched') {
-    // Notched mode (2026-04-28, latest rev per Alex):
+    if (ideNotchedFrame === 'brackets') {
+      // Brackets variant (2026-04-29 prototype). Same blackout-the-seam
+      // trick as the rectangle variant — the dark patch between the two
+      // bracket glyphs is `bg-ide-2` so the cursor doesn't render across
+      // the gradient/substrate seam — but the visible frame is two
+      // orange bracket glyphs straddling the seam instead of a 1px
+      // rectangle border. The brackets themselves are solid color, so
+      // the seam through them is invisible. Same translateY +4 / -4
+      // counter-translate as the rectangle variant so the cursor's
+      // page-y position is unchanged.
+      return (
+        <span
+          className="font-mono text-[16px] inline-flex items-baseline select-none"
+          style={{ transform: 'translateY(4px)' }}
+          aria-hidden
+        >
+          <span className="text-orange">[</span>
+          <span className="bg-ide-2 inline-block px-[2px] py-[4px]">
+            <span
+              className="relative inline-block"
+              style={{
+                width: '5ch',
+                height: '1em',
+                transform: 'translateY(-4px)',
+              }}
+            >
+              <span className={`${accentClass} absolute left-0 top-0`}>
+                &gt;
+              </span>
+              <span
+                className="text-ide-fg absolute top-0 inline-block animate-cursor-walk-3 motion-reduce:animate-none"
+                style={{ left: '0.8ch' }}
+              >
+                _
+              </span>
+            </span>
+          </span>
+          <span className="text-orange">]</span>
+        </span>
+      )
+    }
+
+    // Notched rectangle mode (2026-04-28, latest rev per Alex):
     //  - 1px border (`border` not `border-2`).
     //  - Tight vertical padding: 1px above `>`, 1px below `_`.
     //  - Rectangle is shifted down 2px relative to its natural

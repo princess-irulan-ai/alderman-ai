@@ -15,7 +15,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
  *          typing, disappears entirely once typing is complete.
  *
  * CODIFIED DEFAULTS (Alderman terminal voice — H2.5 is the reference):
- *   fontSize       24px
+ *   fontSize       22px (matches the hero terminal lines; dropped from
+ *                  24px on 2026-04-29 so all terminal lines render at
+ *                  the same size)
  *   leadingSpaces  2   (NBSPs baked into the front of the typed content)
  *   startDelayMs   2120ms   (2 × 1.06s cursor blinks on viewport entry)
  *   charDelayMs    36ms     (20% faster than the original 45ms medium)
@@ -309,7 +311,7 @@ export function TerminalLine({
   promptColor = 'text-purple',
   cursorColor = 'text-purple',
   bracketColor = 'text-orange',
-  fontSize = 24,
+  fontSize = 22,
   leadingSpaces = 2,
   className = '',
   onComplete,

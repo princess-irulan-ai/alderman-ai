@@ -95,14 +95,16 @@ export default function SectionTileSandboxPage() {
               <div className="font-mono text-[10px] text-ide-fg-mute mb-2 lowercase tracking-wider">
                 1. contained spacious
               </div>
-              <div className="mx-auto w-full max-w-[420px]">
-                <SectionTile
-                  variant="ide"
-                  accent="purple"
-                  eyebrow={PLACEHOLDER_EYEBROW}
-                  title={PLACEHOLDER_TITLE_IDE}
-                  markerStyle="contained"
-                />
+              <div className="px-8">
+                <div className="mx-auto w-full max-w-[420px]">
+                  <SectionTile
+                    variant="ide"
+                    accent="purple"
+                    eyebrow={PLACEHOLDER_EYEBROW}
+                    title={PLACEHOLDER_TITLE_IDE}
+                    markerStyle="contained"
+                  />
+                </div>
               </div>
             </div>
 
@@ -110,17 +112,41 @@ export default function SectionTileSandboxPage() {
             <div>
               <div className="font-mono text-[10px] text-ide-fg-mute mb-2 lowercase tracking-wider">
                 2. contained-notched spacious — same body height as
-                #1, marker notched on bottom border
+                #1, marker notched on bottom border (orange rectangle)
               </div>
-              <div className="mx-auto w-full max-w-[420px]">
-                <SectionTile
-                  variant="ide"
-                  accent="purple"
-                  eyebrow={PLACEHOLDER_EYEBROW}
-                  title={PLACEHOLDER_TITLE_IDE}
-                  markerStyle="notched"
-                  tileHeight="spacious"
-                />
+              <div className="px-8">
+                <div className="mx-auto w-full max-w-[420px]">
+                  <SectionTile
+                    variant="ide"
+                    accent="purple"
+                    eyebrow={PLACEHOLDER_EYEBROW}
+                    title={PLACEHOLDER_TITLE_IDE}
+                    markerStyle="notched"
+                    tileHeight="spacious"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* 2b. Contained-notched spacious — bracket frame. */}
+            <div>
+              <div className="font-mono text-[10px] text-ide-fg-mute mb-2 lowercase tracking-wider">
+                2b. contained-notched spacious — bracket frame (orange{' '}
+                <span className="font-mono">[ ]</span> with blacked-out
+                interior holding the walking cursor)
+              </div>
+              <div className="px-8">
+                <div className="mx-auto w-full max-w-[420px]">
+                  <SectionTile
+                    variant="ide"
+                    accent="purple"
+                    eyebrow={PLACEHOLDER_EYEBROW}
+                    title={PLACEHOLDER_TITLE_IDE}
+                    markerStyle="notched"
+                    tileHeight="spacious"
+                    ideNotchedFrame="brackets"
+                  />
+                </div>
               </div>
             </div>
 
@@ -130,16 +156,18 @@ export default function SectionTileSandboxPage() {
                 3. notched compact (button) — barlow title, mono
                 eyebrow + marker
               </div>
-              <div className="mx-auto w-full max-w-[420px]">
-                <SectionTile
-                  variant="ide"
-                  accent="purple"
-                  eyebrow={PLACEHOLDER_EYEBROW}
-                  title={PLACEHOLDER_TITLE_IDE}
-                  markerStyle="notched"
-                  tileHeight="compact"
-                  ideTitleFont="barlow"
-                />
+              <div className="px-8">
+                <div className="mx-auto w-full max-w-[420px]">
+                  <SectionTile
+                    variant="ide"
+                    accent="purple"
+                    eyebrow={PLACEHOLDER_EYEBROW}
+                    title={PLACEHOLDER_TITLE_IDE}
+                    markerStyle="notched"
+                    tileHeight="compact"
+                    ideTitleFont="barlow"
+                  />
+                </div>
               </div>
             </div>
           </div>

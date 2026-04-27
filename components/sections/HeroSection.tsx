@@ -490,12 +490,33 @@ export function HeroSection() {
         // 2026-04-26 pull-up reduced this by ~2 line-heights (52px) so
         // line 2 sits closer to the post-it. New formula: 50vw - 35px,
         // leaving ~1 line-height of clearance.
-        <div className="md:hidden mt-[calc(50vw-115px)]">
-          <HeroTerminalBlock
-            line2Ready={line2Ready}
-            lines="2"
-            fontSize={HERO_FONT_SIZE_MOBILE}
-          />
+        //
+        // Ghost-locking (2026-04-29 Alex spec, mirrors line 1): an
+        // invisible aria-hidden copy of the fully-typed line is rendered
+        // alongside the live TerminalLine, both pinned to the same grid
+        // cell at `col-start-1 row-start-1`. The ghost reserves the full
+        // terminal-block height from first paint, so the WhatYouGet
+        // paper-app below stays put as line 2 types out instead of
+        // sliding downward each character.
+        <div className="md:hidden mt-[calc(50vw-115px)] grid">
+          <div
+            aria-hidden
+            className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+            style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+          >
+            <span>
+              <span className="select-none">&gt;</span>
+              {'  my unique process of teaching ai fluency will be more familiar than YOU think '}
+              <span className="inline-block">_</span>
+            </span>
+          </div>
+          <div className="col-start-1 row-start-1">
+            <HeroTerminalBlock
+              line2Ready={line2Ready}
+              lines="2"
+              fontSize={HERO_FONT_SIZE_MOBILE}
+            />
+          </div>
         </div>
       )}
 
