@@ -333,13 +333,13 @@ export function HeroSection() {
       className="block font-display font-normal"
       style={{ width: '200px', fontSize: '24px', lineHeight: 1.1 }}
     >
-      <span className="whitespace-nowrap">add ai fluency to</span>
+      <span className="font-bold whitespace-nowrap">add ai fluency</span>
       <br />
-      <span className="whitespace-nowrap">your L&amp;D perks to</span>
+      <span className="font-bold whitespace-nowrap">as an L&amp;D perk</span>
       <br />
-      <span className="font-bold whitespace-nowrap">attract and retain</span>
+      <span className="whitespace-nowrap">to attract and retain</span>
       <br />
-      <span className="font-bold whitespace-nowrap">
+      <span className="whitespace-nowrap">
         top talent in{' '}
         <span className="relative inline-block">
           <span
