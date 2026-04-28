@@ -14,23 +14,18 @@ import Link from 'next/link'
  *            segment color overrides for inline accents
  *
  * CODIFIED DEFAULTS (H2.5 is the reference):
- *   fontSize       20px   (≈150% of the old 13px PrimaryButton)
+ *   fontSize       20px
  *   border         1px solid `ide-fg-mute` (#75715E) — one of the few
  *                  places the muted IDE foreground is deployed
  *   padding        px-3 py-2 (12px horizontal, 8px vertical)
  *   radius         rounded-sm
- *   hover          bg-orange/10 (matches the old PrimaryButton hover)
+ *   hover          bg-orange/10
  *   lowercase      true — set false for CTAs that need mixed case
  *                         (e.g. the nav's `HUMAN` brand caps)
  *   bracketBlink   false — opt-in. Set true in contexts where the CTA
  *                         should pulse on its own (e.g. the nav).
  *                         In H2.5 it flips from false → true when the
  *                         upstream TerminalLine finishes typing.
- *
- * PrimaryButton (`components/ui/PrimaryButton.tsx`) is still around for
- * the section-level "big" CTA treatment (H5 FinalCTA, A6 About CTA), but
- * the floating nav now uses TerminalCTA so everything inline/compact
- * shares one voice.
  *
  * Click target is the whole framed string (brackets + prompt + body), so
  * the entire visual is one tap zone.
@@ -83,7 +78,7 @@ export type TerminalCTAProps = {
   text?: string
   /** Styled segments for inline color accents. Takes precedence over `text`. */
   segments?: TerminalCTASegment[]
-  /** Font size in px. Default 20 (≈150% of PrimaryButton's 13px). */
+  /** Font size in px. Default 20. */
   fontSize?: number
   /** Tailwind text-color class for the framing `[` and `]`. Default `"text-orange"`. */
   bracketColor?: string
@@ -137,15 +132,12 @@ export function TerminalCTA({
   // brackets/prompt characters.
   const ariaLabel = activeSegments.map((s) => s.text).join('')
 
-  // Hover treatment mirrors PrimaryButton (the top-right nav CTA) so both
-  // CTA primitives share one hover language: `hover:bg-orange/10`. A small
-  // padding + rounded-sm give the tint a touch of breathing room around the
-  // brackets instead of hugging the glyph edges.
+  // hover:bg-orange/10. A small padding + rounded-sm give the tint a
+  // touch of breathing room around the brackets instead of hugging the
+  // glyph edges.
   //
   // Default border uses `ide-fg-mute` — one of the few places Alex is
-  // comfortable deploying the muted IDE foreground. Kept on TerminalCTA
-  // only (not PrimaryButton) so the inline CTAs get a quiet frame that
-  // lives behind the orange brackets.
+  // comfortable deploying the muted IDE foreground.
   const body = (
     <span
       className={`font-mono inline-flex items-baseline gap-[1ch] rounded-sm border border-ide-fg-mute px-3 py-2 transition hover:bg-orange/10 ${className}`}
