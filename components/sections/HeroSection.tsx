@@ -316,29 +316,40 @@ export function HeroSection() {
     willChange: 'transform',
   }
 
-  // Post-it copy is shared across the desktop overlay and the mobile
-  // contained version. Extracting it here keeps the two render paths
-  // from drifting on the load-bearing copy.
+  // Post-it copy — merged title-weight + body-weight into a single
+  // heading per Alex 2026-04-28: drop the title/subtitle split, render
+  // one mixed-weight string with the key phrase ("the #1 L&D topic")
+  // bold and the rest at regular weight.
+  //
+  // Highlight on "2026" uses variant E from /sandbox/highlight (wide
+  // rounded-md stroke at bg-purple/55). Outer span sets `font-normal`
+  // explicitly to override Postit's wrapper-level `font-bold`; the
+  // bold inner span then re-applies bold to the key phrase. Inline
+  // fontSize=24px overrides Postit's wrapper text-[34px]/[43px] —
+  // the merged copy is longer than the original two-word heading and
+  // needs a smaller size to wrap cleanly inside the 240×240 post-it.
   const postitHeading = (
-    <>
-      ai fluency
+    <span
+      className="block font-display font-normal"
+      style={{ width: '200px', fontSize: '24px', lineHeight: 1.1 }}
+    >
+      <span className="whitespace-nowrap">add ai fluency to</span>
       <br />
-      lessons
-    </>
-  )
-  const postitBody = (
-    <>
-      the #1 L&D topic
+      <span className="whitespace-nowrap">your L&amp;D perks to</span>
       <br />
-      of{' '}
-      <span className="relative inline-block font-bold">
-        <span
-          aria-hidden
-          className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-sm bg-purple/90"
-        />
-        <span className="relative text-ide-fg">2026</span>
+      <span className="font-bold whitespace-nowrap">attract and retain</span>
+      <br />
+      <span className="font-bold whitespace-nowrap">
+        top talent in{' '}
+        <span className="relative inline-block">
+          <span
+            aria-hidden
+            className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+          />
+          <span className="relative">2026</span>
+        </span>
       </span>
-    </>
+    </span>
   )
 
   // Perks list — same content in both layouts; reused inline in each
@@ -349,7 +360,7 @@ export function HeroSection() {
         <span className="relative inline-block">
           <span
             aria-hidden
-            className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-sm bg-purple/90"
+            className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
           />
           <span className="relative">2025</span>
         </span>{' '}
@@ -476,9 +487,7 @@ export function HeroSection() {
             className="absolute left-1/2 top-[244px] pointer-events-none origin-top-left"
             style={{ transform: 'scale(calc(50vw / 250px))' }}
           >
-            <Postit rotation={-5} heading={postitHeading}>
-              {postitBody}
-            </Postit>
+            <Postit rotation={-5} heading={postitHeading} />
           </div>
         </div>
       </div>
@@ -536,9 +545,7 @@ export function HeroSection() {
           className="absolute top-1/2 left-1/2 pointer-events-none z-50"
           style={postitWrapperStyle}
         >
-          <Postit rotation={-5} rotationOrigin="top left" heading={postitHeading}>
-            {postitBody}
-          </Postit>
+          <Postit rotation={-5} rotationOrigin="top left" heading={postitHeading} />
         </div>
       </div>
     </section>
