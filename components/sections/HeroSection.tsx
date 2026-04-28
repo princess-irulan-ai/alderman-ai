@@ -341,7 +341,7 @@ export function HeroSection() {
       <br />
       <span className="whitespace-nowrap">
         top talent in{' '}
-        <span className="relative inline-block">
+        <span className="relative inline-block font-bold">
           <span
             aria-hidden
             className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
