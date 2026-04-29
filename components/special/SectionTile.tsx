@@ -115,7 +115,7 @@ export type SectionTileProps = {
   variant: SectionTileVariant
   /** Accent color for the marker glyphs. Default 'purple'. */
   accent?: SectionTileAccent
-  eyebrow: string
+  eyebrow: string | ReactNode
   title: string
   /** If provided, the whole tile becomes a link. Otherwise non-interactive. */
   href?: string
@@ -338,11 +338,13 @@ export function SectionTile({
           {eyebrowStyle === 'em-dash' ? (
             <>
               <span aria-hidden>—&nbsp;</span>
-              {eyebrow.toUpperCase()}
+              {typeof eyebrow === 'string' ? eyebrow.toUpperCase() : eyebrow}
               <span aria-hidden>&nbsp;—</span>
             </>
-          ) : (
+          ) : typeof eyebrow === 'string' ? (
             eyebrow.toUpperCase()
+          ) : (
+            eyebrow
           )}
         </div>
       )}
