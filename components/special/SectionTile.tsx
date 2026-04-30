@@ -116,7 +116,7 @@ export type SectionTileProps = {
   /** Accent color for the marker glyphs. Default 'purple'. */
   accent?: SectionTileAccent
   eyebrow: string | ReactNode
-  title: string
+  title: string | ReactNode
   /** If provided, the whole tile becomes a link. Otherwise non-interactive. */
   href?: string
   /**
