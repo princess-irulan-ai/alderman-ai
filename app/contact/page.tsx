@@ -35,6 +35,7 @@ export default function ContactPage() {
                   accent="orange"
                   eyebrow="Book a call"
                   eyebrowStyle="em-dash"
+                  href="https://cal.com/alex-the-ai-instructor/30m"
                   title={<>Let&apos;s chat <span className="text-purple">:)</span></>}
                   markerStyle="contained"
                   className="!mt-10 md:!mt-12 max-w-[280px] mx-auto"
