@@ -253,12 +253,18 @@ export function HeroTerminalBlock({
 
   const line1 = (
     <TerminalLine
+      className="[font-variant-ligatures:none]"
       segments={[
         { text: 'take a ' },
         { text: 'HUMAN', color: 'text-orange' },
         { text: ' approach to ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' adoption and make sure no one gets left behind' },
+        { text: ' adoption and make sure no one is left behind ' },
+        { text: ':(', color: 'text-green' },
+        { text: ' ' },
+        { text: '->', color: 'text-white' },
+        { text: ' ' },
+        { text: ':)', color: 'text-orange' },
       ]}
       fontSize={resolvedFontSize}
       align="left"
@@ -277,9 +283,9 @@ export function HeroTerminalBlock({
       segments={[
         { text: 'my unique process of teaching ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' fluency will be more familiar than ' },
-        { text: 'YOU', color: 'text-orange' },
-        { text: ' think' },
+        { text: ' fluency will be familiar to ' },
+        { text: 'ANYONE', color: 'text-orange' },
+        { text: " who's booked english lessons" },
       ]}
       fontSize={resolvedFontSize}
       align="left"

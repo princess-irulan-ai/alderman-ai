@@ -461,7 +461,7 @@ export function WhatYouGetSection() {
               Onboarding
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              It&apos;s similar to setting up English lessons for your company.
+              The same as setting up English lessons for your company.
             </p>
           </div>
 

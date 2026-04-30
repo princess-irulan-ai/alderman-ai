@@ -69,7 +69,7 @@ export default function HomePage() {
               variant="ide"
               accent="purple"
               eyebrow="ai fluency"
-              title="learn about ai lessons"
+              title="have questions?"
               href="/faq"
               markerStyle="contained"
             />

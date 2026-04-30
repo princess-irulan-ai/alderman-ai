@@ -44,7 +44,7 @@ export default function AboutPage() {
             be the visual peak below. */}
         <section className="flex flex-col gap-8 pt-4 pb-8 md:grid md:grid-cols-canvas md:gap-6 md:pt-8 md:items-center">
           <div className="md:col-span-2 md:pr-4">
-            <h1 className="font-display text-[36px] md:text-[48px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center md:text-left">
+            <h1 className="font-display text-[37px] md:text-[48px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center md:text-left">
               Your team needs
               <br />
               a <span className="text-orange">HUMAN</span> teacher

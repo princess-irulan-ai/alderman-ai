@@ -51,7 +51,7 @@ import { Postit } from '@/components/special/Postit'
  * Eye-follow choreography (Pass 5, Alex's spec)
  * ────────────────────────────────────────────────────────────────────
  * The user's gaze is intentionally pulled through four beats:
- *   1. TerminalLine types L→R. Eye tracks the cursor.
+ *   1. TerminalLine types L->R. Eye tracks the cursor.
  *   2. ~1s before typing ends, the Post-it enters the field of vision
  *      rising up the right side of the viewport. Eye is peripherally
  *      aware.
@@ -61,7 +61,7 @@ import { Postit } from '@/components/special/Postit'
  *      then lands on the Post-it's "AI Fluency Lessons" headline
  *      overlapping the top of the panel — the emotional payload.
  *
- * Net effect: typing → Post-it arrival → perks scan → Post-it read,
+ * Net effect: typing -> Post-it arrival -> perks scan -> Post-it read,
  * ending on Alderman's value prop without shouting.
  *
  * Note: the Post-it overhang obscures the lower portion of the perks
@@ -89,7 +89,7 @@ import { Postit } from '@/components/special/Postit'
  *                                  own IntersectionObserver immediately
  *                                  fires and runs the codified 2120ms
  *                                  idle-blink, then types out. Bumped
- *                                  from 500ms → 1500ms 2026-04-22
+ *                                  from 500ms -> 1500ms 2026-04-22
  *                                  evening (Alex: "heroterminalline2
  *                                  should begin a whole second
  *                                  earlier").
@@ -146,9 +146,9 @@ import { Postit } from '@/components/special/Postit'
 /**
  * Delay between viewport entry and rise start (ms). Tuned on-screen
  * 2026-04-21 evening with Alex:
- *   • 900ms (original guess) → Post-it entered view too early
- *   • +7000 → 7900ms — overshoot, Post-it felt late / dead-air
- *   • -2000 → 5900ms (current) — lands in the pocket right after the
+ *   • 900ms (original guess) -> Post-it entered view too early
+ *   • +7000 -> 7900ms — overshoot, Post-it felt late / dead-air
+ *   • -2000 -> 5900ms (current) — lands in the pocket right after the
  *     eye finishes reading the typed line.
  * Re-tune if the hero copy gets longer/shorter since typing duration
  * anchors the target landing moment.
@@ -295,11 +295,11 @@ export function HeroSection() {
   }, [])
 
   // Transform state on the Post-it's positioning wrapper.
-  //   idle    → translateY(100vh) — off-screen below the fold. No
+  //   idle    -> translateY(100vh) — off-screen below the fold. No
   //             transition so the initial paint doesn't animate from
   //             wherever React initially placed things.
-  //   rising  → translateY(0), transition active → animates the rise.
-  //   landed  → translateY(0), transition still on; kept active so any
+  //   rising  -> translateY(0), transition active -> animates the rise.
+  //   landed  -> translateY(0), transition still on; kept active so any
   //             subsequent state-driven tweak animates smoothly.
   //
   // NOTE: rotation lives on the Postit itself (via `rotation={-5}` +
@@ -399,8 +399,8 @@ export function HeroSection() {
       </h1>
 
       {/* ─── MOBILE STACK (block md:hidden) ─────────────────────────────
-          Order per Alex 2026-04-24: line 1 → paper-app (with Post-it
-          contained INSIDE the body, below the perks list) → line 2.
+          Order per Alex 2026-04-24: line 1 -> paper-app (with Post-it
+          contained INSIDE the body, below the perks list) -> line 2.
           Post-it is load-bearing copy, so it stays in the layout — just
           repositioned from the desktop overhanging overlay to a
           contained block inside the paper-app on mobile. No rise-and-
@@ -431,7 +431,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'\u00a0\u00a0take a HUMAN approach to ai adoption and make sure no one gets left behind\u00a0'}
+            {'\u00a0\u00a0take a HUMAN approach to ai adoption and make sure no one is left behind :( -> :)\u00a0'}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -507,7 +507,7 @@ export function HeroSection() {
         // terminal-block height from first paint, so the WhatYouGet
         // paper-app below stays put as line 2 types out instead of
         // sliding downward each character.
-        <div className="md:hidden mt-[calc(50vw-115px)] grid">
+        <div className="md:hidden mt-[calc(50vw-82px)] grid">
           <div
             aria-hidden
             className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -515,7 +515,7 @@ export function HeroSection() {
           >
             <span>
               <span className="select-none">&gt;</span>
-              {'  my unique process of teaching ai fluency will be more familiar than YOU think '}
+              {"  my unique process of teaching ai fluency will be familiar to ANYONE who's booked english lessons "}
               <span className="inline-block">_</span>
             </span>
           </div>

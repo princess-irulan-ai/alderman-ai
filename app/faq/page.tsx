@@ -31,35 +31,35 @@ export default function FaqPage() {
               </h2>
               <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 We sell packages of monthly teaching hours that can be divided
-                to as many teams as you wish.
+                to as many groups as you wish.
               </p>
-              <p className="font-body text-[15px] md:text-[16px] font-bold leading-snug text-purple max-w-[780px] mx-auto text-center">
-                (Max 6 people per team)
+              <p className="font-body text-[15px] md:text-[16px] font-bold leading-snug text-orange max-w-[780px] mx-auto text-center">
+                <span className="text-purple">(</span>Max <span className="text-purple">6</span> people per group<span className="text-purple">)</span>
               </p>
-              <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-orange font-display text-[16px] md:text-[18px] text-ink">
+              <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-purple font-display text-[16px] md:text-[18px] text-ink">
                 <thead>
                   <tr>
-                    <th className="border-2 border-orange px-4 py-2 font-bold text-left">Hours</th>
-                    <th className="border-2 border-orange px-4 py-2 font-bold text-left">Price (each)</th>
+                    <th className="border-2 border-purple px-4 py-2 font-bold text-left">Hours</th>
+                    <th className="border-2 border-purple px-4 py-2 font-bold text-left">Price (each)</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border-2 border-orange px-4 py-2">4</td>
-                    <td className="border-2 border-orange px-4 py-2">5000 Kč</td>
+                    <td className="border-2 border-purple px-4 py-2">4</td>
+                    <td className="border-2 border-purple px-4 py-2">5000 Kč</td>
                   </tr>
                   <tr>
-                    <td className="border-2 border-orange px-4 py-2">8</td>
-                    <td className="border-2 border-orange px-4 py-2">4500 Kč</td>
+                    <td className="border-2 border-purple px-4 py-2">8</td>
+                    <td className="border-2 border-purple px-4 py-2">4500 Kč</td>
                   </tr>
                   <tr>
-                    <td className="border-2 border-orange px-4 py-2">16+</td>
-                    <td className="border-2 border-orange px-4 py-2">4000 Kč</td>
+                    <td className="border-2 border-purple px-4 py-2">16+</td>
+                    <td className="border-2 border-purple px-4 py-2">4000 Kč</td>
                   </tr>
                 </tbody>
               </table>
-              <p className="font-body text-[15px] md:text-[16px] !mt-8 md:!mt-10 font-bold leading-snug text-purple max-w-[780px] mx-auto text-center">
-                (Teaching hour = 50m)
+              <p className="font-body text-[15px] md:text-[16px] !mt-8 md:!mt-10 font-bold leading-snug text-orange max-w-[780px] mx-auto text-center">
+                <span className="text-purple">(</span>Teaching hour <span className="text-purple">=</span> 50m<span className="text-purple">)</span>
               </p>
               <SectionTile
                 variant="app"
@@ -94,7 +94,7 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-[138px] md:pt-6 md:pb-[170px]">
+        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-12 pb-[138px] md:pt-14 md:pb-[170px]">
           <div className="relative md:col-span-3 md:w-2/3 md:justify-self-center">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
@@ -193,7 +193,7 @@ export default function FaqPage() {
           </PaperApp>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-4 pb-8 md:pt-6 md:pb-10">
+        <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-14 md:pb-10">
           <div className="col-span-3">
             <TerminalLine
               hangingPrompt

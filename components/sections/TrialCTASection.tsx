@@ -31,11 +31,11 @@ export function TrialCTASection() {
         <PaperApp width="wide">
           <div className="space-y-4 md:space-y-5 py-2">
             <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-              I&rsquo;ve been doing this for 20 years
+              I&rsquo;ve been teaching for 20 years
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              ... since I was a signals intelligence officer for the US
-              government
+              From military training, to teaching advanced ESL, to LinkedIn
+              marketing, to mentoring freelancers and startups, and now ai
             </p>
             {/* Orange APP-variant SectionTile — first live use of the
                 paper-dialect tile. Sits inside the credentials paper-app

@@ -195,9 +195,9 @@ export function FloatingNav() {
                 onClick={() => setMenuOpen(false)}
                 className="font-mono text-[18px] lowercase transition-colors hover:opacity-80"
               >
-                <span className="text-purple">faq</span>
-                <span className="text-paper"> / </span>
-                <span className="text-orange">pricing</span>
+                <span className="text-paper">faq</span>
+                <span className="text-purple"> / </span>
+                <span className="text-paper">pricing</span>
               </Link>
               <Link
                 href="/about"
