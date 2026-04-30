@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { Wordmark } from '@/components/chrome/Wordmark'
@@ -37,6 +38,7 @@ import { TerminalCTA } from '@/components/ui/TerminalCTA'
  */
 export function FloatingNav() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = usePathname()
 
   // Close the mobile menu on Escape and when the viewport crosses up to
   // the desktop breakpoint (where the panel is hidden anyway, but
@@ -96,7 +98,20 @@ export function FloatingNav() {
       <div className="grid grid-cols-page bg-ide/90">
         <div aria-hidden className="hidden md:block" />
         <div className="col-span-6 flex items-center justify-between px-4 py-[2px] md:col-span-4 md:px-0 md:py-6">
-          <Link href="/" className="flex items-center" aria-label="alderman.ai">
+          <Link
+            href="/"
+            onClick={(e) => {
+              // Same-route guard: if we're already on `/`, don't let the
+              // logo click trigger a soft navigation. Without this, Next
+              // re-renders the page on click, re-mounting the terminal
+              // lines and resetting their typing animations from idle.
+              if (pathname === '/') {
+                e.preventDefault()
+              }
+            }}
+            className="flex items-center"
+            aria-label="alderman.ai"
+          >
             {/* Mobile: stacked-logo SVG. Sized 76px so the logo reads as
                 the dominant brand anchor on mobile. */}
             <img

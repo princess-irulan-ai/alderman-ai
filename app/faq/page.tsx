@@ -76,21 +76,40 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="col-span-3">
-            <TerminalLine
-              hangingPrompt
-              showBrackets={false}
-              align="left"
-              persistCursor
-              startDelayMs={1620}
-              segments={[
-                { text: 'feel free to ask ' },
-                { text: 'ai', color: 'text-green' },
-                { text: ' any of ' },
-                { text: 'YOUR', color: 'text-orange' },
-                { text: ' questions about our business' },
-              ]}
-            />
+          <div className="col-span-3 relative">
+            {/* Invisible mirror — reserves the final rendered height of
+                the terminal line so the next paper-app holds its
+                position while the line types out. Mirrors the
+                showBrackets={false} 3ch hang (1ch prompt + 2 NBSP
+                leadingSpaces). */}
+            <div
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: '22px',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
+            >
+              {'>  feel free to ask ai any of YOUR questions about our business'}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                startDelayMs={1620}
+                segments={[
+                  { text: 'feel free to ask ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ' any of ' },
+                  { text: 'YOUR', color: 'text-orange' },
+                  { text: ' questions about our business' },
+                ]}
+              />
+            </div>
           </div>
         </section>
 
@@ -102,8 +121,8 @@ export default function FaqPage() {
                   Download the <span className="text-purple">FAQ</span> file below
                 </h2>
                 <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                  Then upload it to your favorite ai platform (ChatGPT, Claude,
-                  etc). You can then ask it anything you want to know about us.
+                  Then upload it to your favorite ai platform <span className="text-purple">(</span>ChatGPT, Claude,
+                  etc<span className="text-purple">)</span>. You can then ask it anything you want to know about us.
                 </p>
                 {/* Spacer reserves vertical room for the absolutely-
                     positioned Post-it that overhangs the BR corner —
@@ -194,24 +213,41 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-14 md:pb-10">
-          <div className="col-span-3">
-            <TerminalLine
-              hangingPrompt
-              showBrackets={false}
-              align="left"
-              persistCursor
-              startDelayMs={1620}
-              segments={[
-                { text: 'i can' },
-                { text: "'", color: 'text-purple' },
-                { text: 't wait to help ' },
-                { text: 'YOUR TEAM', color: 'text-orange' },
-                { text: ' prepare for the ' },
-                { text: 'ai', color: 'text-green' },
-                { text: ' future ' },
-                { text: ':) :)', color: 'text-purple' },
-              ]}
-            />
+          <div className="col-span-3 relative">
+            {/* Invisible mirror — reserves the final rendered height of
+                the terminal line so the closing CTA below holds its
+                position while the line types out. */}
+            <div
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: '22px',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
+            >
+              {">  i can't wait to help YOUR TEAM prepare for the ai future :) :)"}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                startDelayMs={1620}
+                segments={[
+                  { text: 'i can' },
+                  { text: "'", color: 'text-purple' },
+                  { text: 't wait to help ' },
+                  { text: 'YOUR TEAM', color: 'text-orange' },
+                  { text: ' prepare for the ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ' future ' },
+                  { text: ':) :)', color: 'text-purple' },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

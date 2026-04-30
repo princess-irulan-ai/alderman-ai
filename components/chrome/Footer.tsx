@@ -81,6 +81,12 @@ export function Footer() {
         </div>
         <div aria-hidden />
       </div>
+      {/* Trade license line — bottom chrome under both mobile and
+          desktop layouts. Centered, low-contrast; purple parens +
+          orange HUMAN per brand chord. */}
+      <div className="text-center font-mono text-[12px] text-ide-fg-mute pb-6 md:pb-4">
+        <span className="text-purple">(</span>a <span className="text-orange">human</span> with a <span className="text-green">cz</span> trade license<span className="text-purple">)</span>
+      </div>
     </footer>
   )
 }

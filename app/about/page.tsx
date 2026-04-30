@@ -77,7 +77,7 @@ export default function AboutPage() {
                     className="font-mono lowercase text-white leading-none"
                     style={{ fontSize: '16px', marginBottom: '9px' }}
                   >
-                    alex
+                    hi, I&apos;m alex
                   </span>
                   <img
                     src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
@@ -92,7 +92,7 @@ export default function AboutPage() {
         </section>
 
         {/* DARK CTA — sits directly under the portrait. */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-10 md:pb-10">
+        <section className="grid grid-cols-canvas gap-6 pt-16 pb-8 md:pt-20 md:pb-10">
           <div className="col-span-3 md:col-start-2 md:col-span-1">
             <SectionTile
               variant="ide"
@@ -116,15 +116,31 @@ export default function AboutPage() {
             <div className="space-y-6 md:space-y-8 py-2">
               <div className="space-y-4 md:space-y-5">
                 <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                  Eight years teaching English in Prague
+                  8 years teaching English in ČR
                 </h2>
                 <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                  Same scaffolded immersion. Same workplace context. Same business model.
+                  then 8 more in{' '}
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                    />
+                    <span className="relative">teaching</span>
+                  </span>{' '}
+                  LinkedIn automation
                 </p>
               </div>
               <p className="font-body text-[17px] md:text-[18px] leading-relaxed text-ink max-w-prose mx-auto text-center">
                 If your HR team has ever booked English lessons for staff, you already
-                have a mental model for what these AI fluency lessons look like.
+                have a mental model for what these{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
+                  />
+                  <span className="relative">ai fluency</span>
+                </span>{' '}
+                lessons look like.
               </p>
             </div>
           </PaperApp>
@@ -138,22 +154,44 @@ export default function AboutPage() {
             prefix hangs in the outer gutter, matching the homepage
             hero treatment. */}
         <section className="grid grid-cols-canvas gap-6 py-16 md:py-24">
-          <div className="col-span-3">
-            <TerminalLine
-              fontSize="clamp(26px, 6vw, 44px)"
-              align="left"
-              hangingPrompt
-              persistCursor
-              startDelayMs={1620}
-              segments={[
-                { text: '20 years at the intersection of technology' },
-                { text: ',', color: 'text-purple' },
-                { text: ' education' },
-                { text: ',', color: 'text-purple' },
-                { text: ' and psychology' },
-                { text: '.', color: 'text-purple' },
-              ]}
-            />
+          <div className="col-span-3 relative">
+            {/* Invisible mirror — reserves the final rendered height of
+                the terminal line so the "Before Prague" paper-app below
+                holds its position while the line types out. Mirrors
+                hangingPrompt's 3ch hanging math when brackets are off
+                (1ch prompt + 2 leadingSpaces NBSPs) so the reserved box
+                matches the live line exactly. */}
+            <div
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: 'clamp(26px, 6vw, 44px)',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
+            >
+              {'>  20 years at the intersection of technology, education, and psychology.'}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                fontSize="clamp(26px, 6vw, 44px)"
+                align="left"
+                hangingPrompt
+                showBrackets={false}
+                persistCursor
+                startDelayMs={1620}
+                segments={[
+                  { text: '20 years', color: 'text-orange' },
+                  { text: ' at the intersection of technology' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' education', color: 'text-purple' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' and psychology' },
+                  { text: '.', color: 'text-purple' },
+                ]}
+              />
+            </div>
           </div>
         </section>
 
@@ -166,11 +204,32 @@ export default function AboutPage() {
           <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
             <div className="space-y-4 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                Before Prague: marketing, freelance, military
+                Before Prague: military, then marketing, then freelance{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
+                  />
+                  <span className="relative">mentor</span>
+                </span>
               </h2>
               <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                A decade training juniors on the door-opening software of the moment.
-                Before that, US military &mdash; signals intelligence and a Korean linguist.
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative">20 years</span>
+                </span>{' '}
+                training juniors on cutting-edge software. Now 3 years training people on{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
+                  />
+                  <span className="relative">ai</span>
+                </span>
+                .
               </p>
             </div>
           </PaperApp>

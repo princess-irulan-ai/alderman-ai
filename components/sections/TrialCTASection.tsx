@@ -34,8 +34,23 @@ export function TrialCTASection() {
               I&rsquo;ve been teaching for 20 years
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              From military training, to teaching advanced ESL, to LinkedIn
-              marketing, to mentoring freelancers and startups, and now ai
+              From military training, to teaching{' '}
+              <span className="relative inline-block">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
+                />
+                <span className="relative">advanced ESL</span>
+              </span>
+              , to LinkedIn marketing, to{' '}
+              <span className="relative inline-block">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                />
+                <span className="relative">mentoring freelancers</span>
+              </span>
+              {' '}and startups, and now ai.
             </p>
             {/* Orange APP-variant SectionTile — first live use of the
                 paper-dialect tile. Sits inside the credentials paper-app
