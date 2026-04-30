@@ -85,7 +85,7 @@ export function TrialCTASection() {
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
         <div
-          className="absolute right-1/2 top-full -mt-8 pointer-events-none origin-top-right"
+          className="absolute right-1/2 top-full -mt-8 md:right-auto md:top-auto md:left-0 md:bottom-[-160px] pointer-events-none origin-top-right md:!transform-none"
           style={{ transform: 'scale(calc(50vw / 250px))' }}
         >
           <Postit
