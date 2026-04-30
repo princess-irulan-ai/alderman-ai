@@ -64,7 +64,7 @@ export default function HomePage() {
             before the credentials paper-app. Clicks through to /faq
             (FAQ + pricing). */}
         <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-16 md:pb-10">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
@@ -133,7 +133,7 @@ export default function HomePage() {
             placeholder ("next step") — Alex to drop final copy.
             Provisional href: /contact. */}
         <section className="grid grid-cols-canvas gap-6 pt-8 pb-16 md:pt-12 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"

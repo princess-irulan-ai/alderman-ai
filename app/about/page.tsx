@@ -93,7 +93,7 @@ export default function AboutPage() {
 
         {/* DARK CTA — sits directly under the portrait. */}
         <section className="grid grid-cols-canvas gap-6 pt-16 pb-8 md:pt-20 md:pb-10">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
@@ -237,7 +237,7 @@ export default function AboutPage() {
 
         {/* CLOSING CTA — IDE SectionTile -> /contact. */}
         <section className="grid grid-cols-canvas gap-6 pt-8 pb-16 md:pt-12 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"

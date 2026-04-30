@@ -185,7 +185,7 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-4 pb-16 md:pt-16 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
@@ -234,7 +234,7 @@ export default function FaqPage() {
                 textIndent: '-3ch',
               }}
             >
-              {">  i can't wait to help YOUR TEAM prepare for the ai future :) :)"}
+              {">  i can't wait to help YOUR TEAM prepare for the ai future :)"}
             </div>
             <div className="absolute inset-0">
               <TerminalLine
@@ -251,7 +251,7 @@ export default function FaqPage() {
                   { text: ' prepare for the ' },
                   { text: 'ai', color: 'text-green' },
                   { text: ' future ' },
-                  { text: ':) :)', color: 'text-purple' },
+                  { text: ':)', color: 'text-purple' },
                 ]}
               />
             </div>
@@ -259,7 +259,7 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-12 pb-16 md:pt-16 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3 md:w-1/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
