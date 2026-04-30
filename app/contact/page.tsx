@@ -28,7 +28,14 @@ export default function ContactPage() {
                   Get in touch any way you&apos;d like
                 </h2>
                 <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                  Book a demo lesson, ask a question, or just introduce yourself! <span className="text-orange text-[1.25em]">♥</span>
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                    />
+                    <span className="relative">Book a demo</span>
+                  </span>
+                  {' '}lesson, ask a question, or just introduce yourself! <span className="text-orange text-[1.25em]">♥</span>
                 </p>
                 <SectionTile
                   variant="app"
@@ -161,7 +168,15 @@ export default function ContactPage() {
                 Not ready to chat?
               </h2>
               <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                Just follow me on LinkedIn for more information.
+                Just{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative">follow me</span>
+                </span>
+                {' '}on LinkedIn for more information.
               </p>
               <SectionTile
                 variant="app"

@@ -461,7 +461,15 @@ export function WhatYouGetSection() {
               Onboarding
             </h2>
             <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              The same as setting up English lessons for your company.
+              The same as setting up{' '}
+              <span className="relative inline-block">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                />
+                <span className="relative">English lessons</span>
+              </span>
+              {' '}for your company.
             </p>
           </div>
 

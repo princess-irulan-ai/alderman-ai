@@ -97,8 +97,14 @@ export function TrialCTASection() {
                 style={{ fontSize: '30px', lineHeight: 1.05 }}
               >
                 including 8+ years of{' '}
-                <span className="font-bold">teaching ESL</span> in the
-                Czech Republic
+                <span className="relative inline-block font-bold">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative">teaching ESL</span>
+                </span>{' '}
+                in the Czech Republic
               </span>
             }
           />
