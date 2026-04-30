@@ -117,7 +117,7 @@ export default function ContactPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-16 pb-12 md:pt-20 md:pb-16">
-          <div className="col-span-3 md:w-1/3 md:justify-self-center">
+          <div className="col-span-3 md:w-2/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"

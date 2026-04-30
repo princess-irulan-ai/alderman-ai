@@ -185,7 +185,7 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-4 pb-16 md:pt-16 md:pb-20">
-          <div className="col-span-3 md:w-1/3 md:justify-self-center">
+          <div className="col-span-3 md:w-2/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
@@ -259,7 +259,7 @@ export default function FaqPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-12 pb-16 md:pt-16 md:pb-20">
-          <div className="col-span-3 md:w-1/3 md:justify-self-center">
+          <div className="col-span-3 md:w-2/3 md:justify-self-center">
             <SectionTile
               variant="ide"
               accent="purple"
