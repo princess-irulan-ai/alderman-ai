@@ -12,14 +12,15 @@ import { TerminalCTA } from '@/components/ui/TerminalCTA'
  *
  * Sits above scroll. Logo on the left, menu items on the right.
  *
- * Layout (2026-04-26 pass):
- *   - Desktop (md+): `faq | about me | [talk to a HUMAN]` — three items
- *     separated by muted `|` pipes between them. CTA still bracketed and
- *     bracket-blinking.
- *   - Mobile (<md): `[talk to a HUMAN] [☰]` — CTA stays visible
- *     alongside a hamburger. The hamburger reveals a slide-down panel
- *     containing the secondary items (faq + about me). CTA is excluded
- *     from the hamburger because it's already visible outside it.
+ * Layout (2026-04-30 pass):
+ *   - Desktop (md+): `[wordmark]  ............  faq | about me | [talk to a HUMAN]`
+ *     — wordmark left, three secondary items right with muted `|` pipes
+ *     between them. CTA still bracketed and bracket-blinking.
+ *   - Mobile (<md): `[☰]  [talk to a HUMAN]  [stacked logo]` — three-up
+ *     row, hamburger far left, CTA centered, stacked-logo far right.
+ *     Hamburger reveals a slide-down panel containing the secondary
+ *     items (faq + about me). CTA stays in the bar so it's always
+ *     visible without opening the panel.
  *
  * Background: `bg-ide/90` — the IDE substrate colour at 90% opacity, so
  * the nav reads as a near-solid bar when paper apps sit under it. Kept
@@ -97,72 +98,21 @@ export function FloatingNav() {
           panel now sits over the live page content directly. */}
       <div className="grid grid-cols-page bg-ide/90">
         <div aria-hidden className="hidden md:block" />
-        <div className="col-span-6 flex items-center justify-between px-4 py-[2px] md:col-span-4 md:px-0 md:py-6">
-          <Link
-            href="/"
-            onClick={(e) => {
-              // Same-route guard: if we're already on `/`, don't let the
-              // logo click trigger a soft navigation. Without this, Next
-              // re-renders the page on click, re-mounting the terminal
-              // lines and resetting their typing animations from idle.
-              if (pathname === '/') {
-                e.preventDefault()
-              }
-            }}
-            className="flex items-center"
-            aria-label="alderman.ai"
-          >
-            {/* Mobile: stacked-logo SVG. Sized 76px so the logo reads as
-                the dominant brand anchor on mobile. */}
-            <img
-              src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
-              alt=""
-              aria-hidden
-              className="block h-[76px] w-[76px] md:hidden"
-            />
-            {/* Desktop: text wordmark sized to 16px — ~80% of the nav
-                CTA's 20px, so it reads as a quieter sibling to the
-                primary action on the right. */}
-            <span className="hidden md:inline">
-              <Wordmark size={16} />
-            </span>
-          </Link>
-
-          {/* DESKTOP RIGHT GROUP: faq | about your instructor | [CTA]
-              Pipes go between items, not around the CTA. Hidden on
-              mobile — mobile uses a separate flex group with CTA +
-              hamburger instead. */}
-          <div className="hidden md:flex items-center gap-6">
-            <Link
-              href="/faq"
-              className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
-            >
-              faq
-            </Link>
-            {pipe}
-            <Link
-              href="/about"
-              className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
-            >
-              about your <span className="text-orange">instructor</span>
-            </Link>
-            {pipe}
-            {cta(20)}
-          </div>
-
-          {/* MOBILE RIGHT GROUP: [CTA] [☰]
-              CTA stays visible outside the hamburger because it's the
-              primary action; the hamburger only houses the secondary
-              menu items (faq + about me). Hidden on desktop. */}
-          <div className="md:hidden flex items-center gap-3">
-            {cta(14)}
+        <div className="col-span-6 md:col-span-4">
+          {/* MOBILE BAR: [☰]  [CTA]  [stacked logo]
+              Hamburger and logo are flexed to the edges; CTA is
+              absolutely positioned at the viewport centre so it lines
+              up dead-on regardless of how wide the side elements are.
+              Avoids the equal-thirds grid which squeezed the CTA into
+              a narrow column and forced it to wrap. */}
+          <div className="md:hidden relative flex items-center justify-between px-4 py-[2px]">
             <button
               type="button"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-menu"
               onClick={() => setMenuOpen((v) => !v)}
-              className="p-2 -mr-2 text-purple hover:text-paper transition-colors"
+              className="p-2 -ml-2 text-purple hover:text-paper transition-colors"
             >
               <svg
                 width="24"
@@ -188,45 +138,101 @@ export function FloatingNav() {
                 )}
               </svg>
             </button>
+
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+              {cta(14)}
+            </div>
+
+            <Link
+              href="/"
+              onClick={(e) => {
+                if (pathname === '/') e.preventDefault()
+              }}
+              className="flex items-center"
+              aria-label="alderman.ai"
+            >
+              <img
+                src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+                alt=""
+                aria-hidden
+                className="block h-[76px] w-[76px]"
+              />
+            </Link>
+          </div>
+
+          {/* DESKTOP BAR: [wordmark] ............ faq | about | [CTA] */}
+          <div className="hidden md:flex items-center justify-between py-6">
+            <Link
+              href="/"
+              onClick={(e) => {
+                // Same-route guard: if we're already on `/`, don't let the
+                // logo click trigger a soft navigation. Without this, Next
+                // re-renders the page on click, re-mounting the terminal
+                // lines and resetting their typing animations from idle.
+                if (pathname === '/') e.preventDefault()
+              }}
+              className="flex items-center"
+              aria-label="alderman.ai"
+            >
+              <Wordmark size={16} />
+            </Link>
+
+            <div className="flex items-center gap-6">
+              <Link
+                href="/faq"
+                className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
+              >
+                faq
+              </Link>
+              {pipe}
+              <Link
+                href="/about"
+                className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
+              >
+                about your <span className="text-orange">instructor</span>
+              </Link>
+              {pipe}
+              {cta(20)}
+            </div>
           </div>
         </div>
         <div aria-hidden className="hidden md:block" />
       </div>
 
       {/* MOBILE SLIDE-DOWN PANEL — secondary menu items.
-          Sits below the nav row, full bleed across the IDE substrate,
-          padded to align with the page-padding gutter G. Each link
-          mirrors the desktop styling (paper-white default, purple on
-          hover, lowercase). Tapping a link closes the panel. */}
+          Sits below the nav row, full bleed across the IDE substrate.
+          Items are padded to `px-4` (16px) to match the mobile bar's
+          padding so the link text left-aligns with the hamburger icon
+          directly above it (rather than the wider 12% page gutter).
+          Each link mirrors the desktop styling (paper-white default,
+          purple on hover, lowercase). Tapping a link closes the panel. */}
       {menuOpen && (
         <div
           id="mobile-nav-menu"
           className="md:hidden bg-ide/85 border-t border-ide-rule"
         >
-          <div className="grid grid-cols-page">
-            <div className="col-span-6 px-[var(--gutter-mobile)] py-6 flex flex-col gap-5">
-              <Link
-                href="/faq"
-                onClick={() => setMenuOpen(false)}
-                className="font-mono text-[18px] lowercase transition-colors hover:opacity-80"
-              >
-                <span className="text-paper">faq</span>
-                <span className="text-purple"> / </span>
-                <span className="text-paper">pricing</span>
-              </Link>
-              <Link
-                href="/about"
-                onClick={() => setMenuOpen(false)}
-                className="font-mono text-[18px] text-purple hover:text-paper transition-colors lowercase"
-              >
-                about <span className="text-paper">your</span>{' '}
-                <span className="text-orange">instructor</span>
-              </Link>
-              {/* talk-to-a-HUMAN was previously mirrored here; dropped
-                  2026-04-26 per Alex — it's already visible in the main
-                  bar alongside the hamburger, so duplicating it inside
-                  the panel was redundant. */}
-            </div>
+          <div className="px-4 py-6 flex flex-col gap-5">
+            <Link
+              href="/faq"
+              onClick={() => setMenuOpen(false)}
+              className="font-mono text-[18px] lowercase transition-colors hover:opacity-80"
+            >
+              <span className="text-paper">faq</span>
+              <span className="text-purple"> / </span>
+              <span className="text-paper">pricing</span>
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMenuOpen(false)}
+              className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
+            >
+              about <span className="text-paper">your</span>{' '}
+              <span className="text-orange">instructor</span>
+            </Link>
+            {/* talk-to-a-HUMAN was previously mirrored here; dropped
+                2026-04-26 per Alex — it's already visible in the main
+                bar alongside the hamburger, so duplicating it inside
+                the panel was redundant. */}
           </div>
         </div>
       )}
