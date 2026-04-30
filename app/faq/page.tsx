@@ -18,7 +18,7 @@ export default function FaqPage() {
             <br />
             <span className="text-purple">(</span>or <span className="text-green">ai</span>
             <span className="text-purple">)</span> answer
-            <br />
+            <br className="md:hidden" />{' '}
             your questions
           </h1>
         </section>
@@ -130,13 +130,20 @@ export default function FaqPage() {
                 <div className="h-[30px]" aria-hidden />
               </div>
             </PaperApp>
-            {/* Post-it overlay — mirrors the homepage hero treatment.
-                `top-[X]` positions the top-left corner inside the
-                spacer area; `scale(calc(50vw / 250px))` makes the
-                rotated BR tip land exactly at viewport-right; rotation
-                -5° is the canonical Postit tilt. */}
+            {/* Post-it overlay.
+                Mobile: `top-[X]` positions the top-left corner inside
+                the spacer area; `scale(calc(50vw / 250px))` makes the
+                rotated BR tip land exactly at viewport-right.
+                Desktop: the 50vw scale formula assumed the paper-app
+                fills the canvas (mobile). At md+ the paper-app is only
+                2/3 of canvas centered, so 50vw scales the post-it to
+                ~2.5× and overruns adjacent sections. On desktop we
+                drop the scale (native 240×240) and anchor at the
+                paper-app's BR corner with a small overhang.
+                Rotation -5° is canonical Postit tilt and lives on the
+                primitive itself. */}
             <div
-              className="absolute left-1/2 top-[300px] pointer-events-none origin-top-left"
+              className="absolute left-1/2 top-[300px] md:left-auto md:top-auto md:right-[-180px] md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
               style={{ transform: 'scale(calc(50vw / 250px))' }}
             >
               <Postit

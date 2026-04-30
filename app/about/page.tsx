@@ -48,7 +48,7 @@ export default function AboutPage() {
               Your team needs
               <br />
               a <span className="text-orange">HUMAN</span> teacher
-              <br />
+              <br className="md:hidden" />{' '}
               for <span className="text-green">ai</span>
             </h1>
           </div>

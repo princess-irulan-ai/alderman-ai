@@ -189,7 +189,7 @@ export function FloatingNav() {
                 href="/about"
                 className="font-mono text-[14px] text-paper hover:text-purple transition-colors lowercase"
               >
-                about your <span className="text-orange">instructor</span>
+                about your <span className="text-orange uppercase">instructor</span>
               </Link>
               {pipe}
               {cta(20)}
@@ -227,7 +227,7 @@ export function FloatingNav() {
               className="font-mono text-[18px] text-paper hover:text-purple transition-colors lowercase"
             >
               about <span className="text-paper">your</span>{' '}
-              <span className="text-orange">instructor</span>
+              <span className="text-orange uppercase">instructor</span>
             </Link>
             {/* talk-to-a-HUMAN was previously mirrored here; dropped
                 2026-04-26 per Alex — it's already visible in the main

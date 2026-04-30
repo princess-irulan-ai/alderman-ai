@@ -394,7 +394,7 @@ export function HeroSection() {
         <span className="text-green">ai</span> is a language
         <br />
         your <span className="text-orange">COMPANY</span>
-        <br />
+        <br className="md:hidden" />{' '}
         needs to learn
       </h1>
 
