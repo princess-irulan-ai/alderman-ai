@@ -143,7 +143,7 @@ export default function FaqPage() {
                 Rotation -5° is canonical Postit tilt and lives on the
                 primitive itself. */}
             <div
-              className="absolute left-1/2 top-[300px] md:left-auto md:top-auto md:right-[-180px] md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
+              className="absolute left-1/2 top-[300px] md:left-auto md:top-auto md:right-0 md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
               style={{ transform: 'scale(calc(50vw / 250px))' }}
             >
               <Postit

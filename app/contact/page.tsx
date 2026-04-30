@@ -51,7 +51,7 @@ export default function ContactPage() {
               </div>
             </PaperApp>
             <div
-              className="absolute left-1/2 top-[390px] pointer-events-none origin-top-left"
+              className="absolute left-1/2 top-[390px] md:left-auto md:top-auto md:right-0 md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
               style={{ transform: 'scale(calc(50vw / 250px))' }}
             >
               <Postit
