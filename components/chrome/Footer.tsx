@@ -67,7 +67,7 @@ export function Footer() {
                 alt="alderman.ai"
                 width={36}
                 height={55}
-                className="h-[48px] w-auto"
+                className="h-[120px] w-auto"
               />
             </Link>
           </div>
