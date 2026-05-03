@@ -265,7 +265,7 @@ export function FloatingNav() {
                 {[
                   {
                     href: '/',
-                    label: <>Home</>,
+                    label: <>Homepage</>,
                     gradient:
                       'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
                     hover:
