@@ -2,9 +2,42 @@ import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
 import { PaperApp } from '@/components/paper/PaperApp'
+import { FaqChat, type FaqEntry } from '@/components/special/FaqChat'
 import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
+
+// PROVISIONAL Q&A. The full list lands in a later session (likely two
+// sessions out from this one — next session is /faq cleanup, the one
+// after is real Q&A copy). These six are placeholder copy to
+// demonstrate structure + conventions.
+// Convention: questions use proper capitalization and end with `?` (or `.`).
+const FAQ_ENTRIES: FaqEntry[] = [
+  {
+    q: 'How long is a teaching hour?',
+    a: '50 minutes — that’s one teaching hour.',
+  },
+  {
+    q: 'What fits in 8 hours per month?',
+    a: 'Roughly 2 teams meeting weekly for a month, or 1 team meeting twice a week. By the end your team has built real ai workflows, not just watched demos.',
+  },
+  {
+    q: 'Can I cancel or change tiers?',
+    a: 'Yes — month to month. You commit to one month at a time; raise or lower your hour count whenever.',
+  },
+  {
+    q: 'Who is this for?',
+    a: 'Czech HR and L&D teams adding ai fluency as a benefit. Most groups are 4–6 people.',
+  },
+  {
+    q: 'How do we get started?',
+    a: 'Book a demo lesson. We’ll meet your team, gauge level, and propose a starting tier.',
+  },
+  {
+    q: 'Do you teach in Czech or English?',
+    a: 'English by default. Czech available for groups that prefer it.',
+  },
+]
 
 export default function FaqPage() {
   return (
@@ -16,8 +49,7 @@ export default function FaqPage() {
           <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
             have a <span className="text-orange">HUMAN</span>
             <br />
-            <span className="text-purple">(</span>or <span className="text-green">ai</span>
-            <span className="text-purple">)</span> answer
+            <span className="text-purple">(</span>{' '}or <span className="text-green">ai</span>{' '}<span className="text-purple">)</span> answer
             <br className="md:hidden" />{' '}
             your questions
           </h1>
@@ -27,14 +59,15 @@ export default function FaqPage() {
           <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
             <div className="space-y-4 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                We believe in simple pricing
+                Complex topic.
+                <br />
+                Simple pricing.
               </h2>
               <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                We sell packages of monthly teaching hours that can be divided
-                to as many groups as you wish.
+                Cost is the number of 50m teaching hours used across all of your groups per month.
               </p>
-              <p className="font-body text-[15px] md:text-[16px] font-bold leading-snug text-orange max-w-[780px] mx-auto text-center">
-                <span className="text-purple">(</span>Max <span className="text-purple">6</span> people per group<span className="text-purple">)</span>
+              <p className="font-display text-[18px] md:text-[22px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                Buy more. Pay less. Simple.
               </p>
               <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-purple font-display text-[16px] md:text-[18px] text-ink">
                 <thead>
@@ -58,9 +91,6 @@ export default function FaqPage() {
                   </tr>
                 </tbody>
               </table>
-              <p className="font-body text-[15px] md:text-[16px] !mt-8 md:!mt-10 font-bold leading-snug text-orange max-w-[780px] mx-auto text-center">
-                <span className="text-purple">(</span>Teaching hour <span className="text-purple">=</span> 50m<span className="text-purple">)</span>
-              </p>
               <SectionTile
                 variant="app"
                 accent="orange"
@@ -110,6 +140,27 @@ export default function FaqPage() {
                 ]}
               />
             </div>
+          </div>
+        </section>
+
+        {/* Chat-style FAQ — paper-app with carousel question selector +
+            accumulating Q&A history. Branding-version of an FAQ section,
+            not real ai (the real-ai option is the markdown download
+            below). */}
+        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-12 md:pt-6 md:pb-14">
+          <div className="md:col-span-3 md:w-2/3 md:justify-self-center">
+            <FaqChat
+              entries={FAQ_ENTRIES}
+              emptyState={
+                <>
+                  this is a brand-styled FAQ — not real ai.
+                  <br />
+                  tap a question below to ask it.
+                  <br />
+                  use the arrows to skip around.
+                </>
+              }
+            />
           </div>
         </section>
 
