@@ -15,19 +15,19 @@ export default function ContactPage() {
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <section className="pt-4 pb-12 md:pt-8 md:pb-16">
-          <h1 className="text-center font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
+          <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             in the age of <span className="text-green">ai</span> it can be nice to talk to a <span className="text-orange">HUMAN</span>
           </h1>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-[138px] md:pt-10 md:pb-[170px]">
-          <div className="relative md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-8 pb-[138px] md:pt-10 md:pb-[170px]">
+          <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
-                <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Get in touch any way you&apos;d like
                 </h2>
-                <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   <span className="relative inline-block">
                     <span
                       aria-hidden
@@ -50,10 +50,7 @@ export default function ContactPage() {
                 <div className="h-[55px]" aria-hidden />
               </div>
             </PaperApp>
-            <div
-              className="absolute left-1/2 top-[390px] md:left-auto md:top-auto md:right-0 md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
-              style={{ transform: 'scale(calc(50vw / 250px))' }}
-            >
+            <div className="absolute left-1/2 top-[390px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
               <Postit
                 rotation={-5}
                 heading={
@@ -117,7 +114,7 @@ export default function ContactPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-16 pb-12 md:pt-20 md:pb-16">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+          <div className="col-span-3">
             <SectionTile
               variant="ide"
               accent="purple"
@@ -139,7 +136,7 @@ export default function ContactPage() {
         </section>
 
         <section className="flex justify-center md:mt-8">
-          <div className="relative aspect-square w-full max-w-[360px] md:max-w-[440px]">
+          <div className="relative aspect-square w-full max-w-[360px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"
               alt="Alex Alderman — still HUMAN"
@@ -161,13 +158,13 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
-          <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
-              <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Not ready to chat?
               </h2>
-              <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 Just{' '}
                 <span className="relative inline-block">
                   <span

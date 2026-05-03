@@ -8,6 +8,21 @@
        padding and any element that needs to align to the same gutter
        (e.g. logo glyph offset). Change here to adjust globally. */
     --gutter-mobile: 12%;
+    /* "50vw" equivalent that respects the desktop column lock. On
+       mobile this is literally 50vw — the viewport half-width that
+       drives the hero/credentials post-it scaling and line-2 spacing.
+       On desktop (≥1000px, == md breakpoint in tailwind.config.js), the
+       column locks to 540px so the equivalent is 270px. Using this
+       variable instead of raw `50vw` makes all the column-relative
+       math behave the same across breakpoints — the desktop column
+       is treated as a "viewport equivalent" of the mobile screen,
+       just at a fixed larger size (PLAN.md "Desktop strategy"). */
+    --page-half: 50vw;
+  }
+  @media (min-width: 1000px) {
+    :root {
+      --page-half: 200px;
+    }
   }
   html {
     background-color: #1e1f1a; /* ide-2 — prevents white flash */

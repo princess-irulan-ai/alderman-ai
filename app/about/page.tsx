@@ -42,13 +42,13 @@ export default function AboutPage() {
             back for the mid-page pullquote moment. Smaller H1 size than
             the homepage so the hero feels lighter and the pullquote can
             be the visual peak below. */}
-        <section className="flex flex-col gap-8 pt-4 pb-8 md:grid md:grid-cols-canvas md:gap-6 md:pt-8 md:items-center">
-          <div className="md:col-span-2 md:pr-4">
-            <h1 className="font-display text-[37px] md:text-[48px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center md:text-left mb-10 md:mb-0">
+        <section className="flex flex-col gap-8 pt-4 pb-8">
+          <div>
+            <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
               Your team needs
               <br />
               a <span className="text-orange">HUMAN</span> teacher
-              <br className="md:hidden" />{' '}
+              <br />{' '}
               for <span className="text-green">ai</span>
             </h1>
           </div>
@@ -61,7 +61,7 @@ export default function AboutPage() {
               render — viewBox math: man baseline at y≈322 / vbHeight
               379.5 → 84.8% from top → 64.5px from top of 76px image →
               11.5px from the image's bottom). */}
-          <div className="relative md:block">
+          <div className="relative">
             <PaperApp width="narrow" bodyClassName="">
               <div className="relative">
                 <Image
@@ -92,8 +92,8 @@ export default function AboutPage() {
         </section>
 
         {/* DARK CTA — sits directly under the portrait. */}
-        <section className="grid grid-cols-canvas gap-6 pt-16 pb-8 md:pt-20 md:pb-10">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-16 pb-8 md:pt-20 md:pb-10">
+          <div>
             <SectionTile
               variant="ide"
               accent="purple"
@@ -111,14 +111,14 @@ export default function AboutPage() {
 
         {/* LEAD BEAT — wide centered PaperApp. Strategic anchor: 8 years
             ESL in Prague, the buying mental model HR already has. */}
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-12 pb-8 md:pt-16 md:pb-10">
-          <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-12 pb-8 md:pt-16 md:pb-10">
+          <PaperApp width="wide">
             <div className="space-y-6 md:space-y-8 py-2">
               <div className="space-y-4 md:space-y-5">
-                <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   8 years teaching English in ČR
                 </h2>
-                <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   then 8 more in{' '}
                   <span className="relative inline-block">
                     <span
@@ -130,7 +130,7 @@ export default function AboutPage() {
                   LinkedIn automation
                 </p>
               </div>
-              <p className="font-body text-[17px] md:text-[18px] leading-relaxed text-ink max-w-prose mx-auto text-center">
+              <p className="font-body text-[17px] leading-relaxed text-ink max-w-prose mx-auto text-center">
                 If your HR team has ever booked English lessons for staff, you already
                 have a mental model for what these{' '}
                 <span className="relative inline-block">
@@ -153,8 +153,8 @@ export default function AboutPage() {
             convention. Left-aligned with hangingPrompt so the `[ > `
             prefix hangs in the outer gutter, matching the homepage
             hero treatment. */}
-        <section className="grid grid-cols-canvas gap-6 py-16 md:py-24">
-          <div className="col-span-3 relative">
+        <section className="py-16 md:py-24">
+          <div className="relative">
             {/* Invisible mirror — reserves the final rendered height of
                 the terminal line so the "Before Prague" paper-app below
                 holds its position while the line types out. Mirrors
@@ -200,10 +200,10 @@ export default function AboutPage() {
             juniors + US military signals intelligence / Korean
             linguist). Returns to App register after the IDE pullquote
             peak. */}
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-12 md:pt-10 md:pb-16">
-          <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-8 pb-12 md:pt-10 md:pb-16">
+          <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
-              <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Before Prague: military, then marketing, then freelance{' '}
                 <span className="relative inline-block">
                   <span
@@ -213,7 +213,7 @@ export default function AboutPage() {
                   <span className="relative">mentor</span>
                 </span>
               </h2>
-              <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 <span className="relative inline-block">
                   <span
                     aria-hidden
@@ -236,8 +236,8 @@ export default function AboutPage() {
         </section>
 
         {/* CLOSING CTA — IDE SectionTile -> /contact. */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-16 md:pt-12 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-8 pb-16 md:pt-12 md:pb-20">
+          <div>
             <SectionTile
               variant="ide"
               accent="purple"

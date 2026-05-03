@@ -214,7 +214,7 @@ export function Postit({
         style={flipX ? { transform: 'scaleX(-1)' } : undefined}
       >
         {heading && (
-          <div className="font-display font-bold text-[34px] md:text-[43px] leading-[1.05] tracking-tight">
+          <div className="font-display font-bold text-[34px] leading-[1.05] tracking-tight">
             {heading}
           </div>
         )}

@@ -28,8 +28,8 @@ export default function HomePage() {
             so the cell height tracks the ghost. Same pattern hero line
             1 uses — locks the line's height from the first paint so the
             CTA tile below doesn't shift downward as the line types out. */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="col-span-3 grid">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="grid">
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -63,17 +63,15 @@ export default function HomePage() {
             the dark IDE substrate after the H2.5 terminal seam and
             before the credentials paper-app. Clicks through to /faq
             (FAQ + pricing). */}
-        <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-16 md:pb-10">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="ai fluency"
-              title="have questions?"
-              href="/faq"
-              markerStyle="contained"
-            />
-          </div>
+        <section className="pt-12 pb-8 md:pt-16 md:pb-10">
+          <SectionTile
+            variant="ide"
+            accent="purple"
+            eyebrow="ai fluency"
+            title="have questions?"
+            href="/faq"
+            markerStyle="contained"
+          />
         </section>
         <TrialCTASection />
         {/* Circular portrait — between the credentials paper-app (with
@@ -97,7 +95,7 @@ export default function HomePage() {
             wrapper square so the same proportions hold at both mobile
             (~281px constrained by gutter) and desktop (440px). */}
         <section className="flex justify-center mt-[36px] md:mt-8">
-          <div className="relative aspect-square w-full max-w-[360px] md:max-w-[440px]">
+          <div className="relative aspect-square w-full max-w-[360px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"
               alt="Alex Alderman — still HUMAN"
@@ -132,17 +130,15 @@ export default function HomePage() {
             TerminalCTAs that previously closed the page. Eyebrow is a
             placeholder ("next step") — Alex to drop final copy.
             Provisional href: /contact. */}
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-16 md:pt-12 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="next step"
-              title="book a demo lesson"
-              href="/contact"
-              markerStyle="contained"
-            />
-          </div>
+        <section className="pt-8 pb-16 md:pt-12 md:pb-20">
+          <SectionTile
+            variant="ide"
+            accent="purple"
+            eyebrow="next step"
+            title="book a demo lesson"
+            href="/contact"
+            markerStyle="contained"
+          />
         </section>
       </PageFrame>
       <Footer />

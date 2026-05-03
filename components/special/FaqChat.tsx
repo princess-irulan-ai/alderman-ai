@@ -72,7 +72,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
           }`}
         >
           {isEmpty ? (
-            <div className="font-display text-[18px] md:text-[22px] leading-snug italic text-ink-faint text-center">
+            <div className="font-display text-[18px] leading-snug italic text-ink-faint text-center">
               {emptyState ?? 'tap a question below to begin'}
             </div>
           ) : (

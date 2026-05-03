@@ -24,13 +24,13 @@ export function TrialCTASection() {
   return (
     <section
       id="brochure"
-      className="md:grid md:grid-cols-canvas md:gap-6 pt-12 pb-16 md:pt-16 md:pb-16 scroll-mt-24"
+      className="pt-12 pb-16 md:pt-16 md:pb-16 scroll-mt-24"
       aria-label="Credentials"
     >
-      <div className="relative md:col-span-3">
+      <div className="relative">
         <PaperApp width="wide">
           <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
-            <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+            <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
               I&rsquo;ve been teaching for{' '}
               <span className="relative inline-block">
                 <span
@@ -40,7 +40,7 @@ export function TrialCTASection() {
                 <span className="relative">20 years</span>
               </span>
             </h2>
-            <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+            <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
               Including languages, software, and workflow modernization.
             </p>
             {/* Orange APP-variant SectionTile — first live use of the
@@ -75,10 +75,7 @@ export function TrialCTASection() {
               - `origin-top-right` scales from that anchor so the
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
-        <div
-          className="absolute right-1/2 top-full -mt-[92px] md:right-auto md:top-auto md:left-0 md:bottom-[-220px] pointer-events-none origin-top-right md:!transform-none"
-          style={{ transform: 'scale(calc(50vw / 250px))' }}
-        >
+        <div className="absolute right-1/2 top-full -mt-[92px] pointer-events-none origin-top-right [transform:scale(calc(var(--page-half)/250px))]">
           <Postit
             flipX
             rotation={5}

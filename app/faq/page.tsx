@@ -46,31 +46,31 @@ export default function FaqPage() {
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <section className="pt-4 pb-8 md:pt-8 md:pb-10">
-          <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
+          <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
             have a <span className="text-orange">HUMAN</span>
             <br />
             <span className="text-purple">(</span>{' '}or <span className="text-green">ai</span>{' '}<span className="text-purple">)</span> answer
-            <br className="md:hidden" />{' '}
+            <br />{' '}
             your questions
           </h1>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
-          <div className="relative md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
+          <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
-                <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Complex topic.
                   <br />
                   Simple pricing.
                 </h2>
-                <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   Cost is the number of 50m teaching hours used across all of your groups per month.
                 </p>
-                <p className="font-display text-[18px] md:text-[22px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                <p className="font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
                   Buy more. Pay less. Simple.
                 </p>
-                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-orange font-display text-[16px] md:text-[18px] text-ink">
+                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-orange font-display text-[16px] text-ink">
                   <thead>
                     <tr>
                       <th className="border-2 border-orange px-4 py-2 font-bold text-left">Hours</th>
@@ -100,10 +100,7 @@ export default function FaqPage() {
                 FAQ download paper-app further down the page — see that
                 block for the full rationale on the mobile scale formula
                 and the desktop fixed-position fallback. */}
-            <div
-              className="absolute left-1/2 top-[520px] md:left-auto md:top-auto md:right-0 md:bottom-[-140px] pointer-events-none origin-top-left md:!transform-none"
-              style={{ transform: 'scale(calc(50vw / 250px))' }}
-            >
+            <div className="absolute left-1/2 top-[520px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
               <Postit
                 rotation={-5}
                 heading={
@@ -125,8 +122,8 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-4 pb-8 md:pt-6 md:pb-10">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-4 pb-8 md:pt-6 md:pb-10">
+          <div>
             <SectionTile
               variant="ide"
               accent="purple"
@@ -138,8 +135,8 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="col-span-3 relative">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="relative">
             {/* Invisible mirror — reserves the final rendered height of
                 the terminal line so the next paper-app holds its
                 position while the line types out. Mirrors the
@@ -185,8 +182,8 @@ export default function FaqPage() {
             accumulating Q&A history. Branding-version of an FAQ section,
             not real ai (the real-ai option is the markdown download
             below). */}
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-12 md:pt-6 md:pb-14">
-          <div className="md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-4 pb-12 md:pt-6 md:pb-14">
+          <div>
             <FaqChat
               entries={FAQ_ENTRIES}
               emptyState={
@@ -209,8 +206,8 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="col-span-3 relative">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="relative">
             {/* Invisible mirror — reserves the final rendered height of
                 the terminal line so the download CTA below holds its
                 position while the line types out. */}
@@ -245,8 +242,8 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-10 pb-10 md:pt-20 md:pb-16">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-10 pb-10 md:pt-20 md:pb-16">
+          <div>
             <SectionTile
               variant="ide"
               accent="purple"
@@ -257,13 +254,13 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-16 md:pt-6 md:pb-20">
-          <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
+        <section className="pt-4 pb-16 md:pt-6 md:pb-20">
+          <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
-              <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Don&apos;t want to talk to ai? Don&apos;t worry.
               </h2>
-              <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 Just book a quick intro call with Alex instead.
               </p>
               <SectionTile

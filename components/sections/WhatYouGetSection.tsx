@@ -415,7 +415,7 @@ function CyclingTriptych() {
     <div className="pt-2">
       <div className="mx-auto max-w-[280px] space-y-4 md:space-y-5 text-center">
         <h3
-          className="font-display text-[18px] md:text-[20px] font-bold leading-tight text-ink min-h-[1.5em] transition-opacity"
+          className="font-display text-[18px] font-bold leading-tight text-ink min-h-[1.5em] transition-opacity"
           style={{
             opacity: titleVisible ? 1 : 0,
             transitionDuration: `${TITLE_FADE_MS}ms`,
@@ -450,17 +450,14 @@ function CyclingTriptych() {
 
 export function WhatYouGetSection() {
   return (
-    <section className="md:grid md:grid-cols-canvas md:gap-6 pt-10 pb-16 md:py-16">
-      <PaperApp
-        width="wide"
-        className="md:w-2/3 md:justify-self-center"
-      >
+    <section className="pt-10 pb-16 md:py-16">
+      <PaperApp width="wide">
         <div className="space-y-10 md:space-y-12">
           <div className="space-y-4 md:space-y-5">
-            <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+            <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
               Onboarding
             </h2>
-            <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+            <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
               The same as setting up{' '}
               <span className="relative inline-block">
                 <span
