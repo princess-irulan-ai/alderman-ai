@@ -276,11 +276,11 @@ export function HeroTerminalBlock({
   const line2 = line2Ready ? (
     <TerminalLine
       segments={[
-        { text: 'my unique process of teaching ' },
-        { text: 'ai', color: 'text-green' },
-        { text: ' fluency will be familiar to ' },
-        { text: 'ANYONE', color: 'text-orange' },
-        { text: " who's booked english lessons" },
+        { text: 'fluency helps your ' },
+        { text: 'TEAMS', color: 'text-orange' },
+        { text: ' navigate new tools while reducing their ' },
+        { text: 'anxiety', color: 'text-green' },
+        { text: ' about being replaced' },
       ]}
       fontSize={resolvedFontSize}
       align="left"

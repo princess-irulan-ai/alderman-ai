@@ -515,7 +515,7 @@ export function HeroSection() {
           >
             <span>
               <span className="select-none">&gt;</span>
-              {"  my unique process of teaching ai fluency will be familiar to ANYONE who's booked english lessons "}
+              {"  fluency helps your TEAMS navigate new tools while reducing their anxiety about being replaced "}
               <span className="inline-block">_</span>
             </span>
           </div>
