@@ -96,7 +96,7 @@ export default function HomePage() {
             edge instead of from the SVG bbox. `aspect-square` keeps the
             wrapper square so the same proportions hold at both mobile
             (~281px constrained by gutter) and desktop (440px). */}
-        <section className="flex justify-center mt-[120px] md:mt-8">
+        <section className="flex justify-center mt-[36px] md:mt-8">
           <div className="relative aspect-square w-full max-w-[360px] md:max-w-[440px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"

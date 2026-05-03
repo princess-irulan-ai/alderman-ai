@@ -29,28 +29,19 @@ export function TrialCTASection() {
     >
       <div className="relative md:col-span-3">
         <PaperApp width="wide">
-          <div className="space-y-4 md:space-y-5 py-2">
+          <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
             <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-              I&rsquo;ve been teaching for 20 years
-            </h2>
-            <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-              From military training, to teaching{' '}
-              <span className="relative inline-block">
-                <span
-                  aria-hidden
-                  className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
-                />
-                <span className="relative">advanced ESL</span>
-              </span>
-              , to LinkedIn marketing, to{' '}
+              I&rsquo;ve been teaching for{' '}
               <span className="relative inline-block">
                 <span
                   aria-hidden
                   className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                 />
-                <span className="relative">mentoring freelancers</span>
+                <span className="relative">20 years</span>
               </span>
-              {' '}and startups, and now ai.
+            </h2>
+            <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+              Including languages, software, and workflow modernization.
             </p>
             {/* Orange APP-variant SectionTile — first live use of the
                 paper-dialect tile. Sits inside the credentials paper-app
@@ -59,7 +50,7 @@ export function TrialCTASection() {
                 Why trust me / More about me / More about Alex), shipping
                 "instructor" / "see my experience" as a starting point;
                 expect to iterate in the sandbox. */}
-            <div className="mx-auto max-w-[420px] pt-4 md:pt-6">
+            <div className="mx-auto max-w-[420px] pt-10 md:pt-12">
               <SectionTile
                 variant="app"
                 accent="orange"
@@ -85,7 +76,7 @@ export function TrialCTASection() {
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
         <div
-          className="absolute right-1/2 top-full -mt-8 md:right-auto md:top-auto md:left-0 md:bottom-[-160px] pointer-events-none origin-top-right md:!transform-none"
+          className="absolute right-1/2 top-full -mt-[92px] md:right-auto md:top-auto md:left-0 md:bottom-[-220px] pointer-events-none origin-top-right md:!transform-none"
           style={{ transform: 'scale(calc(50vw / 250px))' }}
         >
           <Postit
