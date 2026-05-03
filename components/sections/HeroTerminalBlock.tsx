@@ -259,12 +259,7 @@ export function HeroTerminalBlock({
         { text: 'HUMAN', color: 'text-orange' },
         { text: ' approach to ' },
         { text: 'ai', color: 'text-green' },
-        { text: ' adoption and make sure no one is left behind ' },
-        { text: ':(', color: 'text-green' },
-        { text: ' ' },
-        { text: '->', color: 'text-white' },
-        { text: ' ' },
-        { text: ':)', color: 'text-orange' },
+        { text: ' adoption and make sure no one is left behind' },
       ]}
       fontSize={resolvedFontSize}
       align="left"

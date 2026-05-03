@@ -390,7 +390,7 @@ export function HeroSection() {
           child stacking above the terminal line.
           Color chord: TEAM orange caps, ai green, rest in default
           ide-fg. PLACEHOLDER copy — Alex will swap in final wording. */}
-      <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-5 md:col-span-3 md:mb-4">
+      <h1 className="font-display text-[40px] md:text-[56px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-14 md:col-span-3 md:mb-4">
         <span className="text-green">ai</span> is a language
         <br />
         your <span className="text-orange">COMPANY</span>
@@ -431,7 +431,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'\u00a0\u00a0take a HUMAN approach to ai adoption and make sure no one is left behind :( -> :)\u00a0'}
+            {'\u00a0\u00a0take a HUMAN approach to ai adoption and make sure no one is left behind\u00a0'}
             <span className="inline-block">_</span>
           </span>
         </div>
