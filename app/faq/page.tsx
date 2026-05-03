@@ -55,54 +55,87 @@ export default function FaqPage() {
           </h1>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-12 md:pt-10 md:pb-16">
-          <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
-            <div className="space-y-4 md:space-y-5 py-2">
-              <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                Complex topic.
-                <br />
-                Simple pricing.
-              </h2>
-              <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                Cost is the number of 50m teaching hours used across all of your groups per month.
-              </p>
-              <p className="font-display text-[18px] md:text-[22px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
-                Buy more. Pay less. Simple.
-              </p>
-              <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-purple font-display text-[16px] md:text-[18px] text-ink">
-                <thead>
-                  <tr>
-                    <th className="border-2 border-purple px-4 py-2 font-bold text-left">Hours</th>
-                    <th className="border-2 border-purple px-4 py-2 font-bold text-left">Price (each)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border-2 border-purple px-4 py-2">4</td>
-                    <td className="border-2 border-purple px-4 py-2">5000 Kč</td>
-                  </tr>
-                  <tr>
-                    <td className="border-2 border-purple px-4 py-2">8</td>
-                    <td className="border-2 border-purple px-4 py-2">4500 Kč</td>
-                  </tr>
-                  <tr>
-                    <td className="border-2 border-purple px-4 py-2">16+</td>
-                    <td className="border-2 border-purple px-4 py-2">4000 Kč</td>
-                  </tr>
-                </tbody>
-              </table>
-              <SectionTile
-                variant="app"
-                accent="orange"
-                eyebrow="Have questions?"
-                eyebrowStyle="em-dash"
-                title="Book a demo call"
-                href="/contact"
-                markerStyle="contained"
-                className="!mt-16 md:!mt-20 max-w-[280px] mx-auto"
+        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
+          <div className="relative md:col-span-3 md:w-2/3 md:justify-self-center">
+            <PaperApp width="wide">
+              <div className="space-y-4 md:space-y-5 py-2">
+                <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                  Complex topic.
+                  <br />
+                  Simple pricing.
+                </h2>
+                <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                  Cost is the number of 50m teaching hours used across all of your groups per month.
+                </p>
+                <p className="font-display text-[18px] md:text-[22px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                  Buy more. Pay less. Simple.
+                </p>
+                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-orange font-display text-[16px] md:text-[18px] text-ink">
+                  <thead>
+                    <tr>
+                      <th className="border-2 border-orange px-4 py-2 font-bold text-left">Hours</th>
+                      <th className="border-2 border-orange px-4 py-2 font-bold text-left">Price (each)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border-2 border-orange px-4 py-2">4</td>
+                      <td className="border-2 border-orange px-4 py-2">5000 Kč</td>
+                    </tr>
+                    <tr>
+                      <td className="border-2 border-orange px-4 py-2">8</td>
+                      <td className="border-2 border-orange px-4 py-2">4500 Kč</td>
+                    </tr>
+                    <tr>
+                      <td className="border-2 border-orange px-4 py-2">16+</td>
+                      <td className="border-2 border-orange px-4 py-2">4000 Kč</td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/* Reserves vertical room for the post-it BR overhang. */}
+                <div className="h-[30px]" aria-hidden />
+              </div>
+            </PaperApp>
+            {/* Pricing-example post-it. Same BR-overhang pattern as the
+                FAQ download paper-app further down the page — see that
+                block for the full rationale on the mobile scale formula
+                and the desktop fixed-position fallback. */}
+            <div
+              className="absolute left-1/2 top-[520px] md:left-auto md:top-auto md:right-0 md:bottom-[-140px] pointer-events-none origin-top-left md:!transform-none"
+              style={{ transform: 'scale(calc(50vw / 250px))' }}
+            >
+              <Postit
+                rotation={-5}
+                heading={
+                  <span
+                    className="block font-display font-normal"
+                    style={{ width: '200px', fontSize: '32px', lineHeight: 1.1 }}
+                  >
+                    <span className="whitespace-nowrap">2 groups,</span>
+                    <br />
+                    <span className="whitespace-nowrap">once a week</span>
+                    <br />
+                    <span className="whitespace-nowrap">= 8 hrs / mo</span>
+                    <br />
+                    <span className="whitespace-nowrap">= 36.000 Kč</span>
+                  </span>
+                }
               />
             </div>
-          </PaperApp>
+          </div>
+        </section>
+
+        <section className="grid grid-cols-canvas gap-6 pt-4 pb-8 md:pt-6 md:pb-10">
+          <div className="col-span-3 md:w-2/3 md:justify-self-center">
+            <SectionTile
+              variant="ide"
+              accent="purple"
+              eyebrow="Have questions?"
+              title="book a call"
+              href="/contact"
+              markerStyle="contained"
+            />
+          </div>
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
@@ -122,7 +155,7 @@ export default function FaqPage() {
                 textIndent: '-3ch',
               }}
             >
-              {'>  feel free to ask ai any of YOUR questions about our business'}
+              {'>  below are three ways to get answers: faq "chat box", faq doc for ai platforms, or just ask a HUMAN'}
             </div>
             <div className="absolute inset-0">
               <TerminalLine
@@ -132,11 +165,16 @@ export default function FaqPage() {
                 persistCursor
                 startDelayMs={1620}
                 segments={[
-                  { text: 'feel free to ask ' },
+                  { text: 'below are three ways to get answers' },
+                  { text: ':', color: 'text-purple' },
+                  { text: ' faq ' },
+                  { text: '"', color: 'text-purple' },
+                  { text: 'chat box' },
+                  { text: '"', color: 'text-purple' },
+                  { text: ', faq doc for ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ' any of ' },
-                  { text: 'YOUR', color: 'text-orange' },
-                  { text: ' questions about our business' },
+                  { text: ' platforms, or just ask a ' },
+                  { text: 'HUMAN', color: 'text-orange' },
                 ]}
               />
             </div>
@@ -152,90 +190,62 @@ export default function FaqPage() {
             <FaqChat
               entries={FAQ_ENTRIES}
               emptyState={
-                <>
-                  this is a brand-styled FAQ — not real ai.
-                  <br />
-                  tap a question below to ask it.
-                  <br />
-                  use the arrows to skip around.
-                </>
+                <div className="space-y-6">
+                  <p>
+                    This is a branded FAQ —{' '}
+                    <span className="relative inline-block">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
+                      />
+                      <span className="relative">not ai</span>
+                    </span>
+                  </p>
+                  <p>Tap a question below to ask it.</p>
+                  <p>Use the arrows to navigate.</p>
+                </div>
               }
             />
           </div>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-12 pb-[138px] md:pt-14 md:pb-[170px]">
-          <div className="relative md:col-span-3 md:w-2/3 md:justify-self-center">
-            <PaperApp width="wide">
-              <div className="space-y-4 md:space-y-5 py-2">
-                <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                  Download the <span className="text-purple">FAQ</span> file below
-                </h2>
-                <p className="font-display text-[18px] md:text-[22px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                  Then upload it to your favorite ai platform <span className="text-purple">(</span>ChatGPT, Claude,
-                  etc<span className="text-purple">)</span>. You can then ask it anything you want to know about us.
-                </p>
-                {/* Spacer reserves vertical room for the absolutely-
-                    positioned Post-it that overhangs the BR corner —
-                    same pattern as the homepage perks paper-app. */}
-                <div className="h-[30px]" aria-hidden />
-              </div>
-            </PaperApp>
-            {/* Post-it overlay.
-                Mobile: `top-[X]` positions the top-left corner inside
-                the spacer area; `scale(calc(50vw / 250px))` makes the
-                rotated BR tip land exactly at viewport-right.
-                Desktop: the 50vw scale formula assumed the paper-app
-                fills the canvas (mobile). At md+ the paper-app is only
-                2/3 of canvas centered, so 50vw scales the post-it to
-                ~2.5× and overruns adjacent sections. On desktop we
-                drop the scale (native 240×240) and anchor at the
-                paper-app's BR corner with a small overhang.
-                Rotation -5° is canonical Postit tilt and lives on the
-                primitive itself. */}
+        <section className="grid grid-cols-canvas gap-6 pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="col-span-3 relative">
+            {/* Invisible mirror — reserves the final rendered height of
+                the terminal line so the download CTA below holds its
+                position while the line types out. */}
             <div
-              className="absolute left-1/2 top-[300px] md:left-auto md:top-auto md:right-0 md:bottom-[-160px] pointer-events-none origin-top-left md:!transform-none"
-              style={{ transform: 'scale(calc(50vw / 250px))' }}
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: '22px',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
             >
-              <Postit
-                rotation={-5}
-                heading={
-                  <span
-                    className="block font-display font-normal"
-                    style={{ width: '200px', fontSize: '30px', lineHeight: 1.1 }}
-                  >
-                    <span className="whitespace-nowrap">upload the</span>
-                    <br />
-                    <span className="font-bold whitespace-nowrap">faq.md file</span>
-                    <br />
-                    <span className="whitespace-nowrap">
-                      using the{' '}
-                      <span className="relative inline-block">
-                        <span
-                          aria-hidden
-                          className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
-                        />
-                        <span className="relative">( + )</span>
-                      </span>
-                    </span>
-                    <br />
-                    <span className="whitespace-nowrap">icon on most</span>
-                    <br />
-                    <span className="relative inline-block whitespace-nowrap">
-                      <span
-                        aria-hidden
-                        className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
-                      />
-                      <span className="relative">ai platforms</span>
-                    </span>
-                  </span>
-                }
+              {'>  if YOU want more in depth answers, upload the following file into your ai platform of choice'}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                startDelayMs={1620}
+                segments={[
+                  { text: 'if ' },
+                  { text: 'YOU', color: 'text-orange' },
+                  { text: ' want more in depth answers, upload the following file into your ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ' platform of choice' },
+                ]}
               />
             </div>
           </div>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-4 pb-16 md:pt-16 md:pb-20">
+        <section className="grid grid-cols-canvas gap-6 pt-10 pb-10 md:pt-20 md:pb-16">
           <div className="col-span-3 md:w-2/3 md:justify-self-center">
             <SectionTile
               variant="ide"
@@ -247,7 +257,7 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-8 md:pt-6 md:pb-10">
+        <section className="md:grid md:grid-cols-canvas md:gap-6 pt-4 pb-16 md:pt-6 md:pb-20">
           <PaperApp width="wide" className="md:col-span-3 md:w-2/3 md:justify-self-center">
             <div className="space-y-4 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] md:text-[38px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
@@ -270,57 +280,6 @@ export default function FaqPage() {
           </PaperApp>
         </section>
 
-        <section className="grid grid-cols-canvas gap-6 pt-12 pb-8 md:pt-14 md:pb-10">
-          <div className="col-span-3 relative">
-            {/* Invisible mirror — reserves the final rendered height of
-                the terminal line so the closing CTA below holds its
-                position while the line types out. */}
-            <div
-              aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
-            >
-              {">  i can't wait to help YOUR TEAM prepare for the ai future :)"}
-            </div>
-            <div className="absolute inset-0">
-              <TerminalLine
-                hangingPrompt
-                showBrackets={false}
-                align="left"
-                persistCursor
-                startDelayMs={1620}
-                segments={[
-                  { text: 'i can' },
-                  { text: "'", color: 'text-purple' },
-                  { text: 't wait to help ' },
-                  { text: 'YOUR TEAM', color: 'text-orange' },
-                  { text: ' prepare for the ' },
-                  { text: 'ai', color: 'text-green' },
-                  { text: ' future ' },
-                  { text: ':)', color: 'text-purple' },
-                ]}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="grid grid-cols-canvas gap-6 pt-12 pb-16 md:pt-16 md:pb-20">
-          <div className="col-span-3 md:w-2/3 md:justify-self-center">
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="ready to chat?"
-              title="book demo call"
-              href="/contact"
-              markerStyle="contained"
-            />
-          </div>
-        </section>
       </PageFrame>
       <Footer />
     </>
