@@ -33,7 +33,7 @@ export function Footer() {
           so the bottom-margin offset reads from the row's bottom edge
           (which equals the logo's bottom edge since the logo is the
           tallest child). */}
-      <div className="flex items-start justify-center gap-3 py-10 md:hidden">
+      <div className="flex items-start justify-center gap-3 py-5 md:hidden">
         <span
           className="font-mono text-[14px] text-paper lowercase"
           style={{ marginTop: '33px' }}
@@ -84,7 +84,7 @@ export function Footer() {
       {/* Trade license line — bottom chrome under both mobile and
           desktop layouts. Centered, low-contrast; purple parens +
           orange HUMAN per brand chord. */}
-      <div className="text-center font-mono text-[12px] text-ide-fg-mute pb-6 md:pb-4">
+      <div className="text-center font-mono text-[12px] text-ide-fg-mute pb-3 md:pb-4">
         <span className="text-purple">(</span>a <span className="text-orange">HUMAN</span> with a <span className="text-green">cz</span> trade license<span className="text-purple">)</span>
       </div>
     </footer>
