@@ -4,22 +4,16 @@ import Link from 'next/link'
 /**
  * Footer — thin IDE-substrate footer strip.
  *
- * Mobile (<md): centered stacked logo only. No tagline, no copyright —
- * the holding page carries no meta chrome on mobile per Alex 2026-04-24.
- *
- * Desktop (md+): per ss5, three columns inside the page canvas.
- *   left   — alderman.ai stacked mark (links to /)
- *   center — brand tagline slot (placeholder, Alex writes)
- *   right  — © + year + " · still HUMAN" meta
- *
- * Uses the page's 6-col grid — desktop content sits in the middle 4/6 to
- * match the rest of the site. Low-contrast (ide-fg-mute) so it reads as
- * chrome, not a content section.
+ * Mobile-only layout at all breakpoints (locked 2026-05-04, PLAN.md
+ * "Desktop strategy"): centered stacked logo with `© alex` on the left
+ * and `2026` on the right, plus a low-contrast trade-license line below.
+ * The desktop 3-column layout was retired when desktop ported to a
+ * uniform mobile-scale 400px column.
  */
 export function Footer() {
   return (
     <footer className="border-t border-ide-rule">
-      {/* Mobile: alex | logo | 2026.
+      {/* alex | logo | 2026.
           Alignment math (for the 140px stacked-logo render):
             - SVG viewBox is 249.75 x 379.5 with empty padding around
               the visible glyphs. At 140px tall, the visible glyphs
@@ -33,7 +27,7 @@ export function Footer() {
           so the bottom-margin offset reads from the row's bottom edge
           (which equals the logo's bottom edge since the logo is the
           tallest child). */}
-      <div className="flex items-start justify-center gap-3 py-5 md:hidden">
+      <div className="flex items-start justify-center gap-3 py-5">
         <span
           className="font-mono text-[14px] text-paper lowercase"
           style={{ marginTop: '33px' }}
@@ -56,34 +50,9 @@ export function Footer() {
           2026
         </span>
       </div>
-      {/* Desktop: 3-column chrome inside the page canvas. */}
-      <div className="hidden md:grid md:grid-cols-page md:py-8">
-        <div aria-hidden />
-        <div className="col-span-4 grid grid-cols-3 items-center gap-6">
-          <div className="flex items-center">
-            <Link href="/" aria-label="alderman.ai home">
-              <Image
-                src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
-                alt="alderman.ai"
-                width={36}
-                height={55}
-                className="h-[120px] w-auto"
-              />
-            </Link>
-          </div>
-          <div className="text-center font-mono text-[12px] text-ide-fg-mute">
-            [ tagline slot — enabling <span className="text-green">ai</span> value with{' '}
-            <span className="text-orange">HUMAN</span> values ]
-          </div>
-          <div className="text-right font-mono text-[12px] text-ide-fg-mute">
-            © 2026 · still <span className="text-orange">HUMAN</span>
-          </div>
-        </div>
-        <div aria-hidden />
-      </div>
-      {/* Trade license line — bottom chrome under both mobile and
-          desktop layouts. Centered, low-contrast; purple parens +
-          orange HUMAN per brand chord. */}
+      {/* Trade license line — bottom chrome under the logo row.
+          Centered, low-contrast; purple parens + orange HUMAN per
+          brand chord. */}
       <div className="text-center font-mono text-[12px] text-ide-fg-mute pb-3 md:pb-4">
         <span className="text-purple">(</span>a <span className="text-orange">HUMAN</span> with a <span className="text-green">cz</span> trade license<span className="text-purple">)</span>
       </div>
