@@ -45,11 +45,11 @@ export default function AboutPage() {
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
-              Your team needs
+              Alex Alderman<span className="text-purple">:</span>
               <br />
-              a <span className="text-orange">HUMAN</span> teacher
-              <br />{' '}
-              for <span className="text-green">ai</span>
+              an <span className="text-green">ai</span> expert and
+              <br />
+              also a <span className="text-orange">TEACHER</span>
             </h1>
           </div>
 
@@ -91,18 +91,53 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* TERMINAL SEAM — career anchor between the portrait and the
+            dark CTA. Comma in purple per the punctuation convention. */}
+        <section className="pt-8 pb-8 md:pt-10 md:pb-10">
+          <div className="relative">
+            <div
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: '22px',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
+            >
+              {'>  working with ai since before chatgpt, and teaching and training for over 20 YEARS'}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                fontSize="22px"
+                align="left"
+                hangingPrompt
+                showBrackets={false}
+                segments={[
+                  { text: 'working with ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ' since before chatgpt' },
+                  { text: ',' },
+                  { text: ' and teaching and training for over ' },
+                  { text: '20 YEARS', color: 'text-orange' },
+                ]}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* DARK CTA — sits directly under the portrait. */}
-        <section className="pt-16 pb-8 md:pt-20 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-10 md:pb-10">
           <div>
             <SectionTile
               variant="ide"
               accent="purple"
               eyebrow={
                 <>
-                  let<span className="text-white">&apos;</span>s chat
+                  let<span className="text-purple">&apos;</span>s chat
                 </>
               }
-              title="book a call"
+              title="book an intro call"
               href="/contact"
               markerStyle="contained"
             />
@@ -111,39 +146,56 @@ export default function AboutPage() {
 
         {/* LEAD BEAT — wide centered PaperApp. Strategic anchor: 8 years
             ESL in Prague, the buying mental model HR already has. */}
-        <section className="pt-12 pb-8 md:pt-16 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-10 md:pb-10">
           <PaperApp width="wide">
-            <div className="space-y-6 md:space-y-8 py-2">
-              <div className="space-y-4 md:space-y-5">
-                <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                  8 years teaching English in ČR
-                </h2>
-                <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                  then 8 more in{' '}
-                  <span className="relative inline-block">
-                    <span
-                      aria-hidden
-                      className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
-                    />
-                    <span className="relative">teaching</span>
-                  </span>{' '}
-                  LinkedIn automation
-                </p>
-              </div>
-              <p className="font-body text-[17px] leading-relaxed text-ink max-w-prose mx-auto text-center">
-                If your HR team has ever booked English lessons for staff, you already
-                have a mental model for what these{' '}
+            <div className="space-y-5 md:space-y-6 py-2">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                8 years teaching English to Czechs
+              </h2>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                Modern ai is literally built on a principle called natural
+                <br />
                 <span className="relative inline-block">
                   <span
                     aria-hidden
-                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
                   />
-                  <span className="relative">ai fluency</span>
-                </span>{' '}
-                lessons look like.
+                  <span className="relative text-ink">language processing</span>
+                </span>
+                .
+              </p>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                And I&apos;m sure you&apos;ve experienced the difference between just a native speaker and a certified
+                <br />
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
+                  />
+                  <span className="relative text-ink">language instructor</span>
+                </span>
+                .
               </p>
             </div>
           </PaperApp>
+        </section>
+
+        {/* QUESTIONS-PATH TILE — purple IDE SectionTile -> /faq for
+            the cautious reader who wants service details before
+            booking. Sits between the credibility paper-app and the
+            pullquote, catching the natural "ok, how does this work?"
+            reader question after the credibility beat. */}
+        <section className="pt-8 pb-8 md:pt-10 md:pb-10">
+          <div>
+            <SectionTile
+              variant="ide"
+              accent="purple"
+              eyebrow="have questions?"
+              title="learn how this works"
+              href="/faq"
+              markerStyle="contained"
+            />
+          </div>
         </section>
 
         {/* THE BIG PULLQUOTE — the locked anchor line at hero scale,
@@ -153,7 +205,7 @@ export default function AboutPage() {
             convention. Left-aligned with hangingPrompt so the `[ > `
             prefix hangs in the outer gutter, matching the homepage
             hero treatment. */}
-        <section className="py-16 md:py-24">
+        <section className="py-8 md:py-10">
           <div className="relative">
             {/* Invisible mirror — reserves the final rendered height of
                 the terminal line so the "Before Prague" paper-app below
@@ -165,88 +217,66 @@ export default function AboutPage() {
               aria-hidden
               className="font-mono invisible"
               style={{
-                fontSize: 'clamp(26px, 6vw, 44px)',
+                fontSize: '22px',
                 marginLeft: '-3ch',
                 paddingLeft: '3ch',
                 textIndent: '-3ch',
               }}
             >
-              {'>  20 years at the intersection of technology, education, and psychology.'}
+              {">  learning new things can be a little scary but i've found a fun and HUMAN approach that helps"}
             </div>
             <div className="absolute inset-0">
               <TerminalLine
-                fontSize="clamp(26px, 6vw, 44px)"
+                fontSize="22px"
                 align="left"
                 hangingPrompt
                 showBrackets={false}
                 persistCursor
                 startDelayMs={1620}
                 segments={[
-                  { text: '20 years', color: 'text-orange' },
-                  { text: ' at the intersection of technology' },
-                  { text: ',', color: 'text-purple' },
-                  { text: ' education', color: 'text-purple' },
-                  { text: ',', color: 'text-purple' },
-                  { text: ' and psychology' },
-                  { text: '.', color: 'text-purple' },
+                  { text: 'learning new things can be a little ' },
+                  { text: 'scary', color: 'text-green' },
+                  { text: " but i've found a fun and " },
+                  { text: 'HUMAN', color: 'text-orange' },
+                  { text: ' approach that helps' },
                 ]}
               />
             </div>
           </div>
         </section>
 
-        {/* AFTER-PULLQUOTE BEAT — "Before Prague" consolidated paper-app.
-            Sentence-level subtitle covers beats 2 + 3 (decade training
-            juniors + US military signals intelligence / Korean
-            linguist). Returns to App register after the IDE pullquote
-            peak. */}
-        <section className="pt-8 pb-12 md:pt-10 md:pb-16">
+        {/* CLOSING BEAT — demo-lesson invitation in a paper-app, with
+            an orange App-variant SectionTile nested inside (matches
+            the homepage TrialCTASection pattern). */}
+        <section className="pt-8 pb-16 md:pt-10 md:pb-20">
           <PaperApp width="wide">
-            <div className="space-y-4 md:space-y-5 py-2">
+            <div className="space-y-5 md:space-y-6 py-2">
               <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                Before Prague: military, then marketing, then freelance{' '}
-                <span className="relative inline-block">
-                  <span
-                    aria-hidden
-                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-orange/55"
-                  />
-                  <span className="relative">mentor</span>
-                </span>
+                See my teaching style in action
               </h2>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
+                Sign up for a{' '}
                 <span className="relative inline-block">
                   <span
                     aria-hidden
                     className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                   />
-                  <span className="relative">20 years</span>
+                  <span className="relative text-ink">free demo</span>
                 </span>{' '}
-                training juniors on cutting-edge software. Now 3 years training people on{' '}
-                <span className="relative inline-block">
-                  <span
-                    aria-hidden
-                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
-                  />
-                  <span className="relative">ai</span>
-                </span>
-                .
+                lesson with me, either 1:1 or join in on an existing group.
               </p>
+              <div className="mx-auto max-w-[420px] pt-6 md:pt-8">
+                <SectionTile
+                  variant="app"
+                  accent="orange"
+                  eyebrow="next step"
+                  title="book demo lesson"
+                  href="/contact"
+                  markerStyle="contained"
+                />
+              </div>
             </div>
           </PaperApp>
-        </section>
-
-        {/* CLOSING CTA — IDE SectionTile -> /contact. */}
-        <section className="pt-8 pb-16 md:pt-12 md:pb-20">
-          <div>
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="next step"
-              title="book a demo lesson"
-              href="/contact"
-              markerStyle="contained"
-            />
-          </div>
         </section>
       </PageFrame>
       <Footer />
