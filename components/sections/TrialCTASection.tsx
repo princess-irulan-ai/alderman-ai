@@ -50,7 +50,7 @@ export function TrialCTASection() {
                 Why trust me / More about me / More about Alex), shipping
                 "instructor" / "see my experience" as a starting point;
                 expect to iterate in the sandbox. */}
-            <div className="mx-auto max-w-[420px] pt-10 md:pt-12">
+            <div className="pt-10 md:pt-12">
               <SectionTile
                 variant="app"
                 accent="orange"

@@ -267,11 +267,10 @@ export default function FaqPage() {
                 variant="app"
                 accent="orange"
                 eyebrow="Book a call"
-                eyebrowStyle="em-dash"
                 title="Chat with Alex"
                 href="/contact"
                 markerStyle="contained"
-                className="!mt-10 md:!mt-12 max-w-[280px] mx-auto"
+                className="!mt-10 md:!mt-12"
               />
             </div>
           </PaperApp>

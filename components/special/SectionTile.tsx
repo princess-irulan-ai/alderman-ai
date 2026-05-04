@@ -22,8 +22,10 @@ import type { ReactNode } from 'react'
  *               accent color.
  *
  *   APP variant (variant='app')  — sits on cream paper. Barlow display.
- *     Eyebrow:  `EYEBROW` (caps) OR `— EYEBROW —` (em-dash flanked) per
- *               `eyebrowStyle`. Muted ink-soft.
+ *     Eyebrow:  `— EYEBROW —` (em-dash flanked) by default; `EYEBROW`
+ *               (plain caps) opt-in via `eyebrowStyle="caps"`. Muted
+ *               ink-soft. Em-dash is the canonical site convention as
+ *               of 2026-05-04 (audit-coherence.md item #3).
  *     Title:    Barlow display, ink, bold.
  *     Marker:   pill outline (rounded-full, ink stroke, transparent
  *               fill) with a small ink-filled knob walking horizontally
@@ -34,8 +36,8 @@ import type { ReactNode } from 'react'
  * SANDBOX KNOBS:
  *   `bracketColor` (IDE only) — try the framing brackets in neutral,
  *     purple, or orange. Default neutral.
- *   `eyebrowStyle` (App only) — try plain caps or em-dash flanked.
- *     Default caps.
+ *   `eyebrowStyle` (App only) — em-dash flanked (default, canonical) or
+ *     plain caps (opt-in via `"caps"`).
  *
  * INTERACTION:
  *   When `href` is provided, the whole tile is the click target
@@ -266,7 +268,7 @@ export function SectionTile({
   title,
   href,
   bracketColor = 'neutral',
-  eyebrowStyle = 'caps',
+  eyebrowStyle = 'em-dash',
   markerStyle = 'classic',
   ideTitleFont = 'mono',
   appPillFill = 'cream',

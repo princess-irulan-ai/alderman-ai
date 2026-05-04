@@ -41,11 +41,10 @@ export default function ContactPage() {
                   variant="app"
                   accent="orange"
                   eyebrow="Book a call"
-                  eyebrowStyle="em-dash"
                   href="https://cal.com/alex-the-ai-instructor/30m"
                   title={<>Let&apos;s have a chat <span className="text-purple">:)</span></>}
                   markerStyle="contained"
-                  className="!mt-10 md:!mt-12 max-w-[280px] mx-auto"
+                  className="!mt-10 md:!mt-12"
                 />
                 <div className="h-[55px]" aria-hidden />
               </div>
@@ -123,7 +122,7 @@ export default function ContactPage() {
                 <>
                   <span className="text-orange">alex</span>
                   <span className="text-purple">@</span>
-                  <span className="text-white">alder</span>
+                  <span className="text-purple">alder</span>
                   <span className="text-orange">man</span>
                   <span className="text-purple">.</span>
                   <span className="text-green">ai</span>
@@ -179,7 +178,6 @@ export default function ContactPage() {
                 variant="app"
                 accent="orange"
                 eyebrow="Follow me"
-                eyebrowStyle="em-dash"
                 href="https://www.linkedin.com/in/alex-the-ai-instructor/"
                 title={
                   <span className="inline-flex items-center justify-center gap-2">
@@ -199,7 +197,7 @@ export default function ContactPage() {
                   </span>
                 }
                 markerStyle="contained"
-                className="!mt-10 md:!mt-12 max-w-[280px] mx-auto"
+                className="!mt-10 md:!mt-12"
               />
             </div>
           </PaperApp>

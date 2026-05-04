@@ -265,7 +265,7 @@ export default function AboutPage() {
                 </span>{' '}
                 lesson with me, either 1:1 or join in on an existing group.
               </p>
-              <div className="mx-auto max-w-[420px] pt-6 md:pt-8">
+              <div className="pt-6 md:pt-8">
                 <SectionTile
                   variant="app"
                   accent="orange"
