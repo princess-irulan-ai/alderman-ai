@@ -26,17 +26,17 @@ export function HeroSection() {
   const postitHeading = (
     <span
       className="block font-display font-normal"
-      style={{ width: '200px', fontSize: '24px', lineHeight: 1.1 }}
+      style={{ width: '200px', fontSize: '32px', lineHeight: 1.05 }}
     >
-      <span className="font-bold whitespace-nowrap">add ai fluency</span>
+      <span className="whitespace-nowrap">ai lessons</span>
       <br />
-      <span className="font-bold whitespace-nowrap">as an L&amp;D perk</span>
+      <span className="whitespace-nowrap">will be the</span>
       <br />
-      <span className="whitespace-nowrap">to attract and retain</span>
+      <span className="font-bold whitespace-nowrap">top L&amp;D perk</span>
       <br />
       <span className="whitespace-nowrap">
-        top talent in{' '}
-        <span className="relative inline-block font-bold">
+        of{' '}
+        <span className="relative inline-block">
           <span
             aria-hidden
             className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
@@ -91,7 +91,7 @@ export function HeroSection() {
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'  take a HUMAN approach to ai adoption and make sure no one is left behind '}
+            {'  ai fluency lessons help attract / retain top TALENT and also prepare for the new era of work '}
             <span className="inline-block">_</span>
           </span>
         </div>

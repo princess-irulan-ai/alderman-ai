@@ -21,8 +21,9 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  *   - `persistCursor` — the `_` keeps blinking after typing completes.
  *
  * Copy:
- *   Line 1: "take a HUMAN approach to ai adoption and make sure no one
- *           is left behind" (HUMAN orange, ai green)
+ *   Line 1: "ai fluency lessons help attract / retain top TALENT and
+ *           also prepare for the new era of work" (ai green, / purple,
+ *           TALENT orange)
  *   Line 2: "fluency helps your TEAMS navigate new tools while reducing
  *           their anxiety about being replaced" (TEAMS orange, anxiety
  *           green)
@@ -51,11 +52,12 @@ export function HeroTerminalBlock({
         <TerminalLine
           className="[font-variant-ligatures:none]"
           segments={[
-            { text: 'take a ' },
-            { text: 'HUMAN', color: 'text-orange' },
-            { text: ' approach to ' },
             { text: 'ai', color: 'text-green' },
-            { text: ' adoption and make sure no one is left behind' },
+            { text: ' fluency lessons help attract ' },
+            { text: '/', color: 'text-purple' },
+            { text: ' retain top ' },
+            { text: 'TALENT', color: 'text-orange' },
+            { text: ' and also prepare for the new era of work' },
           ]}
           fontSize={resolvedFontSize}
           align="left"

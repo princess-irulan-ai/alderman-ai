@@ -124,6 +124,43 @@ export default function HomePage() {
             />
           </div>
         </section>
+        {/* Relocated hero terminal line (was line 1 of HeroTerminalBlock).
+            Sits between the still-HUMAN circular portrait and the final
+            CTA — the "take a HUMAN approach" beat now lands as the closing
+            argument before the booking ask. Same hangingPrompt + ghost-copy
+            height-reservation pattern as the H2.5 seam above. */}
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="grid">
+            <div
+              aria-hidden
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
+            >
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  take a HUMAN approach to ai adoption and make sure no one is left behind '}
+                <span className="inline-block">_</span>
+              </span>
+            </div>
+            <div className="col-start-1 row-start-1">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                startDelayMs={1620}
+                segments={[
+                  { text: 'take a ' },
+                  { text: 'HUMAN', color: 'text-orange' },
+                  { text: ' approach to ' },
+                  { text: 'ai', color: 'text-green' },
+                  { text: ' adoption and make sure no one is left behind' },
+                ]}
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Final IDE-purple SectionTile — "book a full demo" CTA. Last
             element on the home page, replaces the old "enabling ai
             value with human values" tagline + the two flashing-bracket
