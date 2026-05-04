@@ -5,10 +5,11 @@ import { TerminalLine } from '@/components/special/TerminalLine'
 /**
  * HeroTerminalBlock — H1 hero terminal lines.
  *
- * Vertical-stack hero (locked 2026-05-04, PLAN.md "Desktop strategy"):
- * each line renders independently via `lines="1"` or `lines="2"` and
- * runs its own IntersectionObserver type-out from mount. No `'both'`
- * stacked desktop mode, no baton-pass cursor choreography.
+ * Vertical-stack hero (locked 2026-05-04, PLAN.md "Desktop = mobile
+ * at 400px"): each line renders independently via `lines="1"` or
+ * `lines="2"` and runs its own IntersectionObserver type-out from
+ * mount. No `'both'` stacked desktop mode, no baton-pass cursor
+ * choreography.
  *
  * Treatment, both lines:
  *   - `hangingPrompt` — the `>` hangs in the page-padding gutter to
@@ -31,8 +32,8 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * Font-size:
  *   Default `HERO_FONT_SIZE_MOBILE` (22px) at every breakpoint. The old
  *   36px `HERO_FONT_SIZE_DESKTOP` was tuned for the prior wider canvas;
- *   the 540px column uses the mobile size everywhere until a new
- *   desktop type-scale lands.
+ *   the locked 400px column uses the mobile size everywhere until a
+ *   new desktop type-scale lands.
  */
 
 const HERO_FONT_SIZE_MOBILE = '22px'

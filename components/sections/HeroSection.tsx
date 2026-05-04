@@ -9,8 +9,8 @@ import { Postit } from '@/components/special/Postit'
  * HeroSection — top of the homepage.
  *
  * Vertical stack at every breakpoint per the locked desktop strategy
- * (PLAN.md "Desktop strategy 2026-05-04"): H1 → terminal line 1 →
- * paper-app with stuck-on post-it → terminal line 2. The 540px desktop
+ * (PLAN.md "Desktop = mobile at 400px"): H1 → terminal line 1 →
+ * paper-app with stuck-on post-it → terminal line 2. The 400px desktop
  * column comes from PageFrame; this section is breakpoint-agnostic.
  *
  * Post-it sits in its landed position from frame one — no rise/slap
@@ -102,10 +102,11 @@ export function HeroSection() {
 
       {/* Paper-app with stuck-on post-it. Post-it is positioned with its
           visible top-left corner at paper-app y≈244, anchored at the
-          paper-app's horizontal center via `left-1/2`. Mobile scales by
-          calc(50vw / 250px) so the rotated bottom-right tip lands at
-          viewport-right; desktop uses a fixed 1.1× scale inside the
-          540px column.
+          paper-app's horizontal center via `left-1/2`. Scale is
+          calc(--page-half / 250px). On mobile --page-half = 50vw so the
+          rotated bottom-right tip lands at viewport-right; once the
+          column locks at 400px above 400px viewport, --page-half clamps
+          at 200px and the scale stays at 200/250 = 0.8.
           The unit MUST be a length — `calc(50vw / 240)` (no unit on the
           divisor) is invalid CSS for `scale()` because vw/number = length,
           but `scale()` requires a unitless ratio. `50vw / 250px` is
@@ -121,9 +122,11 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Terminal line 2 — sits below the post-it overhang. Mobile mt is
-          calc-scaled to viewport (~1 line of clearance below the post-it
-          bottom); desktop uses a fixed value inside the 540px column. */}
+      {/* Terminal line 2 — sits below the post-it overhang. mt = calc
+          (--page-half - 82px) gives ~1 line of clearance below the
+          post-it bottom. On mobile --page-half = 50vw so it tracks the
+          viewport; above 400px viewport --page-half clamps at 200px so
+          the gap settles at 118px inside the locked column. */}
       <div className="mt-[calc(var(--page-half)-82px)] grid">
         <div
           aria-hidden
