@@ -65,10 +65,10 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
     <div className="relative">
       <PaperApp width="wide" bodyClassName="">
         <div
-          className={`px-5 py-6 h-[340px] overflow-hidden flex flex-col ${
+          className={`px-5 py-6 h-[440px] overflow-hidden flex flex-col ${
             isEmpty
               ? 'items-center justify-center'
-              : 'justify-center gap-4'
+              : 'justify-end gap-4'
           }`}
         >
           {isEmpty ? (
@@ -109,9 +109,16 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
             <span className="line-clamp-2 pr-1">{current?.q}</span>
             <span
               aria-hidden
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-ink text-purple rounded-full w-10 h-10 flex items-center justify-center text-[20px] leading-none pointer-events-none"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-ink text-purple rounded-full w-10 h-10 flex items-center justify-center pointer-events-none"
             >
-              ↑
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-7 h-7"
+                aria-hidden
+              >
+                <path d="M 12 4 L 20 12 L 15 12 L 15 20 L 9 20 L 9 12 L 4 12 Z" />
+              </svg>
             </span>
           </button>
         </div>

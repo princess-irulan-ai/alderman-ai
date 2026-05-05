@@ -7,35 +7,62 @@ import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
-// PROVISIONAL Q&A. The full list lands in a later session (likely two
-// sessions out from this one — next session is /faq cleanup, the one
-// after is real Q&A copy). These six are placeholder copy to
-// demonstrate structure + conventions.
-// Convention: questions use proper capitalization and end with `?` (or `.`).
 const FAQ_ENTRIES: FaqEntry[] = [
   {
-    q: 'How long is a teaching hour?',
-    a: '50 minutes — that’s one teaching hour.',
-  },
-  {
-    q: 'What fits in 8 hours per month?',
-    a: 'Roughly 2 teams meeting weekly for a month, or 1 team meeting twice a week. By the end your team has built real ai workflows, not just watched demos.',
-  },
-  {
-    q: 'Can I cancel or change tiers?',
-    a: 'Yes — month to month. You commit to one month at a time; raise or lower your hour count whenever.',
-  },
-  {
     q: 'Who is this for?',
-    a: 'Czech HR and L&D teams adding ai fluency as a benefit. Most groups are 4–6 people.',
+    a: 'Proactive companies who want to attract, retain, and upskill current and future employees to prepare them and your company for your eventual ai transformation.',
+  },
+  {
+    q: 'What does a session look like?',
+    a: '50 minutes of hands-on learning about ai by using ai. I’m there to guide and troubleshoot, but most of the learning happens using my proprietary ai lesson files.',
+  },
+  {
+    q: 'What’s the ai lesson file?',
+    a: 'A custom file your team opens in their ai of choice. It guides them through the topic, checks understanding, and flags when they should ask me for help.',
+  },
+  {
+    q: 'How often and how big are the groups?',
+    a: 'Up to 6 people per group. Cadence is up to you – most companies run one to three groups, meeting 1–2x a week. Similar to typical language lessons.',
+  },
+  {
+    q: 'How long is the program?',
+    a: 'Open-ended. Like language lessons, ai is ongoing skill-building – not a 12-week course with a finish line.',
+  },
+  {
+    q: 'Online or in-person?',
+    a: 'Online. These are hands-on lessons using ai, so an instructor in front of a whiteboard is ineffective. It also lets your team use personal hardware if your IT restricts all ai.',
+  },
+  {
+    q: 'Do we need to know ai already?',
+    a: 'No. Most teams start as beginners – about 95% of people, despite the marketing buzz. The ai itself adapts to each student, so mixed-experience groups still work.',
+  },
+  {
+    q: 'Can lessons be tailored to specific teams?',
+    a: 'Yes. By default, lessons are general – works for any team. If a whole team is interested (marketing, accounting), we tailor lessons to their actual work.',
+  },
+  {
+    q: 'What ai tools do you use?',
+    a: 'Whatever your IT allows. Free ChatGPT, paid Claude, even what’s built into Microsoft Word – we make lessons compatible with what your company permits.',
+  },
+  {
+    q: 'Czech or English?',
+    a: 'Lessons in English, with Czech help when needed. The ai itself can teach in any language. Think of the ai as your teacher and me as the assistant. (ale mluvím česky docela dobře)',
+  },
+  {
+    q: 'How does pricing work?',
+    a: 'By the teaching hour. The more hours per month, the lower the per-hour rate – see the table at the top of this page.',
+  },
+  {
+    q: 'What’s the commitment?',
+    a: 'Month-to-month with one month notice on either side. Missed sessions can be rescheduled within two weeks. Annual deals are available if you want to lock in pricing.',
+  },
+  {
+    q: 'How is this different from an online course?',
+    a: 'An online course doesn’t help when people are resistant to ai in the first place. I have the cultural and pedagogical experience to get them actually engaging with the topic – not just opting out.',
   },
   {
     q: 'How do we get started?',
-    a: 'Book a demo lesson. We’ll meet your team, gauge level, and propose a starting tier.',
-  },
-  {
-    q: 'Do you teach in Czech or English?',
-    a: 'English by default. Czech available for groups that prefer it.',
+    a: 'Book a call or send an email. We’ll do an intro meeting with anyone interested, sort into groups, agree on cadence, and start as soon as your people are ready.',
   },
 ]
 
@@ -68,27 +95,35 @@ export default function FaqPage() {
                   Cost is the number of 50m teaching hours used across all of your groups per month.
                 </p>
                 <p className="font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
-                  Buy more. Pay less. Simple.
+                  Buy more. Pay less.{' '}
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                    />
+                    <span className="relative text-ink">Simple</span>
+                  </span>
+                  .
                 </p>
-                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-orange font-display text-[16px] text-ink">
+                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
                   <thead>
                     <tr>
-                      <th className="border-2 border-orange px-4 py-2 font-bold text-left">Hours</th>
-                      <th className="border-2 border-orange px-4 py-2 font-bold text-left">Price (each)</th>
+                      <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
+                      <th className="border-2 border-ink px-4 py-2 font-bold text-left">Price (each)</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="border-2 border-orange px-4 py-2">4</td>
-                      <td className="border-2 border-orange px-4 py-2">5000 Kč</td>
+                      <td className="border-2 border-ink px-4 py-2">4</td>
+                      <td className="border-2 border-ink px-4 py-2">5000 Kč</td>
                     </tr>
                     <tr>
-                      <td className="border-2 border-orange px-4 py-2">8</td>
-                      <td className="border-2 border-orange px-4 py-2">4500 Kč</td>
+                      <td className="border-2 border-ink px-4 py-2">8</td>
+                      <td className="border-2 border-ink px-4 py-2">4500 Kč</td>
                     </tr>
                     <tr>
-                      <td className="border-2 border-orange px-4 py-2">16+</td>
-                      <td className="border-2 border-orange px-4 py-2">4000 Kč</td>
+                      <td className="border-2 border-ink px-4 py-2">16+</td>
+                      <td className="border-2 border-ink px-4 py-2">4000 Kč</td>
                     </tr>
                   </tbody>
                 </table>
