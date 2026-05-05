@@ -35,14 +35,14 @@ export default function ContactPage() {
                     />
                     <span className="relative">Book a demo</span>
                   </span>
-                  {' '}lesson, ask a question, or just introduce yourself! <span className="text-orange text-[1.25em]">♥</span>
+                  {' '}lesson, ask a question, or just introduce yourself!
                 </p>
                 <SectionTile
                   variant="app"
                   accent="orange"
                   eyebrow="Book a call"
                   href="https://cal.com/alex-the-ai-instructor/30m"
-                  title={<>Let&apos;s have a chat <span className="text-purple">:)</span></>}
+                  title="Let's have a chat"
                   markerStyle="contained"
                   className="!mt-10 md:!mt-12"
                 />
@@ -81,53 +81,21 @@ export default function ContactPage() {
         </section>
 
         <section className="grid grid-cols-canvas gap-6 pt-4 pb-8 md:pt-6 md:pb-10">
-          <div className="col-span-3 grid">
-            <div
-              aria-hidden
-              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-              style={{ fontSize: 22 }}
-            >
-              <span>
-                <span className="select-none">&gt;</span>
-                {'  prefer email? shoot ME a message '}
-                <span className="inline-block">_</span>
-              </span>
-            </div>
-            <div className="col-start-1 row-start-1">
-              <TerminalLine
-                hangingPrompt
-                showBrackets={false}
-                align="left"
-                persistCursor
-                startDelayMs={1620}
-                segments={[
-                  { text: 'prefer email' },
-                  { text: '?', color: 'text-purple' },
-                  { text: ' shoot ' },
-                  { text: 'ME', color: 'text-orange' },
-                  { text: ' a message' },
-                ]}
-              />
-            </div>
-          </div>
-        </section>
-
-        <section className="grid grid-cols-canvas gap-6 pt-16 pb-12 md:pt-20 md:pb-16">
           <div className="col-span-3">
             <SectionTile
               variant="ide"
               accent="purple"
-              eyebrow="send an email"
-              title={
+              eyebrow={
                 <>
                   <span className="text-orange">alex</span>
                   <span className="text-purple">@</span>
-                  <span className="text-purple">alder</span>
+                  <span className="text-paper">alder</span>
                   <span className="text-orange">man</span>
                   <span className="text-purple">.</span>
                   <span className="text-green">ai</span>
                 </>
               }
+              title="or send me an email"
               href="mailto:alex@alderman.ai"
               markerStyle="contained"
             />
