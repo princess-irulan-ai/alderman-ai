@@ -45,7 +45,7 @@ export default function AboutPage() {
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
-              Alex Alderman<span className="text-purple">:</span>
+              alex alderman<span className="text-purple">:</span>
               <br />
               an <span className="text-green">ai</span> expert and
               <br />
