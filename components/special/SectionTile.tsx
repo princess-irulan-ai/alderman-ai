@@ -115,12 +115,19 @@ export type SectionTileHeight = 'compact' | 'spacious'
 
 export type SectionTileProps = {
   variant: SectionTileVariant
-  /** Accent color for the marker glyphs. Default 'purple'. */
+  /** Accent color for the marker glyphs + eyebrow. Default 'purple'. */
   accent?: SectionTileAccent
+  /** Optional override for the shell gradient color. Defaults to `accent`.
+   *  Use when you want the eyebrow/marker in one color but the gradient
+   *  fill in another (e.g. orange marker on a purple-tinted shell). */
+  gradientAccent?: SectionTileAccent
   eyebrow: string | ReactNode
   title: string | ReactNode
   /** If provided, the whole tile becomes a link. Otherwise non-interactive. */
   href?: string
+  /** Forwarded to the underlying anchor when `href` is set. Pass `true` for
+   *  default browser-suggested filename, or a string to suggest one. */
+  download?: boolean | string
   /**
    * IDE-only. Color of the framing `[ ]` brackets around the marker.
    * Default 'neutral' (ide-fg). Sandbox knob.
@@ -267,6 +274,8 @@ export function SectionTile({
   eyebrow,
   title,
   href,
+  download,
+  gradientAccent,
   bracketColor = 'neutral',
   eyebrowStyle = 'em-dash',
   markerStyle = 'classic',
@@ -312,7 +321,7 @@ export function SectionTile({
     ? `relative block rounded-tile border-2 border-ide-rule px-5 ${verticalPadClass} transition-[box-shadow,border-color] duration-200 ${hoverBorderClass} ${hoverGlowClass}`
     : `relative block rounded-tile border-2 border-ink/15 px-5 ${verticalPadClass} transition-[box-shadow,border-color] duration-200 ${hoverBorderClass} ${hoverGlowClass}`
   const shellStyle = {
-    background: (isIde ? ACCENT_GRADIENT_IDE : ACCENT_GRADIENT_APP)[accent],
+    background: (isIde ? ACCENT_GRADIENT_IDE : ACCENT_GRADIENT_APP)[gradientAccent ?? accent],
   }
 
   const content: ReactNode = (
@@ -424,6 +433,7 @@ export function SectionTile({
     return (
       <Link
         href={href}
+        download={download}
         className={`${baseShellClass} ${className}`}
         style={shellStyle}
       >
