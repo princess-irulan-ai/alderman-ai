@@ -284,31 +284,78 @@ export default function FaqPage() {
               accent="purple"
               eyebrow="upload to ai"
               title="download FAQ file"
+              href="/faq-download"
               markerStyle="contained"
             />
           </div>
         </section>
 
-        <section className="pt-4 pb-16 md:pt-6 md:pb-20">
+        <section className="pt-4 pb-12 md:pt-6 md:pb-14">
           <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                Don&apos;t want to talk to ai? Don&apos;t worry.
+                Need some help with FAQ file?
               </h2>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                Just book a quick intro call with Alex instead.
+                You can find more detailed instructions below.
               </p>
               <SectionTile
                 variant="app"
                 accent="orange"
-                eyebrow="Book a call"
-                title="Chat with Alex"
-                href="/contact"
+                eyebrow="CLICK HERE"
+                title="Detailed instructions"
+                href="/faq-download"
                 markerStyle="contained"
                 className="!mt-10 md:!mt-12"
               />
             </div>
           </PaperApp>
+        </section>
+
+        {/* Second fallback path — for readers who don't want to engage
+            with ai at all and would rather book a human. Mirrors the
+            terminal+CTA pattern from /faq-download. */}
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+          <div className="relative">
+            <div
+              aria-hidden
+              className="font-mono invisible"
+              style={{
+                fontSize: '22px',
+                marginLeft: '-3ch',
+                paddingLeft: '3ch',
+                textIndent: '-3ch',
+              }}
+            >
+              {">  don't want to talk to ai? i totally get it"}
+            </div>
+            <div className="absolute inset-0">
+              <TerminalLine
+                hangingPrompt
+                showBrackets={false}
+                align="left"
+                persistCursor
+                segments={[
+                  { text: "don't want to talk to " },
+                  { text: 'ai', color: 'text-green' },
+                  { text: '? i totally get it' },
+                ]}
+              />
+            </div>
+          </div>
+        </section>
+
+        <section className="pt-6 pb-16 md:pt-10 md:pb-20">
+          <div>
+            <SectionTile
+              variant="ide"
+              accent="purple"
+              eyebrow="book a call"
+              title={<>talk to a <span className="normal-case text-orange">HUMAN</span></>}
+              href="/contact"
+              markerStyle="contained"
+            />
+          </div>
         </section>
 
       </PageFrame>
