@@ -338,10 +338,13 @@
     display: block;
   }
 
-  /* MENU CONTAINER inside side nav — the PaperApp inherits its width
-     from the container. Set to 300px. */
+  /* MENU CONTAINER inside side nav — sizes to its PaperApp's content
+     (PaperApp is `width="fit"` which makes the inner paper element
+     `w-fit` = `width: max-content`). Buttons stretch to the widest
+     (Talk to a HUMAN at text-[20px]); shorter buttons inherit that
+     width with text-right alignment so right-edges line up. */
   .dev-side-nav-menu {
-    width: 300px;
+    width: max-content;
   }
 }
 

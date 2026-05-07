@@ -97,13 +97,13 @@ export default function DevHomePage() {
           />
         </Link>
         <div className="dev-side-nav-menu">
-          <PaperApp width="wide" chromeLeft="" chromeRight="">
-            <nav className="flex flex-col gap-3 px-4 py-4">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (
                 <Link
                   key={i}
                   href={item.href}
-                  className={`block w-full rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
                   style={{ background: item.gradient }}
                 >
                   {item.label}
