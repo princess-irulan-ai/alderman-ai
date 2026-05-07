@@ -254,4 +254,21 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* PAPER-APP TYPE — bump titles + subtitles 50% inside any paper-app
+     body. Targets the canonical Tailwind size classes used across all
+     three paper-apps (hero perks, WhatYouGetSection, TrialCTASection).
+     Scoped under `.shadow-paper-glow` (PaperApp's inner paper element)
+     so post-its and other elements outside the paper-app body don't
+     get bumped — post-its are absolute siblings of PaperApp inside
+     the wrapper, not descendants of `.shadow-paper-glow`. */
+  .desktop-experiment .shadow-paper-glow .text-\[28px\] {
+    font-size: 42px;
+  }
+  .desktop-experiment .shadow-paper-glow .text-\[22px\] {
+    font-size: 33px;
+  }
+  .desktop-experiment .shadow-paper-glow .text-\[18px\] {
+    font-size: 27px;
+  }
 }
