@@ -263,12 +263,12 @@
      get bumped — post-its are absolute siblings of PaperApp inside
      the wrapper, not descendants of `.shadow-paper-glow`. */
   .desktop-experiment .shadow-paper-glow .text-\[28px\] {
-    font-size: 42px;
+    font-size: 35px;
   }
   .desktop-experiment .shadow-paper-glow .text-\[22px\] {
-    font-size: 33px;
+    font-size: 27.5px;
   }
   .desktop-experiment .shadow-paper-glow .text-\[18px\] {
-    font-size: 27px;
+    font-size: 22.5px;
   }
 }
