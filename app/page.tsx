@@ -1,33 +1,94 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
+import { PaperApp } from '@/components/paper/PaperApp'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { TrialCTASection } from '@/components/sections/TrialCTASection'
 import { WhatYouGetSection } from '@/components/sections/WhatYouGetSection'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
+// Side-nav menu items — same destinations as the FloatingNav menu, but
+// always visible (no toggle) and styled for the side-nav narrower
+// container. Hardcoded inline rather than reused from FloatingNav to
+// keep that shared component frozen. Homepage filtered out — current
+// route excluded from its own nav menu.
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/faq',
+    label: 'Pricing / FAQ',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/about',
+    label: 'About Me',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/contact',
+    isPrimary: true,
+    label: (
+      <>
+        Talk to a <span className="uppercase text-orange">HUMAN</span>
+      </>
+    ),
+    gradient:
+      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  },
+] as const
+
 export default function HomePage() {
   return (
-    <>
+    <div className="desktop-experiment">
       <FloatingNav />
+      {/* DESKTOP SIDE NAV — only visible at >=1200px via the
+          .dev-side-nav rules in globals.css. Below that gate it's
+          `display: none`. The existing FloatingNav stays the
+          navigation surface at <1200px (mobile + tablet); at >=1200
+          FloatingNav is also hidden via CSS and this aside takes
+          over. Both elements render unconditionally — gating happens
+          purely in CSS so React state is untouched. */}
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <HeroSection />
         <WhatYouGetSection />
-        {/* H2.5 — terminal-line seam between the WhatYouGet onboarding
-            triptych and the demo-lesson IDE CTA below. Sits on the dark
-            IDE substrate. Uses hangingPrompt + showBrackets={false} so
-            the `>` hangs in the outer gutter and the typed text aligns
-            to the canvas left edge — matches the hero lines above.
-
-            Wrapped in a CSS grid alongside an invisible ghost copy of
-            the fully-typed line, both pinned to col-start-1 row-start-1
-            so the cell height tracks the ghost. Same pattern hero line
-            1 uses — locks the line's height from the first paint so the
-            CTA tile below doesn't shift downward as the line types out. */}
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
           <div className="grid">
             <div
@@ -58,10 +119,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        {/* IDE-purple SectionTile — "see a demo lesson" CTA. Sits on
-            the dark IDE substrate after the H2.5 terminal seam and
-            before the credentials paper-app. Clicks through to /faq
-            (FAQ + pricing). */}
         <section className="pt-12 pb-8 md:pt-16 md:pb-10">
           <SectionTile
             variant="ide"
@@ -70,29 +127,10 @@ export default function HomePage() {
             title="have questions?"
             href="/faq"
             markerStyle="contained"
+            className="tile-right-edge"
           />
         </section>
         <TrialCTASection />
-        {/* Circular portrait — between the credentials paper-app (with
-            its BL post-it overhang) and the final "book a full demo"
-            IDE CTA. Centered on the dark IDE substrate. The
-            `mt-[184px] md:mt-8` clears the post-it overhang on mobile
-            (~152px overhang + canonical 32px gap).
-
-            The SVG draws a charcoal "frame" ring around the photo at 74%
-            of its bbox width (measured: dark frame outer edge spans 36-244
-            in a 281px rendered image; photo edge spans 56-223; frame
-            thickness ~20px each side). Center is at ~50% x / 49% y — the
-            "still HUMAN" arc occupies a sliver below the circle, nudging
-            the frame center slightly above absolute middle.
-
-            Border + paper-app shadow stack (muted ledge + orange glow +
-            dark grounding) sit on an inner overlay sized to that 74%
-            ring — replaces the soft frame-to-substrate transition with a
-            hard 2px line, and casts the shadow from the visible circle's
-            edge instead of from the SVG bbox. `aspect-square` keeps the
-            wrapper square so the same proportions hold at both mobile
-            (~281px constrained by gutter) and desktop (440px). */}
         <section className="flex justify-center mt-[36px] md:mt-8">
           <div className="relative aspect-square w-full max-w-[360px]">
             <Image
@@ -106,14 +144,6 @@ export default function HomePage() {
               aria-hidden
               className="pointer-events-none absolute left-1/2 top-[49%] h-[74%] w-[74%] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-ide-fg-mute"
               style={{
-                // One-off shadow for this portrait — DECOUPLED from
-                // `shadow-paper-glow`. Tuned independently per Alex
-                // (2026-04-27): the muted "card thickness" ledge is dialled
-                // way down (1px / 0.40 vs paper-glow's 3px / 0.80) to keep
-                // the 3D feel minor. Visually similar to paper-glow today,
-                // but changes here MUST NOT propagate to paper-apps and
-                // vice-versa — a tweak to one should never silently move
-                // the other. If paper-glow drifts, leave this alone.
                 boxShadow: [
                   '1px 1px 0 0 rgba(117, 113, 94, 0.40)',
                   '6px 10px 32px rgba(253, 151, 31, 0.28)',
@@ -123,11 +153,6 @@ export default function HomePage() {
             />
           </div>
         </section>
-        {/* Closing terminal seam — sits between the still-HUMAN circular
-            portrait and the final CTA. The "take a HUMAN approach" beat
-            lands as the closing argument before the booking ask. Same
-            hangingPrompt + ghost-copy height-reservation pattern as the
-            H2.5 seam above. */}
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
           <div className="grid">
             <div
@@ -158,13 +183,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Final IDE-purple SectionTile — "book a full demo" CTA. Last
-            element on the home page, replaces the old "enabling ai
-            value with human values" tagline + the two flashing-bracket
-            TerminalCTAs that previously closed the page. Eyebrow is a
-            placeholder ("next step") — Alex to drop final copy.
-            Provisional href: /contact. */}
         <section className="pt-8 pb-16 md:pt-12 md:pb-20">
           <SectionTile
             variant="ide"
@@ -173,10 +191,11 @@ export default function HomePage() {
             title="book a demo lesson"
             href="/contact"
             markerStyle="contained"
+            className="tile-right-edge"
           />
         </section>
       </PageFrame>
       <Footer />
-    </>
+    </div>
   )
 }
