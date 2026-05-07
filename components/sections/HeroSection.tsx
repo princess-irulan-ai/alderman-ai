@@ -1,5 +1,4 @@
 import { PaperApp } from '@/components/paper/PaperApp'
-import { GutterGlow } from '@/components/special/GutterGlow'
 import { Postit } from '@/components/special/Postit'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
@@ -9,20 +8,10 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * Vertical stack at every breakpoint: H1 → terminal line 1 →
  * paper-app with stuck-on post-it → terminal line 2. Below the
  * tablet breakpoint the column locks at 400px (PLAN.md "Desktop =
- * mobile at 400px"); at tablet+ inside `.desktop-expanded` (the
- * homepage dev sandbox) the column widens to 540 and H1 fills it
- * (78px). Paper-app + post-it stay mobile-sized regardless.
- *
- * `inlineTerminal` (opt-in, /dev/home-page only): narrows the
- * terminal-line wrap zone to 414px centered in the 540 column.
- * Wrap-zone width is sized to preserve mobile's 20-visible-chars-
- * per-line ratio at the bumped 30px desktop terminal font (mobile:
- * 22px / 264-content-box / 20 chars; desktop: 30px / 360-content-
- * box / 20 chars). Copy authored for mobile wraps at the same word
- * boundaries on desktop. `>` hangs to the LEFT of the wrap zone
- * via hangingPrompt's negative-margin math (lands ~9px in from the
- * gutter at this width), `_` cursor trails after typed text.
- * Default false — / uses the full content area as wrap zone.
+ * mobile at 400px"); at md+ on the homepage PageFrame's
+ * `desktopExpanded` opt-in widens the column to 560 and scales H1 +
+ * terminal-line type proportionally. Paper-app + post-it stay
+ * mobile-sized regardless.
  *
  * Post-it sits in its landed position from frame one — no rise/slap
  * choreography, no baton-pass between terminal lines. Each TerminalLine
@@ -30,24 +19,7 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * inherits its font size from the canonical `--font-terminal` CSS var.
  */
 
-export function HeroSection({
-  inlineTerminal = false,
-}: {
-  inlineTerminal?: boolean
-} = {}) {
-  // Terminal-line layout differs in inlineTerminal (/dev/home-page) mode:
-  //   - leadingSpaces stays at the canonical 2 (= 2 NBSPs between `>` and
-  //     visible text). Combined with hangingPrompt's -3ch margin, `>` lands
-  //     at column-left - 39 with its bbox fully in the gutter, well past
-  //     the rule line; typed text starts at column-left + 15.
-  //   - The wrapper sits at column-left + 15 (left-aligned) with a 407px
-  //     wrap zone, so text breaks at the paper-app's right edge below
-  //     (column-left + 422).
-  // Canonical mode (used on `/`): leadingSpaces=2 + mx-auto centering as
-  // before — paths stay independent.
-  const leadingSpaces = 2
-  const ghostPad = ' '.repeat(leadingSpaces)
-
+export function HeroSection() {
   // Post-it copy — merged title-weight + body-weight into a single
   // heading per Alex 2026-04-28. Inline fontSize=24px overrides Postit's
   // wrapper text-[34px]/[43px] — the merged copy is longer than the
@@ -100,35 +72,20 @@ export function HeroSection({
 
   return (
     <section className="flex flex-col gap-6 pt-4 pb-8">
-      {/* H1 wrapped in a relative container so the GutterGlows can
-          position themselves against the column's gutter rules.
-          mb-14 lives on the wrapper (not the H1) so the wrapper's
-          rendered height matches the H1's text bbox — the glow's
-          `calc(100% + 20px)` height then extends exactly 10px above
-          and below the topmost/bottommost text rather than picking
-          up the H1's bottom margin. */}
-      <div className="relative mb-14">
-        <h1 className="font-display text-[40px] [.desktop-expanded_&]:tablet:text-[78px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
-          <span className="text-green">ai</span> is a language
-          <br />
-          your <span className="text-orange">COMPANY</span>
-          <br />
-          needs to learn
-        </h1>
-        {inlineTerminal && (
-          <>
-            <GutterGlow side="left" color="purple" />
-            <GutterGlow side="right" color="purple" />
-          </>
-        )}
-      </div>
+      <h1 className="font-display text-[40px] [.desktop-expanded_&]:tablet:text-[105px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-14">
+        <span className="text-green">ai</span> is a language
+        <br />
+        your <span className="text-orange">COMPANY</span>
+        <br />
+        needs to learn
+      </h1>
 
       {/* Terminal line 1 — wrapped in a CSS grid alongside an invisible
           ghost copy of the fully-typed line, both pinned to the same
           col-start-1 row-start-1. The ghost reserves the wrapped-line
           height from first paint so the paper-app below doesn't slide
           downward as the line types out. */}
-      <div className="grid [.desktop-expanded_&]:tablet:max-w-[407px] [.desktop-expanded_&]:tablet:ml-[15px]">
+      <div className="grid [.desktop-expanded_&]:tablet:max-w-[570px] [.desktop-expanded_&]:tablet:mx-auto">
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -136,7 +93,7 @@ export function HeroSection({
         >
           <span>
             <span className="select-none">&gt;</span>
-            {`${ghostPad}ai fluency lessons help attract / retain top TALENT and also prepare for a new era of work `}
+            {'  ai fluency lessons help attract / retain top TALENT and also prepare for a new era of work '}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -153,7 +110,6 @@ export function HeroSection({
             ]}
             align="left"
             hangingPrompt
-            leadingSpaces={leadingSpaces}
             showBrackets={false}
             persistCursor
           />
@@ -173,14 +129,13 @@ export function HeroSection({
           length/length = unitless ratio = valid. The 250px (vs the
           source's 240) accounts for the rotated bbox: at -5° the
           bottom-right tip moves to x≈250. */}
-      <div className="mt-5 relative">
-        <div className="relative [.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:ml-auto [.desktop-expanded_&]:tablet:mr-[15px]">
+      <div className="mt-5">
+        <div className="relative [.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:mx-auto">
           <PaperApp width="narrow">{perks}</PaperApp>
-          <div className="absolute left-1/2 top-[244px] [.desktop-expanded_&]:tablet:left-[370px] pointer-events-none origin-top-left z-10 [transform:scale(calc(var(--page-half)/250px))]">
+          <div className="absolute left-1/2 top-[244px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
             <Postit rotation={-5} heading={postitHeading} />
           </div>
         </div>
-        {inlineTerminal && <GutterGlow side="right" color="orange" />}
       </div>
 
       {/* Terminal line 2 — sits below the post-it overhang. mt = calc
@@ -188,7 +143,7 @@ export function HeroSection({
           post-it bottom. On mobile --page-half = 50vw so it tracks the
           viewport; above 400px viewport --page-half clamps at 200px so
           the gap settles at 118px inside the locked column. */}
-      <div className="mt-[calc(var(--page-half)-82px)] grid [.desktop-expanded_&]:tablet:max-w-[407px] [.desktop-expanded_&]:tablet:ml-[15px]">
+      <div className="mt-[calc(var(--page-half)-82px)] grid [.desktop-expanded_&]:tablet:max-w-[570px] [.desktop-expanded_&]:tablet:mx-auto">
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -196,7 +151,7 @@ export function HeroSection({
         >
           <span>
             <span className="select-none">&gt;</span>
-            {`${ghostPad}fluency helps your TEAMS navigate new tools while reducing their anxiety about being replaced `}
+            {"  fluency helps your TEAMS navigate new tools while reducing their anxiety about being replaced "}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -211,7 +166,6 @@ export function HeroSection({
             ]}
             align="left"
             hangingPrompt
-            leadingSpaces={leadingSpaces}
             showBrackets={false}
             persistCursor
           />

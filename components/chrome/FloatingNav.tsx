@@ -65,7 +65,7 @@ export function FloatingNav() {
           {/* Column-constrained on desktop so the nav aligns with the
               page content column. Inner div carries the 12% gutter
               padding — same pattern as PageFrame. */}
-          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[540px]' : 'md:mx-auto md:max-w-[400px]'}>
+          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[700px]' : 'md:mx-auto md:max-w-[400px]'}>
             {/* Two-element bar: identity on the left, menu affordance on
                 the right. Removed from DOM entirely when the menu is
                 open — the menu paper-app takes over as the only thing
@@ -86,7 +86,7 @@ export function FloatingNav() {
                     src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
                     alt=""
                     aria-hidden
-                    className="block h-[76px] w-[76px] -ml-3"
+                    className={`block h-[76px] w-[76px] -ml-3 ${isExpanded ? 'tablet:h-[200px] tablet:w-[200px]' : ''}`}
                   />
                 </Link>
 
@@ -105,7 +105,7 @@ export function FloatingNav() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     aria-hidden
-                    className="h-[52px] w-[52px]"
+                    className={`h-[52px] w-[52px] ${isExpanded ? 'tablet:h-[137px] tablet:w-[137px]' : ''}`}
                   >
                     <line x1="4" y1="7" x2="20" y2="7" />
                     <line x1="4" y1="12" x2="20" y2="12" />
@@ -139,7 +139,7 @@ export function FloatingNav() {
           className="fixed inset-0 z-40 bg-ide/90 pt-[50px]"
           onClick={() => setMenuOpen(false)}
         >
-          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[540px]' : 'md:mx-auto md:max-w-[400px]'}>
+          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[700px]' : 'md:mx-auto md:max-w-[400px]'}>
             <div
               className="px-[8.333%]"
               onClick={(e) => e.stopPropagation()}

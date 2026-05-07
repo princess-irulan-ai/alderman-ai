@@ -4,12 +4,10 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        // `tablet` (768) gates the home-page desktop-expansion experiment.
-        // Locked spec 2026-05-08: column 400→540, H1 + terminal type
-        // bumped 1.35× (40→54px, 22→30px) to fill the wider column.
-        // Paper-apps, CTAs, nav chrome stay mobile-sized — only the
-        // brand-loud elements (H1, terminal) scale. Don't reuse this
-        // breakpoint for unrelated tweaks until the experiment proves out.
+        // `tablet` (768) gates the home-page desktop-expansion experiment
+        // (column 400→520, hero type 1.3×, nav chrome 1.3×). Locked
+        // 2026-05-06. Don't reuse this breakpoint for unrelated tweaks
+        // until the experiment proves out.
         tablet: '768px',
         md: '1000px',
       },

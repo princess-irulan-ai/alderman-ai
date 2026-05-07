@@ -29,10 +29,10 @@ export default function DevHomePage() {
       <FloatingNav />
       <PageFrame desktopExpanded>
         <div className="h-[120px] tablet:h-[244px]" aria-hidden />
-        <HeroSection inlineTerminal />
+        <HeroSection />
         <WhatYouGetSection />
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="grid tablet:max-w-[407px] tablet:ml-[15px]">
+          <div className="grid tablet:max-w-[570px] tablet:mx-auto">
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -47,7 +47,6 @@ export default function DevHomePage() {
             <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
-                leadingSpaces={2}
                 showBrackets={false}
                 align="left"
                 persistCursor
@@ -98,7 +97,7 @@ export default function DevHomePage() {
           </div>
         </section>
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="grid tablet:max-w-[407px] tablet:ml-[15px]">
+          <div className="grid tablet:max-w-[570px] tablet:mx-auto">
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
@@ -113,7 +112,6 @@ export default function DevHomePage() {
             <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
-                leadingSpaces={2}
                 showBrackets={false}
                 align="left"
                 persistCursor
