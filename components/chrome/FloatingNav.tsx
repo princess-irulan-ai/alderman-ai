@@ -136,13 +136,30 @@ export function FloatingNav() {
           className="fixed inset-0 z-40 bg-ide/90 pt-[50px]"
           onClick={() => setMenuOpen(false)}
         >
-          <div className="md:mx-auto md:max-w-[400px]">
-            <div
-              className="px-[8.333%]"
-              onClick={(e) => e.stopPropagation()}
+          <div
+            className="flex justify-center px-[var(--gutter-mobile)]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <PaperApp
+              width="fit"
+              chromeLeft=""
+              chromeRight=""
+              bodyClassName=""
+              paperStyle={{
+                // Dialed-down warm wash — quieter than the canonical
+                // orange paper-glow so the menu reads as navigation
+                // chrome rather than content. Same shadow as the
+                // dev side-nav menu (3px ledge / 0.18 hot / 0.07
+                // tail / dark grounding) so the two surfaces match.
+                boxShadow: [
+                  '3px 3px 0 0 rgba(117, 113, 94, 0.80)',
+                  '8px 10px 24px rgba(253, 151, 31, 0.18)',
+                  '16px 18px 40px rgba(253, 151, 31, 0.07)',
+                  '28px 38px 80px rgba(0, 0, 0, 0.50)',
+                ].join(', '),
+              }}
             >
-              <PaperApp width="wide" chromeLeft="" chromeRight="">
-                <nav className="flex flex-col gap-5 py-2">
+              <nav className="flex flex-col gap-2 p-[10px]">
                   {/* Context-aware menu: shows the three pages that are
                       NOT the current one. Canonical order:
                         Home → Pricing/FAQ → About Me → Talk to a HUMAN
@@ -205,15 +222,14 @@ export function FloatingNav() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMenuOpen(false)}
-                        className={`block w-full rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 pl-5 pr-5 py-2.5 font-display font-bold text-[22px] text-ink text-right`}
+                        className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
                         style={{ background: item.gradient }}
                       >
                         {item.label}
                       </Link>
                     ))}
                 </nav>
-              </PaperApp>
-            </div>
+            </PaperApp>
           </div>
         </div>
       )}
