@@ -186,4 +186,28 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* TERMINAL-LINE GRID WRAPPERS — hero line 1, hero line 2, H2.5 seam,
+     and "take a HUMAN approach" seam. All four are direct children of
+     a `<section>` and carry the `.grid` class. Cap at 407 wrap zone
+     left-aligned with 15px gap from column-left, so the prompt `>`
+     hangs in the gutter at column-left - 39 and typed text breaks at
+     column-left + 422 (= 15 + 407). Preserves the 20-chars-per-line
+     proportion at the bumped 30px terminal font. */
+  .desktop-experiment section > .grid {
+    max-width: 407px;
+    margin-left: 15px;
+  }
+
+  /* IDE-VARIANT SECTION TILES — "have questions?" and "book a demo
+     lesson" both render as `<a>` (or block) with `.rounded-tile.border-2.
+     border-ide-rule`. Cap at 304 centered, matching mobile width inside
+     the wider canvas. The APP-variant tile inside the credentials
+     paper-app uses a different border color (orange, not ide-rule) so
+     it doesn't match this selector and stays at its own width. */
+  .desktop-experiment .rounded-tile.border-ide-rule {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
