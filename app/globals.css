@@ -145,14 +145,16 @@
     z-index: 10;
   }
 
-  /* CREDENTIALS PAPER-APP (TrialCTASection) — capped at 304,
-     centered. Orange GutterGlow on right side via ::after. */
-  .desktop-experiment #brochure > .relative {
-    max-width: 304px;
-    margin-left: auto;
-    margin-right: auto;
+  /* HERO PAPER-APP OUTER WRAPPER — needs `position: relative` so the
+     orange GutterGlow ::after can anchor against the column-right.
+     The `.mt-5` div spans the full 550 column (no width override
+     above), so its right edge equals the column's right edge. The
+     glow's `right: -30px` then sits 30px past the column-right rule
+     line, into the gutter. */
+  .desktop-experiment .mt-5 {
+    position: relative;
   }
-  .desktop-experiment #brochure > .relative::after {
+  .desktop-experiment .mt-5::after {
     content: '';
     position: absolute;
     top: -10px;
@@ -166,6 +168,16 @@
       rgba(253, 151, 31, 0.30) 25%,
       rgba(253, 151, 31, 0.10) 60%,
       rgba(253, 151, 31, 0) 100%);
+  }
+
+  /* CREDENTIALS PAPER-APP (TrialCTASection) — capped at 304, centered.
+     No GutterGlow per session-38 code (the commit message claimed an
+     orange glow here but the diff didn't add one — only the hero got
+     a glow). */
+  .desktop-experiment #brochure > .relative {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: auto;
   }
   /* CREDENTIALS PAPER-APP INNER PADDING — collapse pb-[96px] → 0.5rem
      because the BL post-it doesn't overhang the body at desktop
