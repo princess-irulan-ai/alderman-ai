@@ -15,6 +15,14 @@
        are breakpoint-free — no media query needed.
        Spec: PLAN.md "Desktop = mobile at 400px". */
     --page-half: min(50vw, 200px);
+    /* Terminal-line font size — single knob read by every TerminalLine
+       (default fontSize prop is `var(--font-terminal)`) and by ghost
+       copies that need to match. Mobile-locked pages keep this at 22px
+       at every viewport. The `.desktop-experiment` scope in the
+       desktop block below bumps it to 30px at tablet+ so terminal
+       lines on /dev/home-page scale with the wider 550 column while
+       preserving the 20-chars-per-line wrap proportion. */
+    --font-terminal: 22px;
   }
   html {
     background-color: #1e1f1a; /* ide-2 — prevents white flash */
@@ -49,6 +57,16 @@
    reverted in commits c7312e7 and a2de332).
    ============================================================ */
 @media (min-width: 768px) {
+  /* TERMINAL FONT SIZE — bump the canonical 22px to 30px at desktop
+     for any TerminalLine inside a `.desktop-experiment` ancestor.
+     TerminalLine's default fontSize prop is `var(--font-terminal)`,
+     so this bump propagates automatically to every visible terminal
+     output. Ghost copies that use a literal `fontSize: 22` inline
+     style get caught by the `[style*="font-size:22px"]` rule below. */
+  .desktop-experiment {
+    --font-terminal: 30px;
+  }
+
   /* COLUMN — widen 400 → 550, add 1px rule lines at edges, drop the
      12% interior gutter so the column itself is the visual edge. */
   .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
@@ -218,6 +236,18 @@
      paper-app uses a different border color (orange, not ide-rule) so
      it doesn't match this selector and stays at its own width. */
   .desktop-experiment .rounded-tile.border-ide-rule {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* WHAT-YOU-GET SECTION — its `<PaperApp width="wide">` renders as
+     `.col-span-3` direct child of section. Cap at 304 centered at
+     desktop so the onboarding paper-app reads at mobile-equivalent
+     width inside the 550 column. (Credentials section's wide PaperApp
+     is wrapped in `<div class="relative">` so it's a grandchild, not
+     a direct section child — this selector doesn't catch it.) */
+  .desktop-experiment section > .col-span-3 {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;

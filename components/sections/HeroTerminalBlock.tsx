@@ -23,7 +23,7 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  *
  * Copy:
  *   Line 1: "ai fluency lessons help attract / retain top TALENT and
- *           also prepare for the new era of work" (ai green, / purple,
+ *           also prepare for a new era of work" (ai green, / purple,
  *           TALENT orange)
  *   Line 2: "fluency helps your TEAMS navigate new tools while reducing
  *           their anxiety about being replaced" (TEAMS orange, anxiety
@@ -58,14 +58,13 @@ export function HeroTerminalBlock({
             { text: '/', color: 'text-purple' },
             { text: ' retain top ' },
             { text: 'TALENT', color: 'text-orange' },
-            { text: ' and also prepare for the new era of work' },
+            { text: ' and also prepare for a new era of work' },
           ]}
           fontSize={resolvedFontSize}
           align="left"
           hangingPrompt
           showBrackets={false}
           persistCursor
-          startDelayMs={1620}
         />
       </div>
     )
@@ -86,7 +85,6 @@ export function HeroTerminalBlock({
         hangingPrompt
         showBrackets={false}
         persistCursor
-        startDelayMs={1620}
       />
     </div>
   )

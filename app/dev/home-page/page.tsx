@@ -57,7 +57,6 @@ export default function DevHomePage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
-                startDelayMs={1620}
                 segments={[
                   { text: 'fluency lessons are hands on usage of ' },
                   { text: 'ai', color: 'text-green' },
@@ -121,7 +120,6 @@ export default function DevHomePage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
-                startDelayMs={1620}
                 segments={[
                   { text: 'take a ' },
                   { text: 'HUMAN', color: 'text-orange' },

@@ -14,13 +14,16 @@ import { useEffect, useMemo, useRef, useState } from 'react'
  *   _    — purple blinking cursor; rides the end of the typed text while
  *          typing, disappears entirely once typing is complete.
  *
- * CODIFIED DEFAULTS (Alderman terminal voice — H2.5 is the reference):
- *   fontSize       22px (matches the hero terminal lines; dropped from
- *                  24px on 2026-04-29 so all terminal lines render at
- *                  the same size)
+ * CODIFIED DEFAULTS (Alderman terminal voice):
+ *   fontSize       var(--font-terminal) — resolves to the page's
+ *                  canonical terminal-line size (22px on mobile-locked
+ *                  pages; bumped to 30px on /dev/home-page at desktop
+ *                  via the .desktop-experiment scope in globals.css).
+ *                  All TerminalLine instances render at the same size
+ *                  on a given page.
  *   leadingSpaces  2   (NBSPs baked into the front of the typed content)
- *   startDelayMs   2120ms   (2 × 1.06s cursor blinks on viewport entry)
- *   charDelayMs    36ms     (20% faster than the original 45ms medium)
+ *   startDelayMs   1060ms  (1 × 1.06s cursor blink on viewport entry)
+ *   charDelayMs    27ms    (25% faster than the previous 36ms; original was 45ms)
  *
  * Any new TerminalLine deployed anywhere else in the site should look and
  * feel identical to the H2.5 instance without the caller having to pass
@@ -138,10 +141,12 @@ export type TerminalLineProps = {
   /** Tailwind text-color class for the framing `[` and `]`. Default `"text-orange"`. */
   bracketColor?: string
   /**
-   * Font size. Default 24 — the codified H2.5 size. Pass a number for
-   * a fixed px size, or a CSS string (e.g. `'clamp(22px, 5.5vw, 36px)'`)
-   * for responsive sizing. The hanging-prompt math uses `ch` units so
-   * it stays correct across font-size changes.
+   * Font size. Default `var(--font-terminal)` — resolves to the page's
+   * canonical terminal-line size (22px on mobile-locked pages; bumped
+   * to 30px on /dev/home-page at desktop via the `.desktop-experiment`
+   * scope in globals.css). Pass a number for a fixed px size, or a
+   * CSS string for any other expression. The hanging-prompt math uses
+   * `ch` units so it stays correct across font-size changes.
    */
   fontSize?: number | string
   /**
@@ -304,14 +309,14 @@ export type TerminalLineProps = {
 export function TerminalLine({
   text,
   segments,
-  startDelayMs = 2120,
-  charDelayMs = 36,
+  startDelayMs = 1060,
+  charDelayMs = 27,
   align = 'center',
   textColor = 'text-ide-fg',
   promptColor = 'text-purple',
   cursorColor = 'text-purple',
   bracketColor = 'text-orange',
-  fontSize = 22,
+  fontSize = 'var(--font-terminal)',
   leadingSpaces = 2,
   className = '',
   onComplete,
