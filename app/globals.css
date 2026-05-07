@@ -274,12 +274,12 @@
 }
 
 /* ============================================================
-   DESKTOP EXPERIMENT — wide-desktop tier (≥1000px)
+   DESKTOP EXPERIMENT — wide-desktop tier (≥1200px)
    ============================================================
-   Second tier of the dev experiment, kicking in only above 1000px
-   viewport width. Below 1000px the gutters are too narrow to house
-   the scaled-up logo + hamburger (~225px gutter each side at 1000,
-   needing ~192px for logo 2× + 40px gap).
+   Second tier of the dev experiment, kicking in only above 1200px
+   viewport width. The 1000–1199 range felt cramped, so the gate
+   moved up to 1200 (gutters at 1200 = 325px each side, plenty of
+   slack for the scaled-up logo + hamburger).
 
    At this tier the FloatingNav becomes effectively invisible:
      - Bar background goes fully transparent.
@@ -298,12 +298,22 @@
    open menu paper-app continues to use the column-constrained 550
    inner wrapper from the 768px tier.
    ============================================================ */
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
   /* Transparent bar — `bg-ide/90` is the only visible chrome of the
      nav today; zeroing it leaves no visible bar. Children inside
      (logo, hamburger, menu) carry their own visuals. */
   .desktop-experiment nav > div.bg-ide\/90 {
     background-color: transparent;
+  }
+
+  /* HEADER SPACER — collapse the 768px-tier 244px spacer back to the
+     mobile 120px at this tier. With the bar transparent and the logo
+     out in the left gutter (not overlapping the column), the H1
+     doesn't need to clear a visible nav bar — 120 lifts the H1
+     up so the column starts higher and the dead band above it
+     disappears. */
+  .desktop-experiment .h-\[120px\] {
+    height: 120px;
   }
 
   /* LOGO — absolute-positioned in the left gutter, scaled 2×.
