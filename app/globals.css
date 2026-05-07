@@ -272,3 +272,73 @@
     font-size: 22.5px;
   }
 }
+
+/* ============================================================
+   DESKTOP EXPERIMENT — wide-desktop tier (≥1000px)
+   ============================================================
+   Second tier of the dev experiment, kicking in only above 1000px
+   viewport width. Below 1000px the gutters are too narrow to house
+   the scaled-up logo + hamburger (~225px gutter each side at 1000,
+   needing ~192px for logo 2× + 40px gap).
+
+   At this tier the FloatingNav becomes effectively invisible:
+     - Bar background goes fully transparent.
+     - Logo + hamburger break out of the flex bar via `position:
+       absolute` (the fixed <nav> is their containing block, so
+       absolute positions resolve against the viewport).
+     - Both scale 2× via `transform: scale(2)`.
+     - Logo lands ~40px past the column-left rule, in the left
+       gutter; hamburger ~40px past column-right.
+   As the page scrolls, the column slides under the floating logo +
+   hamburger, which stay anchored at the top of the viewport.
+
+   Menu open state still works: HamburgerButton's parent `!menuOpen
+   && (...)` wrapper unmounts both elements from the DOM when the
+   menu is open, so this CSS only paints in the closed state. The
+   open menu paper-app continues to use the column-constrained 550
+   inner wrapper from the 768px tier.
+   ============================================================ */
+@media (min-width: 1000px) {
+  /* Transparent bar — `bg-ide/90` is the only visible chrome of the
+     nav today; zeroing it leaves no visible bar. Children inside
+     (logo, hamburger, menu) carry their own visuals. */
+  .desktop-experiment nav > div.bg-ide\/90 {
+    background-color: transparent;
+  }
+
+  /* LOGO — absolute-positioned in the left gutter, scaled 2×.
+     Math: column is 550 wide centered, so column-left = 50vw − 275.
+     Logo's intrinsic 76px box scales to 152px wide. Place its right
+     edge at column-left − 40 (40px breathing room into the gutter):
+       logo right = 50vw − 275 − 40 = 50vw − 315
+       logo left  = (50vw − 315) − 152 = 50vw − 467
+     `transform-origin: top left` keeps the math anchored at the
+     element's top-left corner so scale doesn't shift the position. */
+  .desktop-experiment nav a[aria-label="alderman.ai"] {
+    position: absolute;
+    top: 8px;
+    left: calc(50vw - 467px);
+    transform: scale(2);
+    transform-origin: top left;
+  }
+  /* Neutralize the img's `-ml-3` (which existed for column-aligned
+     gutter math). Out in the gutter, no -ml-3 needed. */
+  .desktop-experiment nav a[aria-label="alderman.ai"] img {
+    margin-left: 0;
+  }
+
+  /* HAMBURGER — absolute-positioned in the right gutter, scaled 2×.
+     Math: hamburger 52px box scales to 104px wide. Place its left
+     edge at column-right + 40:
+       hamburger left = 50vw + 275 + 40 = 50vw + 315
+     Right edge lands at 50vw + 419 — leaves ~31px slack to the
+     viewport edge at 1000px viewport width. Wider viewports = more
+     slack. */
+  .desktop-experiment nav button[aria-label="Open menu"] {
+    position: absolute;
+    top: 8px;
+    left: calc(50vw + 315px);
+    transform: scale(2);
+    transform-origin: top left;
+  }
+}
