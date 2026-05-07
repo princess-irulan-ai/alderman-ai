@@ -1,9 +1,6 @@
 import { PaperApp } from '@/components/paper/PaperApp'
-import {
-  HERO_FONT_SIZE_MOBILE,
-  HeroTerminalBlock,
-} from '@/components/sections/HeroTerminalBlock'
 import { Postit } from '@/components/special/Postit'
+import { TerminalLine } from '@/components/special/TerminalLine'
 
 /**
  * HeroSection — top of the homepage.
@@ -75,7 +72,7 @@ export function HeroSection() {
         <br />
         your <span className="text-orange">COMPANY</span>
         <br />
-        needs to learn
+        needs to learn<span className="text-purple">.</span>
       </h1>
 
       {/* Terminal line 1 — wrapped in a CSS grid alongside an invisible
@@ -87,7 +84,7 @@ export function HeroSection() {
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-          style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+          style={{ fontSize: '22px' }}
         >
           <span>
             <span className="select-none">&gt;</span>
@@ -96,7 +93,23 @@ export function HeroSection() {
           </span>
         </div>
         <div className="col-start-1 row-start-1">
-          <HeroTerminalBlock lines="1" fontSize={HERO_FONT_SIZE_MOBILE} />
+          <div className="w-full pr-0">
+            <TerminalLine
+              className="[font-variant-ligatures:none] no-gutter-glow"
+              segments={[
+                { text: 'ai', color: 'text-green' },
+                { text: ' fluency lessons help attract ' },
+                { text: '/', color: 'text-purple' },
+                { text: ' retain top ' },
+                { text: 'TALENT', color: 'text-orange' },
+                { text: ' and also prepare for a new era of work' },
+              ]}
+              fontSize="22px"
+              align="left"
+              hangingPrompt
+              persistCursor
+            />
+          </div>
         </div>
       </div>
 
@@ -116,9 +129,12 @@ export function HeroSection() {
       <div className="mt-5">
         <div className="relative">
           <PaperApp width="narrow">{perks}</PaperApp>
-          <div className="absolute left-1/2 top-[244px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
-            <Postit rotation={-5} heading={postitHeading} />
-          </div>
+          <Postit
+            overhang="br"
+            anchorTop={244}
+            rotation={-5}
+            heading={postitHeading}
+          />
         </div>
       </div>
 
@@ -131,7 +147,7 @@ export function HeroSection() {
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-          style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+          style={{ fontSize: '22px' }}
         >
           <span>
             <span className="select-none">&gt;</span>
@@ -140,7 +156,21 @@ export function HeroSection() {
           </span>
         </div>
         <div className="col-start-1 row-start-1">
-          <HeroTerminalBlock lines="2" fontSize={HERO_FONT_SIZE_MOBILE} />
+          <div className="w-full pr-0">
+            <TerminalLine
+              segments={[
+                { text: 'fluency helps your ' },
+                { text: 'TEAMS', color: 'text-orange' },
+                { text: ' navigate new tools while reducing their ' },
+                { text: 'anxiety', color: 'text-green' },
+                { text: ' about being replaced' },
+              ]}
+              fontSize="22px"
+              align="left"
+              hangingPrompt
+              persistCursor
+            />
+          </div>
         </div>
       </div>
     </section>

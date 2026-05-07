@@ -123,11 +123,11 @@ export default function HomePage() {
             />
           </div>
         </section>
-        {/* Relocated hero terminal line (was line 1 of HeroTerminalBlock).
-            Sits between the still-HUMAN circular portrait and the final
-            CTA — the "take a HUMAN approach" beat now lands as the closing
-            argument before the booking ask. Same hangingPrompt + ghost-copy
-            height-reservation pattern as the H2.5 seam above. */}
+        {/* Closing terminal seam — sits between the still-HUMAN circular
+            portrait and the final CTA. The "take a HUMAN approach" beat
+            lands as the closing argument before the booking ask. Same
+            hangingPrompt + ghost-copy height-reservation pattern as the
+            H2.5 seam above. */}
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
           <div className="grid">
             <div

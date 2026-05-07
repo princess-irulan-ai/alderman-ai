@@ -62,9 +62,34 @@
      TerminalLine's default fontSize prop is `var(--font-terminal)`,
      so this bump propagates automatically to every visible terminal
      output. Ghost copies that use a literal `fontSize: 22` inline
-     style get caught by the `[style*="font-size:22px"]` rule below. */
+     style get caught by the `[style*="font-size:22px"]` rule below.
+
+     GUTTER EXTENSION LINE — single knob controlling how far elements
+     extend past the column edge into the gutter. Calibrated to the
+     `>` prompt's far (leftmost) edge: 39px deep into the gutter. With
+     the symmetric terminal-line spacing (grid margin-left 21 →
+     text-start at column-left + 21, `>` near edge at column-left −
+     21, `>` far edge at column-left − 39), the gap on either side of
+     the column rule line is 21px. Used by:
+       - H1 GutterGlow (::before/::after envelope width + offset)
+       - Hero paper-app overhang into right gutter
+     Any future "hangs into the gutter" element should consume this
+     same var so the ragged edges line up across page elements.
+
+     PROMPT OFFSET — TerminalLine reads `--prompt-offset` for the `>`
+     prompt's absolute `left` value (with `-3ch` fallback for mobile,
+     where the prompt simply hangs 3ch past container-left into the
+     12% mobile gutter). At desktop the prompt's far edge must sit at
+     column-left − gutter-extension while the container sits at
+     column-left + 21, so the offset from container is −(21 + 39) =
+     −60px. Decoupling the prompt position from text position (via
+     the TerminalLine refactor that made `>` `position: absolute`)
+     lets the prompt track gutter-extension independently of where
+     text starts. */
   .desktop-experiment {
     --font-terminal: 30px;
+    --gutter-extension: 39px;
+    --prompt-offset: -60px;
   }
 
   /* COLUMN — widen 400 → 550, add 1px rule lines at edges, drop the
@@ -92,7 +117,7 @@
 
   /* HEADER SPACER — taller on desktop to push H1 below the FloatingNav. */
   .desktop-experiment .h-\[120px\] {
-    height: 244px;
+    height: 294px;
   }
 
   /* H1 — 78px on desktop. `position: relative` so the GutterGlow
@@ -106,19 +131,19 @@
     content: '';
     position: absolute;
     top: -10px;
-    width: 30px;
+    width: var(--gutter-extension);
     height: calc(100% + 20px);
     pointer-events: none;
     z-index: -1;
   }
   /* Purple GutterGlow flanking H1 — left side. Ellipse anchored at
      parent-right (100% 50%) so the gradient peak sits at H1's left
-     edge, fading 0.55 → 0.30 → 0.10 → 0 across the 30px envelope.
-     Stops are calibrated for a Gaussian-ish falloff that reads as
-     ambient light, not a graphic element. */
+     edge, fading 0.55 → 0.30 → 0.10 → 0 across the gutter-extension
+     envelope. Stops are calibrated for a Gaussian-ish falloff that
+     reads as ambient light, not a graphic element. */
   .desktop-experiment h1::before {
-    left: -30px;
-    background-image: radial-gradient(ellipse 30px 50% at 100% 50%,
+    left: calc(var(--gutter-extension) * -1);
+    background-image: radial-gradient(ellipse var(--gutter-extension) 50% at 100% 50%,
       rgba(174, 129, 255, 0.55) 0%,
       rgba(174, 129, 255, 0.30) 25%,
       rgba(174, 129, 255, 0.10) 60%,
@@ -126,8 +151,8 @@
   }
   /* Purple GutterGlow — right side, mirror of left. */
   .desktop-experiment h1::after {
-    right: -30px;
-    background-image: radial-gradient(ellipse 30px 50% at 0% 50%,
+    right: calc(var(--gutter-extension) * -1);
+    background-image: radial-gradient(ellipse var(--gutter-extension) 50% at 0% 50%,
       rgba(174, 129, 255, 0.55) 0%,
       rgba(174, 129, 255, 0.30) 25%,
       rgba(174, 129, 255, 0.10) 60%,
@@ -144,37 +169,92 @@
     font-size: 30px !important;
   }
 
+  /* TERMINAL-LINE GUTTER GLOW — left-side only, mirrors the H1's left
+     glow visually but anchored to the column rule line for terminal
+     lines (whose container sits inset 21px from column-left). Painted
+     on the GRID wrapper rather than the live TerminalLine container,
+     so the glow envelope is at full final height from frame zero —
+     the grid sizes to max(ghost, live), and the ghost reserves the
+     fully-typed wrap height invisibly. If the glow lived on the live
+     container it would expand vertically as text typed out. The
+     `:not(:has(...))` opts out grids whose live TerminalLine carries
+     `no-gutter-glow` — used on the very top hero terminal (sits
+     directly under the H1's own left glow; stacking reads heavy).
+     `position: relative` is added to the grid rule below so the
+     absolute pseudo anchors correctly. */
+  .desktop-experiment section > .grid:not(:has(.no-gutter-glow))::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--prompt-offset);
+    width: var(--gutter-extension);
+    pointer-events: none;
+    z-index: -1;
+    background-image: radial-gradient(ellipse var(--gutter-extension) 50% at 100% 50%,
+      rgba(174, 129, 255, 0.55) 0%,
+      rgba(174, 129, 255, 0.30) 25%,
+      rgba(174, 129, 255, 0.10) 60%,
+      rgba(174, 129, 255, 0) 100%);
+  }
+
   /* HERO PAPER-APP — capped at 304, hangs OVER the column's right
-     rule line by 10px (margin-right: -10) so the paper-app's right
-     edge sits at column-right + 10. `z-index: 1` raises it above the
-     column's ::after rule pseudo so the paper-app paints over the
-     rule line where they overlap (rule sits at column-right + 1, so
-     paper-app overlaps the rule by 9px). The hero paper-app's wrapper
-     is `.mt-5 > .relative` (a stable selector unique to the hero — no
-     other paper-app uses this wrapper). */
+     rule line into the right gutter by `--gutter-extension`. Paper-app's
+     right edge sits at column-right + gutter-extension. `z-index: 1`
+     raises it above the column's ::after rule pseudo so the paper-app
+     paints over the rule line where they overlap. The hero paper-app's
+     wrapper is `.mt-5 > .relative` (a stable selector unique to the
+     hero — no other paper-app uses this wrapper). */
   .desktop-experiment .mt-5 > .relative {
     max-width: 304px;
     margin-left: auto;
-    margin-right: -10px;
+    margin-right: calc(var(--gutter-extension) * -1);
     z-index: 1;
   }
 
   /* HERO POST-IT — offset from `left: 50%` (paper-app horizontal
      center) to `left: 370px` so it lands relative to the column,
      not the paper-app, at the wider canvas. z-10 so it paints over
-     the right rule line. */
-  .desktop-experiment .absolute.left-1\/2.top-\[244px\] {
+     the right rule line. Targets the stable `data-postit-overhang="br"`
+     hook emitted by Postit's overhang wrapper (Postit.tsx). The
+     credentials BL post-it carries `data-postit-overhang="bl"` so
+     it doesn't match this rule. NB: when /dev/contact and /dev/faq
+     get built, their BR post-its will also carry the "br" data
+     attribute — at that point this rule may need page-level scoping. */
+  .desktop-experiment [data-postit-overhang="br"] {
     left: 370px;
     z-index: 10;
   }
+  /* HERO POST-IT (dev override) — relocates from right side of the
+     column to the LEFT gutter region, with the −10°-rotated shape's
+     TL extreme corner kissing the left gutter extension line
+     (column-left − var(--gutter-extension)). Top bumped up 20px from
+     the canonical 244 so the post-it sits higher in the column at
+     desktop. Scoped to the hero's `.mt-5 > .relative` ancestor so
+     future /dev/<page> BR post-its don't inherit. The inner shape's
+     inline `transform: rotate(-5deg)` and the wrapper's inline
+     `top: 244px` are both overridden via !important here (inline
+     styles beat class rules without it). z-index: 10 inherited from
+     the rule above. */
+  .desktop-experiment .mt-5 > .relative > [data-postit-overhang="br"] {
+    left: -294px;
+    top: 224px !important;
+  }
+  .desktop-experiment .mt-5 > .relative > [data-postit-overhang="br"] > div {
+    transform: rotate(5deg) !important;
+  }
 
-  /* CREDENTIALS PAPER-APP (TrialCTASection) — capped at 304, centered.
+  /* CREDENTIALS PAPER-APP (TrialCTASection) — capped at 304, hangs
+     OVER the column's left rule line into the LEFT gutter by
+     `--gutter-extension`. Paper-app's left edge sits at column-left
+     − gutter-extension (the left gutter extension line). Mirror of
+     the hero paper-app's right-side overhang. Per Alex 2026-05-07.
      No GutterGlow per session-38 code (the commit message claimed an
      orange glow here but the diff didn't add one — only the hero got
      a glow). */
   .desktop-experiment #brochure > .relative {
     max-width: 304px;
-    margin-left: auto;
+    margin-left: calc(var(--gutter-extension) * -1);
     margin-right: auto;
   }
   /* CREDENTIALS PAPER-APP INNER PADDING — collapse pb-[96px] → 0.5rem
@@ -184,9 +264,37 @@
     padding-bottom: 0.5rem;
   }
   /* CREDENTIALS POST-IT — right:50% → right:370px (mirror of hero
-     post-it). */
-  .desktop-experiment .absolute.right-1\/2.top-full {
+     post-it). Targets the stable `data-postit-overhang="bl"` hook
+     emitted by Postit's overhang wrapper. */
+  .desktop-experiment [data-postit-overhang="bl"] {
     right: 370px;
+  }
+  /* CREDENTIALS POST-IT (dev override) — paper-app's relative div now
+     overhangs the LEFT gutter (margin-left = -gutter-extension), so
+     the post-it floats in the RIGHT gutter region with its +5°-rotated
+     + flipped right extreme corner kissing the right gutter extension
+     line (column-right + var(--gutter-extension)). The right value
+     shifts in step with the paper-app's left overhang: each px the
+     paper-app moves left, the post-it's right value gets one px more
+     negative to keep the rightmost pixel on the right gutter line.
+     Margin-top moved up 20px (canonical inline -92 → -112) per Alex
+     2026-05-07 — needs !important to beat the inline style. z-index:
+     10 so the post-it paints over the column's right rule line where
+     its body crosses col-right. The flipped+rotated shape extends ~8px
+     past the wrapper's right edge. Scoped to `#brochure > .relative`
+     so future /dev/<page> BL post-its don't inherit. */
+  .desktop-experiment #brochure > .relative > [data-postit-overhang="bl"] {
+    right: -301px;
+    margin-top: -112px !important;
+    z-index: 10;
+  }
+  /* CREDENTIALS POST-IT rotation override (dev) — flip the canonical
+     +5° tilt to −5° while preserving the `scaleX(-1)` flipX from
+     `<Postit flipX>`. Inline style on the inner shape is `rotate(5deg)
+     scaleX(-1)`, so the override has to include scaleX(-1) to keep
+     the post-it mirrored. !important needed to beat the inline. */
+  .desktop-experiment #brochure > .relative > [data-postit-overhang="bl"] > div {
+    transform: rotate(-5deg) scaleX(-1) !important;
   }
 
   /* FLOATING NAV — widen inner column-constrained div to match the
@@ -200,13 +308,20 @@
   /* TERMINAL-LINE GRID WRAPPERS — hero line 1, hero line 2, H2.5 seam,
      and "take a HUMAN approach" seam. All four are direct children of
      a `<section>` and carry the `.grid` class. Cap at 407 wrap zone
-     left-aligned with 15px gap from column-left, so the prompt `>`
-     hangs in the gutter at column-left - 39 and typed text breaks at
-     column-left + 422 (= 15 + 407). Preserves the 20-chars-per-line
-     proportion at the bumped 30px terminal font. */
+     left-aligned with 21px gap from column-left, so typed text starts
+     at column-left + 21 — symmetric to the `>` prompt's near (right)
+     edge at column-left − 21. The visual effect: the `>` and the
+     first typed character mirror each other across the column rule
+     line, with equal 21px breathing on each side. The prompt's far
+     (left) edge lands at column-left − 39 (= --gutter-extension);
+     positioning the prompt independently via --prompt-offset (= -60)
+     decouples it from this margin so they no longer have to move
+     together. Preserves the 20-chars-per-line proportion at the
+     bumped 30px terminal font. */
   .desktop-experiment section > .grid {
     max-width: 407px;
-    margin-left: 15px;
+    margin-left: 21px;
+    position: relative;
   }
 
   /* IDE-VARIANT SECTION TILES — "have questions?" and "book a demo
@@ -219,6 +334,33 @@
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  /* RIGHT-EDGE-ALIGNED TILE — opt-in via `className="tile-right-edge"`
+     on a SectionTile. Right-aligns the tile and hangs its right edge
+     past the column's right rule line into the right gutter by
+     `--gutter-extension`, so the tile's right edge lands on the
+     gutter inlay mark (column-right + 39). `z-index: 1` lifts it
+     above the column's ::after rule pseudo so the tile paints over
+     the rule line where they overlap. Mirrors the hero paper-app's
+     overhang treatment. Used on /dev/home-page's "have questions?"
+     CTA. */
+  .desktop-experiment .rounded-tile.tile-right-edge {
+    margin-left: auto;
+    margin-right: calc(var(--gutter-extension) * -1);
+    position: relative;
+    z-index: 1;
+    /* Opaque ide-2 bg behind the translucent purple gradient. Without
+       this the column rule line and the darker gutter bg show through
+       the gradient where the tile overhangs, leaving a visible seam at
+       column-right. With ide-2 underneath, the tile reads uniformly
+       across its width — same substrate behind the gradient over the
+       column area and the overhang into the gutter. `!important`
+       because SectionTile sets the gradient via inline
+       `style="background: linear-gradient(...)"` — the shorthand
+       resets background-color to transparent, and inline shorthand
+       beats stylesheet longhand without !important. */
+    background-color: #1E1F1A !important;
   }
 
   /* WHAT-YOU-GET SECTION — its `<PaperApp width="wide">` renders as
@@ -243,9 +385,11 @@
   .desktop-experiment .shadow-paper-glow .text-\[28px\] {
     font-size: 35px;
   }
-  .desktop-experiment .shadow-paper-glow .text-\[22px\] {
-    font-size: 27.5px;
-  }
+  /* text-[22px] bump removed 2026-05-07 — was making the App-variant
+     SectionTile title ("See My Experience") sit too close to the
+     paper-app title. Stays at canonical 22px on desktop now. The
+     hero perks h2 ("2025 Job Benefits") also rides this class and
+     stays at 22px in tandem. */
   .desktop-experiment .shadow-paper-glow .text-\[18px\] {
     font-size: 22.5px;
   }
@@ -295,10 +439,10 @@
     margin-right: calc((100vw - 550px) / 3);
   }
 
-  /* HEADER SPACER — keep at 14 so the H1 lands ~30px from viewport
-     top (14 spacer + 16 section pt-4). */
+  /* HEADER SPACER — 64 so the H1 lands ~80px from viewport top
+     (64 spacer + 16 section pt-4). */
   .desktop-experiment .h-\[120px\] {
-    height: 14px;
+    height: 64px;
   }
 
   /* EXPERIMENT — gutters in the old nav-bar color (ide #272822),
@@ -409,6 +553,102 @@
       8px 10px 24px rgba(253, 151, 31, 0.18),
       16px 18px 40px rgba(253, 151, 31, 0.07),
       28px 38px 80px rgba(0, 0, 0, 0.50);
+  }
+
+  /* UNIFORM SPACING (≥1200) — every flow-level element on
+     /dev/home-page sits 80px from its neighbor, matching the
+     H1-to-viewport-top distance (header spacer 0 + parent flex
+     gap 80 = 80) at this tier. PageFrame's inner column div
+     becomes a flex column with gap:80, and the per-section
+     pt/pb plus internal margins (h1 mb-14, hero's mt-5 paper-
+     app wrapper, mt-[calc(--page-half-82px)] terminal 2 wrapper)
+     are zeroed so the parent gap is the only spacer. Header
+     spacer collapses to 0. Footer also gets margin-top: 80 since
+     it's a sibling of PageFrame, not a child. Per Alex 2026-05-07. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+  /* Zero margin-top on direct children of the column inner div —
+     the parent flex gap is the only spacer; any margin-top on a
+     section (e.g. portrait `md:mt-8`) would add to the gap.
+     margin-bottom is left alone so post-it overhang compensation
+     below can use it on specific sections. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > * {
+    margin-top: 0 !important;
+  }
+  .desktop-experiment .h-\[120px\] {
+    height: 0;
+  }
+  .desktop-experiment section {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .desktop-experiment section.flex.flex-col.gap-6 {
+    gap: 80px;
+  }
+  .desktop-experiment section.flex.flex-col.gap-6 > * {
+    margin-top: 0 !important;
+  }
+  .desktop-experiment h1 {
+    margin-bottom: 0 !important;
+  }
+  /* FOOTER FLUSH WITH COLUMN — was margin-top: 80px, removed per
+     Alex 2026-05-07 to delete the lighter-colored "ribbon" that
+     showed body bg through the gap. The column's inner div picks
+     up the 80px gap as padding-bottom (rule below) so the column's
+     dark bg covers the area between the last section and the
+     footer; visual gap from CTA tile bottom to footer top is 80
+     but with column color throughout (no ribbon). */
+  .desktop-experiment footer {
+    margin-top: 0;
+  }
+  /* COLUMN BOTTOM PADDING — 80px below the last section so the
+     visual gap to the footer is 80 with column bg covering it.
+     Replaces the footer margin-top: 80 approach, which left the
+     gap painted in body bg (the "ribbon"). */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
+    padding-bottom: 80px;
+  }
+  /* COLUMN RULE LINES — extend the column's ::before/::after rule
+     line pseudos down by 80px so they bridge the gap to the footer's
+     own rule lines (the 80px footer margin-top would otherwise leave
+     a visible break in the rule lines). 80 matches the footer
+     margin-top exactly so the column rules meet the footer rules
+     edge-to-edge. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::before,
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::after {
+    bottom: -80px;
+  }
+  /* POST-IT OVERHANG COMPENSATION — both post-its visually extend
+     below their .relative flow box. To preserve the 80px visual gap
+     to the next element (rather than 80px between flow boxes), the
+     post-it's parent flex item gets margin-bottom = the overhang
+     amount. The parent flex gap (80) then resolves between the post-
+     it's BOTTOM and the next element's TOP. Calibrated values below
+     are post-it-position-specific; if a rotation or top changes such
+     that the overhang shifts, adjust here. */
+  .desktop-experiment section.flex.flex-col.gap-6 > .mt-5 {
+    margin-bottom: 62px;
+  }
+  .desktop-experiment #brochure {
+    margin-bottom: 88px;
+  }
+  /* PORTRAIT SECTION TOP/BOTTOM COMPENSATION — the portrait's
+     360x360 box has ~43px of transparent SVG padding above the
+     visible circle frame (frame is at 49% center, 74% size) and
+     ~51px of transparent SVG below it (the "still HUMAN" arc
+     fills the bottom space — visible content extends to box
+     bottom per Alex 2026-05-07). Negative margin-top pulls the
+     section up so the visual gap from the credentials post-it
+     bottom to the visible top is 80, not 80+43. Negative margin-
+     bottom shrinks the gap to the next terminal line below the
+     visible bottom. Higher specificity + !important to beat the
+     global zero-margin rule above. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
+    margin-top: -43px !important;
+    margin-bottom: -51px;
   }
 }
 

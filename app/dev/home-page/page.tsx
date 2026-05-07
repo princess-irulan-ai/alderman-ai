@@ -155,6 +155,7 @@ export default function DevHomePage() {
             title="have questions?"
             href="/faq"
             markerStyle="contained"
+            className="tile-right-edge"
           />
         </section>
         <TrialCTASection />

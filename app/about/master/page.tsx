@@ -64,8 +64,8 @@ export default function AboutMasterPage() {
 
           {/* Left col: hero-scale TerminalLine carrying the locked
               anchor line. Comma + period in purple per the homepage
-              convention (HeroTerminalBlock pulls connective punctuation
-              into purple segments). Anchor line is locked verbatim. */}
+              convention (connective punctuation as purple segments).
+              Anchor line is locked verbatim. */}
           <div className="md:col-span-2 md:flex md:flex-col md:pr-6">
             <TerminalLine
               fontSize={28}
