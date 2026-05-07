@@ -3,7 +3,10 @@ import type { ReactNode } from 'react'
 /**
  * Postit — the orange sticky note.
  *
- * Hero-only per spec. Used exactly once on the site.
+ * Used in 4 places: hero perks, credentials (BL flipped), /contact,
+ * /faq. Each call site renders a paper-app overhang via the
+ * `overhang` prop, which internalizes the previously-inline absolute
+ * positioning + scale-by-`--page-half` math. See the prop docs below.
  *
  * H1-sandbox pass #3 (2026-04-21 evening — organic crescent curl):
  *  - Square (240×240), ~80% of the previous 300px-wide rectangle.
@@ -75,6 +78,28 @@ type PostitProps = {
    * bottom-left post-it overhang (TrialCTASection).
    */
   flipX?: boolean
+  /**
+   * Overhang mode. When set, Postit emits its own absolute-positioned
+   * + scaled wrapper anchored to a `relative` parent (typically a
+   * PaperApp). Default `'none'` returns the bare shape (no wrapper).
+   *
+   *   'br' → bottom-right overhang. Wrapper has `left-1/2` and
+   *          `transform-origin: top left`. Pair with `anchorTop`.
+   *   'bl' → bottom-left overhang. Wrapper has `right-1/2` and
+   *          `transform-origin: top right`. Pair with `anchorTop`
+   *          (often `'100%'`) and (typically negative) `anchorMarginTop`.
+   *
+   * The wrapper carries a `data-postit-overhang` attribute used as
+   * the stable selector hook by `.desktop-experiment` rules in
+   * `globals.css`. Scale is `calc(var(--page-half) / 250px)` — the
+   * 250 (vs the source's 240) accounts for the rotated bbox at ±5°
+   * so the rotated tip lands at viewport-edge on narrow mobile.
+   */
+  overhang?: 'br' | 'bl' | 'none'
+  /** CSS `top` value for the overhang wrapper. `number` becomes `Npx`. */
+  anchorTop?: number | string
+  /** CSS `margin-top` (px) on the overhang wrapper. */
+  anchorMarginTop?: number
 }
 
 // ──────────────────────────────────────────────────────────────────────
@@ -165,11 +190,15 @@ export function Postit({
   className = '',
   rotationOrigin = 'center',
   flipX = false,
+  overhang = 'none',
+  anchorTop,
+  anchorMarginTop,
 }: PostitProps) {
   const flipTransform = flipX ? ' scaleX(-1)' : ''
-  return (
+
+  const shape = (
     <div
-      className={`relative inline-block ${className}`}
+      className={overhang === 'none' ? `relative inline-block ${className}` : 'relative inline-block'}
       style={{
         transform: `rotate(${rotation}deg)${flipTransform}`,
         transformOrigin: rotationOrigin,
@@ -224,6 +253,32 @@ export function Postit({
           </div>
         )}
       </div>
+    </div>
+  )
+
+  if (overhang === 'none') {
+    return shape
+  }
+
+  // Overhang wrapper — replicates the previously-inline absolute +
+  // scale-by-page-half + transform-origin boilerplate that lived at
+  // every call site. DOM is byte-identical to the previous inline form.
+  const anchorClasses =
+    overhang === 'br' ? 'left-1/2 origin-top-left' : 'right-1/2 origin-top-right'
+  const topValue =
+    typeof anchorTop === 'number' ? `${anchorTop}px` : anchorTop
+  return (
+    <div
+      data-postit-overhang={overhang}
+      className={`absolute pointer-events-none ${anchorClasses} ${className}`}
+      style={{
+        top: topValue,
+        marginTop:
+          anchorMarginTop !== undefined ? `${anchorMarginTop}px` : undefined,
+        transform: 'scale(calc(var(--page-half) / 250px))',
+      }}
+    >
+      {shape}
     </div>
   )
 }
