@@ -158,28 +158,6 @@
     margin-right: -10px;
     z-index: 1;
   }
-  /* Pumped paper-glow on the hero paper-app — replaces the external
-     orange GutterGlow ::after with a stronger bottom-right halo on
-     the paper-app's own boxShadow. Layers tuned to match the
-     GutterGlow's intensity (0.55 peak) and extension (~30px out):
-       - Layer 1: card-thickness ledge, kept verbatim from
-         `paper-glow` shadow utility.
-       - Layer 2: hot orange core. Offset 8/10, blur 24, opacity 0.55
-         — equivalent peak intensity to the GutterGlow at parent edge.
-       - Layer 3: orange tail. Offset 16/18, blur 40, opacity 0.20 —
-         the soft falloff that brings total extent to ~30px past the
-         paper-app's bottom-right corner.
-       - Layer 4: dark grounding, kept verbatim.
-     Targets the `<div class="shadow-paper-glow">` paper element
-     inside PaperApp (the inner wrapper that carries the rounded-paper
-     bg + shadow). */
-  .desktop-experiment .mt-5 .shadow-paper-glow {
-    box-shadow:
-      3px 3px 0 0 rgba(117, 113, 94, 0.80),
-      8px 10px 24px rgba(253, 151, 31, 0.55),
-      16px 18px 40px rgba(253, 151, 31, 0.20),
-      28px 38px 80px rgba(0, 0, 0, 0.50);
-  }
 
   /* HERO POST-IT — offset from `left: 50%` (paper-app horizontal
      center) to `left: 370px` so it lands relative to the column,

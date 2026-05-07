@@ -37,20 +37,24 @@ module.exports = {
       },
       boxShadow: {
         // Ambient orange glow under every paper app. Non-negotiable per spec.
-        // Promoted from H1-sandbox to canonical 2026-04-22 — retired the old
-        // hard orange stripe (`14px 14px 0 -4px` + inset sheen) in favour of
-        // a 3-layer stack tuned on-screen during the H1 polish pass:
+        // Pumped to a 4-layer stack 2026-05-07 — was previously a 3-layer
+        // softer treatment (single orange layer at 0.28 opacity / 32 blur).
+        // The new spec adds a hot orange core layer + a softer trailing
+        // layer to match the GutterGlow's intensity (0.55 peak) and
+        // bottom-right extent (~30px).
         //   (1) 3px muted ide-fg-mute ledge at 0 blur / 0 spread — "card
         //       thickness" illusion along the bottom and right edges.
-        //   (2) Soft orange glow off that ledge — visible warmth, no hard
-        //       edge (offset 6/10, blur 32, 28% opacity).
-        //   (3) Pulled-in dark grounding shadow — keeps paper on substrate
-        //       (offset 28/38, blur 80, 50% opacity; pulled in from the old
-        //       40/50/100 to make room for the new layers).
+        //   (2) Hot orange core. Offset 8/10, blur 24, opacity 0.55 —
+        //       peak intensity matching the old GutterGlow at parent edge.
+        //   (3) Orange tail. Offset 16/18, blur 40, opacity 0.20 — soft
+        //       falloff that brings total bottom-right extent to ~30px.
+        //   (4) Pulled-in dark grounding shadow — keeps paper on substrate
+        //       (offset 28/38, blur 80, 50% opacity).
         // Raw string also mirrored in `lib/tokens.ts` as `ambientGlow`.
         'paper-glow': [
           '3px 3px 0 0 rgba(117, 113, 94, 0.80)',
-          '6px 10px 32px rgba(253, 151, 31, 0.28)',
+          '8px 10px 24px rgba(253, 151, 31, 0.55)',
+          '16px 18px 40px rgba(253, 151, 31, 0.20)',
           '28px 38px 80px rgba(0, 0, 0, 0.50)',
         ].join(', '),
         postit: '4px 6px 16px rgba(0, 0, 0, 0.45), 1px 2px 4px rgba(0, 0, 0, 0.35)',

@@ -37,11 +37,14 @@ export type TokenName = keyof typeof tokens
 /**
  * Ambient glow: the shadow stack behind every paper app.
  * Non-negotiable per spec. Promoted from H1-sandbox to canonical 2026-04-22.
- * Three-layer composition (front to back):
+ * Four-layer composition (front to back) — pumped 2026-05-07:
  *   1. 3px muted ide-fg-mute ledge at 0 blur / 0 spread — the "card
  *      thickness" feel along the bottom and right edges.
- *   2. Soft orange glow off that ledge — visible warmth, no hard edge.
- *   3. Pulled-in dark grounding shadow — keeps paper on the substrate.
+ *   2. Hot orange core. Offset 8/10, blur 24, opacity 0.55 — peak
+ *      intensity matching the old GutterGlow at parent edge.
+ *   3. Orange tail. Offset 16/18, blur 40, opacity 0.20 — soft
+ *      falloff that brings total bottom-right extent to ~30px.
+ *   4. Pulled-in dark grounding shadow — keeps paper on the substrate.
  *
  * The canonical surface is the Tailwind utility `shadow-paper-glow` in
  * `tailwind.config.js` (applied to every PaperApp). This export mirrors
@@ -49,5 +52,6 @@ export type TokenName = keyof typeof tokens
  */
 export const ambientGlow =
   '3px 3px 0 0 rgba(117, 113, 94, 0.80), ' +
-  '6px 10px 32px rgba(253, 151, 31, 0.28), ' +
+  '8px 10px 24px rgba(253, 151, 31, 0.55), ' +
+  '16px 18px 40px rgba(253, 151, 31, 0.20), ' +
   '28px 38px 80px rgba(0, 0, 0, 0.50)'
