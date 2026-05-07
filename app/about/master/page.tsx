@@ -71,6 +71,7 @@ export default function AboutMasterPage() {
               fontSize={28}
               align="left"
               persistCursor
+              startDelayMs={1620}
               segments={[
                 { text: '20 years at the intersection of technology' },
                 { text: ',', color: 'text-purple' },
@@ -130,6 +131,7 @@ export default function AboutMasterPage() {
               showBrackets={false}
               align="left"
               persistCursor
+              startDelayMs={1620}
               segments={[
                 { text: 'almost the whole career has been teaching' },
                 { text: ',', color: 'text-purple' },

@@ -30,10 +30,6 @@ import { PaperApp } from '@/components/paper/PaperApp'
 export function FloatingNav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-  // The desktop-expansion experiment lives at /dev/home-page (split out
-  // 2026-05-07). Nav widens + chrome scales only on that route; every
-  // other page stays mobile-locked.
-  const isExpanded = pathname === '/dev/home-page'
 
   // Close the menu on Escape.
   useEffect(() => {
@@ -65,7 +61,7 @@ export function FloatingNav() {
           {/* Column-constrained on desktop so the nav aligns with the
               page content column. Inner div carries the 12% gutter
               padding — same pattern as PageFrame. */}
-          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[700px]' : 'md:mx-auto md:max-w-[400px]'}>
+          <div className="md:mx-auto md:max-w-[400px]">
             {/* Two-element bar: identity on the left, menu affordance on
                 the right. Removed from DOM entirely when the menu is
                 open — the menu paper-app takes over as the only thing
@@ -73,7 +69,7 @@ export function FloatingNav() {
                 body so the bar + paper-app feel like one unified
                 surface rather than two stacked layers. */}
             {!menuOpen && (
-              <div className={`flex items-center justify-between py-[2px] ${isExpanded ? 'px-[var(--gutter-mobile)] tablet:px-0' : 'px-[var(--gutter-mobile)]'}`}>
+              <div className="flex items-center justify-between px-[var(--gutter-mobile)] py-[2px]">
                 <Link
                   href="/"
                   onClick={(e) => {
@@ -86,7 +82,7 @@ export function FloatingNav() {
                     src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
                     alt=""
                     aria-hidden
-                    className={`block h-[76px] w-[76px] -ml-3 ${isExpanded ? 'tablet:h-[200px] tablet:w-[200px]' : ''}`}
+                    className="block h-[76px] w-[76px] -ml-3"
                   />
                 </Link>
 
@@ -99,13 +95,14 @@ export function FloatingNav() {
                   className="text-purple hover:text-paper transition-colors"
                 >
                   <svg
+                    width="52"
+                    height="52"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
                     aria-hidden
-                    className={`h-[52px] w-[52px] ${isExpanded ? 'tablet:h-[137px] tablet:w-[137px]' : ''}`}
                   >
                     <line x1="4" y1="7" x2="20" y2="7" />
                     <line x1="4" y1="12" x2="20" y2="12" />
@@ -139,7 +136,7 @@ export function FloatingNav() {
           className="fixed inset-0 z-40 bg-ide/90 pt-[50px]"
           onClick={() => setMenuOpen(false)}
         >
-          <div className={isExpanded ? 'tablet:mx-auto tablet:max-w-[700px]' : 'md:mx-auto md:max-w-[400px]'}>
+          <div className="md:mx-auto md:max-w-[400px]">
             <div
               className="px-[8.333%]"
               onClick={(e) => e.stopPropagation()}

@@ -195,6 +195,7 @@ export default function FaqPage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
+                startDelayMs={1620}
                 segments={[
                   { text: 'below are three ways to get answers' },
                   { text: ':', color: 'text-purple' },
@@ -263,6 +264,7 @@ export default function FaqPage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
+                startDelayMs={1620}
                 segments={[
                   { text: 'if ' },
                   { text: 'YOU', color: 'text-orange' },
