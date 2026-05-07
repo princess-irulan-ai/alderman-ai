@@ -277,58 +277,81 @@
    inner wrapper from the 768px tier.
    ============================================================ */
 @media (min-width: 1200px) {
-  /* Transparent bar — `bg-ide/90` is the only visible chrome of the
-     nav today; zeroing it leaves no visible bar. Children inside
-     (logo, hamburger, menu) carry their own visuals. */
-  .desktop-experiment nav > div.bg-ide\/90 {
-    background-color: transparent;
+  /* HIDE the top FloatingNav entirely — the side-nav <aside> takes
+     over as the navigation surface at this tier. */
+  .desktop-experiment > nav {
+    display: none;
   }
 
-  /* HEADER SPACER — collapse to 14px so the H1 lands ~30px from the
-     viewport top (14 spacer + 16 section pt-4 = 30). With the bar
-     transparent and the logo in the gutter (not overlapping the
-     column), the H1 can sit close to the top edge without colliding
-     with chrome — they share the same vertical band but on
-     different horizontal axes. */
+  /* OFFSET COLUMN — replace the centered (auto/auto) margins with
+     an explicit 2:1 ratio, so the left gutter is twice as wide as
+     the right. Total gutter = 100vw − 550. Left gets 2/3 of that,
+     right gets 1/3.
+       At 1200vw: left ≈ 433.3, right ≈ 216.7 (column at x=433–983)
+       At 1500vw: left ≈ 633.3, right ≈ 316.7 (column at x=633–1183)
+     Override the existing 768-tier `mx-auto` (auto/auto). */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
+    margin-left: calc((100vw - 550px) * 2 / 3);
+    margin-right: calc((100vw - 550px) / 3);
+  }
+
+  /* HEADER SPACER — keep at 14 so the H1 lands ~30px from viewport
+     top (14 spacer + 16 section pt-4). */
   .desktop-experiment .h-\[120px\] {
     height: 14px;
   }
 
-  /* LOGO — absolute-positioned in the left gutter, scaled 2×.
-     Math: column is 550 wide centered, so column-left = 50vw − 275.
-     Logo's intrinsic 76px box scales to 152px wide. Place its right
-     edge at column-left − 70 (70px breathing room into the gutter):
-       logo right = 50vw − 275 − 70 = 50vw − 345
-       logo left  = (50vw − 345) − 152 = 50vw − 497
-     `transform-origin: top left` keeps the math anchored at the
-     element's top-left corner so scale doesn't shift the position. */
-  .desktop-experiment nav a[aria-label="alderman.ai"] {
-    position: absolute;
-    top: 8px;
-    left: calc(50vw - 497px);
-    transform: scale(2);
-    transform-origin: top left;
-  }
-  /* Neutralize the img's `-ml-3` (which existed for column-aligned
-     gutter math). Out in the gutter, no -ml-3 needed. */
-  .desktop-experiment nav a[aria-label="alderman.ai"] img {
-    margin-left: 0;
+  /* SIDE NAV — fixed in the left gutter, vertically centered around
+     the visible content area near the top of the page. Center X of
+     the left gutter = (100vw − 550) / 3 (half of the 2/3 share). The
+     side nav's content (logo + menu paper-app) is laid out as a flex
+     column so they stack vertically and both inherit horizontal
+     centering via `align-items: center` on the parent.
+       Width: 300px (matches the menu paper-app's spec — logo 200
+       wide centers inside the wider 300 frame).
+       Left: half-gutter − 150 (half the side-nav width) places the
+       container's left edge at the gutter's center − 150.
+     `position: fixed` so it stays anchored to the viewport as the
+     user scrolls — the menu is always available without scrolling
+     back to the top. */
+  .dev-side-nav {
+    position: fixed;
+    top: 30px;
+    left: calc((100vw - 550px) / 3 - 150px);
+    width: 300px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
   }
 
-  /* HAMBURGER — absolute-positioned in the right gutter, scaled 2×.
-     Math: hamburger 52px box scales to 104px wide. Place its left
-     edge at column-right + 70:
-       hamburger left = 50vw + 275 + 70 = 50vw + 345
-     Right edge lands at 50vw + 449 — leaves ~151px slack to the
-     viewport edge at 1200px viewport width.
-     `top: 32` vertically centers the hamburger against the logo
-     (logo center y = 8 top + 76 half-height = 84; hamburger center
-     y = 32 top + 52 half-height = 84). */
-  .desktop-experiment nav button[aria-label="Open menu"] {
-    position: absolute;
-    top: 32px;
-    left: calc(50vw + 345px);
-    transform: scale(2);
-    transform-origin: top left;
+  /* LOGO inside side nav — 200px wide, centered horizontally in the
+     300px container. The img's intrinsic dimensions are 76×76; we
+     scale up via width/height. The wordmark SVG scales cleanly. */
+  .dev-side-nav-logo {
+    width: 200px;
+    height: 200px;
+    margin-left: 0; /* override the canonical -ml-3 if it leaked */
+  }
+  .dev-side-nav-logo-link {
+    display: block;
+  }
+
+  /* MENU CONTAINER inside side nav — the PaperApp inherits its width
+     from the container. Set to 300px. */
+  .dev-side-nav-menu {
+    width: 300px;
+  }
+}
+
+/* Below 1200px, the side nav is invisible — the canonical
+   FloatingNav at the top handles navigation. */
+.dev-side-nav {
+  display: none;
+}
+@media (min-width: 1200px) {
+  .dev-side-nav {
+    display: flex;
   }
 }

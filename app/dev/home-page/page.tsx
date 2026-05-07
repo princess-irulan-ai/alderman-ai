@@ -1,8 +1,10 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
+import { PaperApp } from '@/components/paper/PaperApp'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { TrialCTASection } from '@/components/sections/TrialCTASection'
 import { WhatYouGetSection } from '@/components/sections/WhatYouGetSection'
@@ -30,10 +32,87 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * effect needs new DOM, that DOM is added via CSS pseudo-elements
  * (::before / ::after) on existing class targets.
  */
+// Side-nav menu items — same destinations as the FloatingNav menu, but
+// always visible (no toggle) and styled for the side-nav narrower
+// container. Hardcoded inline rather than reused from FloatingNav to
+// keep that shared component frozen.
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/',
+    label: 'Homepage',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/faq',
+    label: 'Pricing / FAQ',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/about',
+    label: 'About Me',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/contact',
+    isPrimary: true,
+    label: (
+      <>
+        Talk to a <span className="uppercase text-orange">HUMAN</span>
+      </>
+    ),
+    gradient:
+      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  },
+] as const
+
 export default function DevHomePage() {
   return (
     <div className="desktop-experiment">
       <FloatingNav />
+      {/* DEV SIDE NAV — only visible at >=1200px via the
+          .dev-side-nav rules in globals.css. Below that gate it's
+          `display: none`. The existing FloatingNav stays the
+          navigation surface at <1200px (mobile + tablet); at >=1200
+          FloatingNav is also hidden via CSS and this aside takes
+          over. Both elements render unconditionally — gating happens
+          purely in CSS so React state is untouched. */}
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="wide" chromeLeft="" chromeRight="">
+            <nav className="flex flex-col gap-3 px-4 py-4">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block w-full rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <HeroSection />
