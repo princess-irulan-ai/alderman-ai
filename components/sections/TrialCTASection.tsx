@@ -29,7 +29,7 @@ export function TrialCTASection() {
     >
       <div className="relative [.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:mx-auto">
         <PaperApp width="wide">
-          <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
+          <div className="space-y-4 md:space-y-5 pt-2 pb-[96px] [.desktop-expanded_&]:tablet:pb-2">
             <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
               I&rsquo;ve been teaching for{' '}
               <span className="relative inline-block">
@@ -75,7 +75,7 @@ export function TrialCTASection() {
               - `origin-top-right` scales from that anchor so the
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
-        <div className="absolute right-1/2 top-full -mt-[92px] pointer-events-none origin-top-right [transform:scale(calc(var(--page-half)/250px))]">
+        <div className="absolute right-1/2 top-full -mt-[92px] [.desktop-expanded_&]:tablet:right-[370px] pointer-events-none origin-top-right [transform:scale(calc(var(--page-half)/250px))]">
           <Postit
             flipX
             rotation={5}
