@@ -144,14 +144,41 @@
     font-size: 30px !important;
   }
 
-  /* HERO PAPER-APP — right-justified inside the 550 column, capped
-     at 304 (mobile width), 15px gap to the column-right. The hero
-     paper-app's wrapper is `.mt-5 > .relative` (a stable selector
-     unique to the hero — no other paper-app uses this wrapper). */
+  /* HERO PAPER-APP — capped at 304, hangs OVER the column's right
+     rule line by 10px (margin-right: -10) so the paper-app's right
+     edge sits at column-right + 10. `z-index: 1` raises it above the
+     column's ::after rule pseudo so the paper-app paints over the
+     rule line where they overlap (rule sits at column-right + 1, so
+     paper-app overlaps the rule by 9px). The hero paper-app's wrapper
+     is `.mt-5 > .relative` (a stable selector unique to the hero — no
+     other paper-app uses this wrapper). */
   .desktop-experiment .mt-5 > .relative {
     max-width: 304px;
     margin-left: auto;
-    margin-right: 15px;
+    margin-right: -10px;
+    z-index: 1;
+  }
+  /* Pumped paper-glow on the hero paper-app — replaces the external
+     orange GutterGlow ::after with a stronger bottom-right halo on
+     the paper-app's own boxShadow. Layers tuned to match the
+     GutterGlow's intensity (0.55 peak) and extension (~30px out):
+       - Layer 1: card-thickness ledge, kept verbatim from
+         `paper-glow` shadow utility.
+       - Layer 2: hot orange core. Offset 8/10, blur 24, opacity 0.55
+         — equivalent peak intensity to the GutterGlow at parent edge.
+       - Layer 3: orange tail. Offset 16/18, blur 40, opacity 0.20 —
+         the soft falloff that brings total extent to ~30px past the
+         paper-app's bottom-right corner.
+       - Layer 4: dark grounding, kept verbatim.
+     Targets the `<div class="shadow-paper-glow">` paper element
+     inside PaperApp (the inner wrapper that carries the rounded-paper
+     bg + shadow). */
+  .desktop-experiment .mt-5 .shadow-paper-glow {
+    box-shadow:
+      3px 3px 0 0 rgba(117, 113, 94, 0.80),
+      8px 10px 24px rgba(253, 151, 31, 0.55),
+      16px 18px 40px rgba(253, 151, 31, 0.20),
+      28px 38px 80px rgba(0, 0, 0, 0.50);
   }
 
   /* HERO POST-IT — offset from `left: 50%` (paper-app horizontal
@@ -161,31 +188,6 @@
   .desktop-experiment .absolute.left-1\/2.top-\[244px\] {
     left: 370px;
     z-index: 10;
-  }
-
-  /* HERO PAPER-APP OUTER WRAPPER — needs `position: relative` so the
-     orange GutterGlow ::after can anchor against the column-right.
-     The `.mt-5` div spans the full 550 column (no width override
-     above), so its right edge equals the column's right edge. The
-     glow's `right: -30px` then sits 30px past the column-right rule
-     line, into the gutter. */
-  .desktop-experiment .mt-5 {
-    position: relative;
-  }
-  .desktop-experiment .mt-5::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: -30px;
-    width: 30px;
-    height: calc(100% + 20px);
-    pointer-events: none;
-    z-index: -1;
-    background-image: radial-gradient(ellipse 30px 50% at 0% 50%,
-      rgba(253, 151, 31, 0.55) 0%,
-      rgba(253, 151, 31, 0.30) 25%,
-      rgba(253, 151, 31, 0.10) 60%,
-      rgba(253, 151, 31, 0) 100%);
   }
 
   /* CREDENTIALS PAPER-APP (TrialCTASection) — capped at 304, centered.
