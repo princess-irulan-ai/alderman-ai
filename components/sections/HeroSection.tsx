@@ -60,10 +60,10 @@ export function HeroSection() {
         Job Benefits
       </h2>
       <ul className="space-y-4 text-[18px] leading-snug text-ink">
-        <li>- English Lessons</li>
-        <li>- 30 Days PTO</li>
-        <li>- Flexible Home Office</li>
-        <li>- MultiSport Card</li>
+        <li>&gt; English Lessons</li>
+        <li>&gt; 30 Days PTO</li>
+        <li>&gt; Flexible Home Office</li>
+        <li>&gt; MultiSport Card</li>
       </ul>
     </div>
   )
