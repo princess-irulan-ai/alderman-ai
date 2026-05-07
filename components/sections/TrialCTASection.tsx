@@ -27,7 +27,7 @@ export function TrialCTASection() {
       className="pt-12 pb-16 md:pt-16 md:pb-16 scroll-mt-24"
       aria-label="Credentials"
     >
-      <div className="relative">
+      <div className="relative [.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:mx-auto">
         <PaperApp width="wide">
           <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
             <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">

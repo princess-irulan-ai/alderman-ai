@@ -33,7 +33,7 @@ export default function HomePage() {
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-              style={{ fontSize: 22 }}
+              style={{ fontSize: 'var(--font-terminal)' }}
             >
               <span>
                 <span className="select-none">&gt;</span>
@@ -47,7 +47,6 @@ export default function HomePage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
-                startDelayMs={1620}
                 segments={[
                   { text: 'fluency lessons are hands on usage of ' },
                   { text: 'ai', color: 'text-green' },
@@ -134,7 +133,7 @@ export default function HomePage() {
             <div
               aria-hidden
               className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-              style={{ fontSize: 22 }}
+              style={{ fontSize: 'var(--font-terminal)' }}
             >
               <span>
                 <span className="select-none">&gt;</span>
@@ -148,7 +147,6 @@ export default function HomePage() {
                 showBrackets={false}
                 align="left"
                 persistCursor
-                startDelayMs={1620}
                 segments={[
                   { text: 'take a ' },
                   { text: 'HUMAN', color: 'text-orange' },

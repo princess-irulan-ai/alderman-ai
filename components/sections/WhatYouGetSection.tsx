@@ -451,6 +451,7 @@ function CyclingTriptych() {
 export function WhatYouGetSection() {
   return (
     <section className="pt-10 pb-16 md:py-16">
+      <div className="[.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:mx-auto">
       <PaperApp width="wide">
         <div className="space-y-10 md:space-y-12">
           <div className="space-y-4 md:space-y-5">
@@ -473,6 +474,7 @@ export function WhatYouGetSection() {
           <CyclingTriptych />
         </div>
       </PaperApp>
+      </div>
     </section>
   )
 }

@@ -232,7 +232,6 @@ export default function AboutPage() {
                 hangingPrompt
                 showBrackets={false}
                 persistCursor
-                startDelayMs={1620}
                 segments={[
                   { text: 'learning new things can be a little ' },
                   { text: 'scary', color: 'text-green' },

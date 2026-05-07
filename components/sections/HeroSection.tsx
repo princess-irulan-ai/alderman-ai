@@ -1,22 +1,24 @@
 import { PaperApp } from '@/components/paper/PaperApp'
-import {
-  HERO_FONT_SIZE_MOBILE,
-  HeroTerminalBlock,
-} from '@/components/sections/HeroTerminalBlock'
 import { Postit } from '@/components/special/Postit'
+import { TerminalLine } from '@/components/special/TerminalLine'
 
 /**
  * HeroSection — top of the homepage.
  *
- * Vertical stack at every breakpoint per the locked desktop strategy
- * (PLAN.md "Desktop = mobile at 400px"): H1 → terminal line 1 →
- * paper-app with stuck-on post-it → terminal line 2. The 400px desktop
- * column comes from PageFrame; this section is breakpoint-agnostic.
+ * Vertical stack at every breakpoint: H1 → terminal line 1 →
+ * paper-app with stuck-on post-it → terminal line 2. Below the
+ * tablet breakpoint the column locks at 400px (PLAN.md "Desktop =
+ * mobile at 400px"); at md+ on the homepage PageFrame's
+ * `desktopExpanded` opt-in widens the column to 560 and scales H1 +
+ * terminal-line type proportionally. Paper-app + post-it stay
+ * mobile-sized regardless.
  *
  * Post-it sits in its landed position from frame one — no rise/slap
  * choreography, no baton-pass between terminal lines. Each TerminalLine
- * runs its own IntersectionObserver-driven type-out independently.
+ * runs its own IntersectionObserver-driven type-out independently and
+ * inherits its font size from the canonical `--font-terminal` CSS var.
  */
+
 export function HeroSection() {
   // Post-it copy — merged title-weight + body-weight into a single
   // heading per Alex 2026-04-28. Inline fontSize=24px overrides Postit's
@@ -70,7 +72,7 @@ export function HeroSection() {
 
   return (
     <section className="flex flex-col gap-6 pt-4 pb-8">
-      <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-14">
+      <h1 className="font-display text-[40px] [.desktop-expanded_&]:tablet:text-[105px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-14">
         <span className="text-green">ai</span> is a language
         <br />
         your <span className="text-orange">COMPANY</span>
@@ -83,20 +85,34 @@ export function HeroSection() {
           col-start-1 row-start-1. The ghost reserves the wrapped-line
           height from first paint so the paper-app below doesn't slide
           downward as the line types out. */}
-      <div className="grid">
+      <div className="grid [.desktop-expanded_&]:tablet:max-w-[570px] [.desktop-expanded_&]:tablet:mx-auto">
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-          style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+          style={{ fontSize: 'var(--font-terminal)' }}
         >
           <span>
             <span className="select-none">&gt;</span>
-            {'  ai fluency lessons help attract / retain top TALENT and also prepare for the new era of work '}
+            {'  ai fluency lessons help attract / retain top TALENT and also prepare for a new era of work '}
             <span className="inline-block">_</span>
           </span>
         </div>
         <div className="col-start-1 row-start-1">
-          <HeroTerminalBlock lines="1" fontSize={HERO_FONT_SIZE_MOBILE} />
+          <TerminalLine
+            className="[font-variant-ligatures:none]"
+            segments={[
+              { text: 'ai', color: 'text-green' },
+              { text: ' fluency lessons help attract ' },
+              { text: '/', color: 'text-purple' },
+              { text: ' retain top ' },
+              { text: 'TALENT', color: 'text-orange' },
+              { text: ' and also prepare for a new era of work' },
+            ]}
+            align="left"
+            hangingPrompt
+            showBrackets={false}
+            persistCursor
+          />
         </div>
       </div>
 
@@ -114,7 +130,7 @@ export function HeroSection() {
           source's 240) accounts for the rotated bbox: at -5° the
           bottom-right tip moves to x≈250. */}
       <div className="mt-5">
-        <div className="relative">
+        <div className="relative [.desktop-expanded_&]:tablet:max-w-[304px] [.desktop-expanded_&]:tablet:mx-auto">
           <PaperApp width="narrow">{perks}</PaperApp>
           <div className="absolute left-1/2 top-[244px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
             <Postit rotation={-5} heading={postitHeading} />
@@ -127,11 +143,11 @@ export function HeroSection() {
           post-it bottom. On mobile --page-half = 50vw so it tracks the
           viewport; above 400px viewport --page-half clamps at 200px so
           the gap settles at 118px inside the locked column. */}
-      <div className="mt-[calc(var(--page-half)-82px)] grid">
+      <div className="mt-[calc(var(--page-half)-82px)] grid [.desktop-expanded_&]:tablet:max-w-[570px] [.desktop-expanded_&]:tablet:mx-auto">
         <div
           aria-hidden
           className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
-          style={{ fontSize: HERO_FONT_SIZE_MOBILE }}
+          style={{ fontSize: 'var(--font-terminal)' }}
         >
           <span>
             <span className="select-none">&gt;</span>
@@ -140,7 +156,19 @@ export function HeroSection() {
           </span>
         </div>
         <div className="col-start-1 row-start-1">
-          <HeroTerminalBlock lines="2" fontSize={HERO_FONT_SIZE_MOBILE} />
+          <TerminalLine
+            segments={[
+              { text: 'fluency helps your ' },
+              { text: 'TEAMS', color: 'text-orange' },
+              { text: ' navigate new tools while reducing their ' },
+              { text: 'anxiety', color: 'text-green' },
+              { text: ' about being replaced' },
+            ]}
+            align="left"
+            hangingPrompt
+            showBrackets={false}
+            persistCursor
+          />
         </div>
       </div>
     </section>
