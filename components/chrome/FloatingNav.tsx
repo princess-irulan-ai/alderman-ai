@@ -141,24 +141,7 @@ export function FloatingNav() {
               className="px-[8.333%]"
               onClick={(e) => e.stopPropagation()}
             >
-              <PaperApp
-                width="wide"
-                chromeLeft=""
-                chromeRight=""
-                paperStyle={{
-                  // Mirrors the canonical `shadow-paper-glow` utility from
-                  // tailwind.config.js, with the orange layers swapped for
-                  // purple. Same offsets, same blurs, same opacities — just
-                  // the chord shifted: card-thickness ledge + hot purple
-                  // core + purple tail + dark grounding.
-                  boxShadow: [
-                    '3px 3px 0 0 rgba(117, 113, 94, 0.80)',
-                    '8px 10px 24px rgba(174, 129, 255, 0.55)',
-                    '16px 18px 40px rgba(174, 129, 255, 0.20)',
-                    '28px 38px 80px rgba(0, 0, 0, 0.50)',
-                  ].join(', '),
-                }}
-              >
+              <PaperApp width="wide" chromeLeft="" chromeRight="">
                 <nav className="flex flex-col gap-5 py-2">
                   {/* Context-aware menu: shows the three pages that are
                       NOT the current one. Canonical order:
