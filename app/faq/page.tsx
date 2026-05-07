@@ -135,25 +135,25 @@ export default function FaqPage() {
                 FAQ download paper-app further down the page — see that
                 block for the full rationale on the mobile scale formula
                 and the desktop fixed-position fallback. */}
-            <div className="absolute left-1/2 top-[520px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
-              <Postit
-                rotation={-5}
-                heading={
-                  <span
-                    className="block font-display font-normal"
-                    style={{ width: '200px', fontSize: '32px', lineHeight: 1.1 }}
-                  >
-                    <span className="whitespace-nowrap">2 groups,</span>
-                    <br />
-                    <span className="whitespace-nowrap">once a week</span>
-                    <br />
-                    <span className="whitespace-nowrap">= 8 hrs / mo</span>
-                    <br />
-                    <span className="whitespace-nowrap">= 36.000 Kč</span>
-                  </span>
-                }
-              />
-            </div>
+            <Postit
+              overhang="br"
+              anchorTop={520}
+              rotation={-5}
+              heading={
+                <span
+                  className="block font-display font-normal"
+                  style={{ width: '200px', fontSize: '32px', lineHeight: 1.1 }}
+                >
+                  <span className="whitespace-nowrap">2 groups,</span>
+                  <br />
+                  <span className="whitespace-nowrap">once a week</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 8 hrs / mo</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 36.000 Kč</span>
+                </span>
+              }
+            />
           </div>
         </section>
 

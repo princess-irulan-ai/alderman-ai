@@ -49,34 +49,34 @@ export default function ContactPage() {
                 <div className="h-[55px]" aria-hidden />
               </div>
             </PaperApp>
-            <div className="absolute left-1/2 top-[390px] pointer-events-none origin-top-left [transform:scale(calc(var(--page-half)/250px))]">
-              <Postit
-                rotation={-5}
-                heading={
-                  <span
-                    className="block font-display font-normal"
-                    style={{ width: '200px', fontSize: '28px', lineHeight: 1.1 }}
-                  >
-                    <span className="whitespace-nowrap">
-                      give me{' '}
-                      <span className="relative inline-block">
-                        <span
-                          aria-hidden
-                          className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
-                        />
-                        <span className="relative">30m</span>
-                      </span>
+            <Postit
+              overhang="br"
+              anchorTop={390}
+              rotation={-5}
+              heading={
+                <span
+                  className="block font-display font-normal"
+                  style={{ width: '200px', fontSize: '28px', lineHeight: 1.1 }}
+                >
+                  <span className="whitespace-nowrap">
+                    give me{' '}
+                    <span className="relative inline-block">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                      />
+                      <span className="relative">30m</span>
                     </span>
-                    <br />
-                    <span className="font-bold whitespace-nowrap">and i promise</span>
-                    <br />
-                    <span className="whitespace-nowrap">i&apos;ll teach you</span>
-                    <br />
-                    <span className="whitespace-nowrap">something useful</span>
                   </span>
-                }
-              />
-            </div>
+                  <br />
+                  <span className="font-bold whitespace-nowrap">and i promise</span>
+                  <br />
+                  <span className="whitespace-nowrap">i&apos;ll teach you</span>
+                  <br />
+                  <span className="whitespace-nowrap">something useful</span>
+                </span>
+              }
+            />
           </div>
         </section>
 

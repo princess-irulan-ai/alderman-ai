@@ -604,12 +604,15 @@
   .desktop-experiment footer {
     margin-top: 0;
   }
-  /* COLUMN BOTTOM PADDING — 80px below the last section so the
-     visual gap to the footer is 80 with column bg covering it.
-     Replaces the footer margin-top: 80 approach, which left the
-     gap painted in body bg (the "ribbon"). */
+  /* COLUMN BOTTOM PADDING — 60px below the last section. The footer's
+     inner div has padding-top: 20px, so the visible content top of
+     the footer sits 20 below footer.box.top. With col padding-bottom:
+     60 + footer inner padding-top: 20 = 80 visible gap from CTA tile
+     bottom to footer's first visible content. Replaces the
+     margin-top: 80 approach, which left the gap painted in body
+     bg (the "ribbon"). */
   .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
-    padding-bottom: 80px;
+    padding-bottom: 60px;
   }
   /* COLUMN RULE LINES — extend the column's ::before/::after rule
      line pseudos down by 80px so they bridge the gap to the footer's
@@ -649,6 +652,31 @@
   .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
     margin-top: -43px !important;
     margin-bottom: -51px;
+  }
+  /* IDE-TILE EYEBROW COMPENSATION — the IDE SectionTile's eyebrow
+     ("=== ... ===") is absolutely positioned via `bottom-full mb-1`
+     in SectionTile.tsx, sticking ~19px above the tile's top box
+     edge. Without compensation the visible gap from the previous
+     element's box bottom to the eyebrow top is 80 − 19 = 61.
+     Pushing IDE-tile-bearing sections down 19 makes the eyebrow
+     land at previous_box_bottom + 80, restoring uniform 80 visible
+     gaps. Targets sections whose direct child is an IDE tile (link
+     with the canonical .rounded-tile.border-ide-rule class combo). */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:has(> .rounded-tile.border-ide-rule) {
+    margin-top: 19px !important;
+  }
+  /* SECOND TERMINAL SEAM HEIGHT COMPENSATION — the ghost div for the
+     "take a HUMAN approach…" terminal seam (section nth-child 8)
+     reserves 5 lines (cursor "_" wraps to its own line), but the live
+     typed block visually only fills 4 lines, leaving a 45px empty
+     5th line at the bottom of the row. Negative margin-bottom shrinks
+     the gap to the next sibling by 45 to absorb that empty space, so
+     the visible gap from the live text bottom (line 4) to the IDE
+     tile eyebrow top is 80, matching the first seam's gap. Scoped to
+     nth-child(8) so seam 1 (which wraps to 4 lines naturally) is
+     unaffected. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+    margin-bottom: -45px;
   }
 }
 

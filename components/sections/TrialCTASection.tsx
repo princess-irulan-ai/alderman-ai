@@ -31,13 +31,14 @@ export function TrialCTASection() {
         <PaperApp width="wide">
           <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
             <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-              I&rsquo;ve been teaching for{' '}
+              I&rsquo;ve Taught for
+              <br />
               <span className="relative inline-block">
                 <span
                   aria-hidden
                   className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                 />
-                <span className="relative">20 years</span>
+                <span className="relative">20 Years</span>
               </span>
             </h2>
             <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
@@ -75,28 +76,29 @@ export function TrialCTASection() {
               - `origin-top-right` scales from that anchor so the
                 rotated+scaled tip lands at the viewport's left edge
                 on mobile (mirror of the hero math). */}
-        <div className="absolute right-1/2 top-full -mt-[92px] pointer-events-none origin-top-right [transform:scale(calc(var(--page-half)/250px))]">
-          <Postit
-            flipX
-            rotation={5}
-            heading={
-              <span
-                className="font-display font-normal"
-                style={{ fontSize: '30px', lineHeight: 1.05 }}
-              >
-                including 8+ years of{' '}
-                <span className="relative inline-block font-bold">
-                  <span
-                    aria-hidden
-                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
-                  />
-                  <span className="relative">teaching ESL</span>
-                </span>{' '}
-                in the Czech Republic
-              </span>
-            }
-          />
-        </div>
+        <Postit
+          overhang="bl"
+          anchorTop="100%"
+          anchorMarginTop={-92}
+          flipX
+          rotation={5}
+          heading={
+            <span
+              className="font-display font-normal"
+              style={{ fontSize: '30px', lineHeight: 1.05 }}
+            >
+              including 8+ years of{' '}
+              <span className="relative inline-block font-bold">
+                <span
+                  aria-hidden
+                  className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                />
+                <span className="relative">teaching ESL</span>
+              </span>{' '}
+              in the Czech Republic
+            </span>
+          }
+        />
       </div>
     </section>
   )

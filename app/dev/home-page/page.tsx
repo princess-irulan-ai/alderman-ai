@@ -219,6 +219,7 @@ export default function DevHomePage() {
             title="book a demo lesson"
             href="/contact"
             markerStyle="contained"
+            className="tile-right-edge"
           />
         </section>
       </PageFrame>
