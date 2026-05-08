@@ -760,16 +760,16 @@
   }
 
   /* PRICING POST-IT VERTICAL ANCHOR — at desktop the pricing splits
-     into two paper-apps (table moves to the .dev-pricing-split-only
-     paper-app), so paper-app 1 holds heading + subhead + "Buy more"
-     only and ends up ~509 tall. Override `top` so the post-it
-     attaches to paper-app 1's BR corner with ~78px overhang past the
-     bottom edge — sticky-note feel. Calibrated: 509 (paper-app 1
-     height) + 78 (overhang target) - 197 (post-it scaled height) =
-     390. Mobile-tuned `top: 520` (anchorTop prop) doesn't apply
-     because mobile has the combined paper-app, not split. */
+     into two paper-apps. Paper-app 1 holds heading + subhead only
+     ("Buy more. Pay less. Simple." moves to paper-app 2 as its h2
+     title), so paper-app 1 ends up ~407 tall. Override `top` so the
+     post-it attaches to paper-app 1's BR corner with ~78px overhang
+     past the bottom edge — sticky-note feel. Calibrated: 407 (paper-
+     app 1 height) + 78 (overhang target) - 197 (post-it scaled
+     height) = 288. Mobile-tuned `top: 520` (anchorTop prop) doesn't
+     apply because mobile has the combined paper-app, not split. */
   .desktop-experiment.dev-faq section.dev-pricing > .relative > [data-postit-overhang="br"] {
-    top: 390px !important;
+    top: 288px !important;
   }
 
   /* PRICING POST-IT OVERHANG ABSORPTION — the post-it (192 high
@@ -796,14 +796,16 @@
   }
 
   /* PRICING SPLIT (desktop tier) — show the second paper-app and
-     hide the table inside paper-app 1. Net result: paper-app 1 holds
-     heading + subhead + "Buy more. Pay less. Simple."; paper-app 2
-     holds the pricing table. Two-beat rhythm: centered explanation
-     above, left-overhanging table below. */
+     hide the table + "Buy more" punchline inside paper-app 1. Net
+     result: paper-app 1 holds heading + subhead only; paper-app 2
+     holds "Buy more. Pay less. Simple." (as h2 title) + the pricing
+     table. Two-beat rhythm: centered topic explanation above, left-
+     overhanging table-with-punchline below. */
   .desktop-experiment.dev-faq .dev-pricing-split-only {
     display: block;
   }
-  .desktop-experiment.dev-faq .dev-pricing-table-mobile {
+  .desktop-experiment.dev-faq .dev-pricing-table-mobile,
+  .desktop-experiment.dev-faq .dev-pricing-buy-mobile {
     display: none;
   }
 

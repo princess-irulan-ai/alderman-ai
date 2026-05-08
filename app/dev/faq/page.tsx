@@ -158,7 +158,14 @@ export default function DevFaqPage() {
                 <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   Cost is the number of 50m teaching hours used across all of your groups per month.
                 </p>
-                <p className="font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                {/* MOBILE + TABLET: "Buy more. Pay less. Simple." sits
+                    inside paper-app 1 as a punchline beat between the
+                    subhead and the table. At desktop tier (≥1200) this
+                    is hidden via `.dev-pricing-buy-mobile { display:
+                    none }` and the text is duplicated into paper-app 2
+                    as the table's TITLE. Mobile + tablet byte-
+                    identical to canonical. */}
+                <p className="dev-pricing-buy-mobile font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
                   Buy more. Pay less.{' '}
                   <span className="relative inline-block">
                     <span
@@ -235,8 +242,19 @@ export default function DevFaqPage() {
             overhanging table. */}
         <section className="dev-pricing-split-only">
           <PaperApp width="wide">
-            <div className="py-2">
-              <table className="mx-auto border-collapse border-2 border-ink font-display text-[16px] text-ink">
+            <div className="space-y-4 md:space-y-5 py-2">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                Buy more. Pay less.{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative text-ink">Simple</span>
+                </span>
+                .
+              </h2>
+              <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
                 <thead>
                   <tr>
                     <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
