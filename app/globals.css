@@ -538,7 +538,18 @@
      (PaperApp is `width="fit"` which makes the inner paper element
      `w-fit` = `width: max-content`). Buttons stretch to the widest
      (Talk to a HUMAN at text-[20px]); shorter buttons inherit that
-     width with text-right alignment so right-edges line up. */
+     width with text-right alignment so right-edges line up.
+     min-width floors the container at the canonical 4-item width so
+     pages that filter out "Talk to a HUMAN" (e.g. /contact filtering
+     its own route) don't shrink — buttons stay the same width on
+     every page. Applied to both the wrapper AND the inner paper
+     element (which carries `w-fit` from PaperApp's `width="fit"`); the
+     wrapper floor alone wouldn't propagate through `w-fit`. Per Alex
+     2026-05-09. */
+  .dev-side-nav-menu,
+  .dev-side-nav-menu .shadow-paper-glow {
+    min-width: 192px;
+  }
   .dev-side-nav-menu {
     width: max-content;
   }
@@ -775,6 +786,14 @@
   display: none;
 }
 
+/* FaqChat desktop CTA flank columns — 14 question CTAs split 7/7
+   either side of the chat-app paper-app. Hidden everywhere by default;
+   only render at ≥1200 inside .desktop-experiment.dev-faq scope. Mobile
+   + tablet keep the canonical chevron + input-pill carousel. */
+.dev-faq-cta-col {
+  display: none;
+}
+
 /* Desktop-only purple highlight bg on paper-app 1's "Simple" word.
    Hidden everywhere by default; only renders at ≥1200. The text
    "Simple" itself stays plain bold on mobile + tablet (canonical /faq
@@ -897,6 +916,70 @@
   .desktop-experiment.dev-faq section.dev-pricing-split-only {
     margin-bottom: 64px;
   }
+
+  /* === FAQ CHAT — desktop CTA flanks ===
+     14 question CTAs split 7/7 either side of the chat-app paper-app.
+     The chevrons + input pill + "Use the arrows" empty-state hint are
+     hidden at this tier since the CTAs replace the carousel as the
+     entry point for asking a question. Each CTA pushes the question +
+     answer pair into the chat history (sendByIdx).
+
+     LAYOUT — chat-shell becomes a 3-column CSS grid: [220 cta] [304
+     chat] [220 cta] with 24px column gaps. Total width = 220+24+304+
+     24+220 = 792, so the chat-shell breaks out of the 550 column by
+     121px each side (margin-left: -121). This keeps the chat paper-
+     app at its canonical 304 cap and gives each flank 220px of
+     readable width.
+
+     z-index: 1 lifts the entire chat-shell + descendants above the
+     mx-auto column's gutter rule pseudo-elements (`::before` /
+     `::after` at column-left/right − 2px) so the CTA tiles paint OVER
+     the gutter lines where the flanking columns extend into the
+     gutters, instead of being clipped behind them.
+
+     Tradeoff: at 1200-1300 viewport widths the left CTA flank
+     visually overlaps the fixed side-nav (~50-100px overlap).
+     Acceptable for first iteration; revisit by either gating to a
+     higher min-width or moving the side-nav out of the way at this
+     section. */
+  .desktop-experiment.dev-faq .dev-faq-chat-shell {
+    display: grid;
+    grid-template-columns: 220px 304px 220px;
+    column-gap: 24px;
+    align-items: start;
+    width: 792px;
+    margin-left: -121px;
+    z-index: 1;
+  }
+  .desktop-experiment.dev-faq .dev-faq-cta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .desktop-experiment.dev-faq .dev-faq-cta-left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .desktop-experiment.dev-faq .dev-faq-cta-right {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .desktop-experiment.dev-faq .dev-faq-chevron,
+  .desktop-experiment.dev-faq .dev-faq-input-pill,
+  .desktop-experiment.dev-faq .dev-faq-arrows-hint {
+    display: none;
+  }
+
+  /* PRICING PAPER-APP 1 — drop the 30px in-paper spacer at desktop.
+     The spacer sits at the bottom of paper-app 1's body (originally
+     reserved for the canonical post-it overhang behavior on mobile).
+     At desktop the mobile post-it is hidden and the table moved into
+     paper-app 2, so paper-app 1 no longer has tall content beneath
+     the subhead — the 30 spacer + 20 space-y gap = 50px of dead
+     whitespace at the paper-app's bottom edge. */
+  .desktop-experiment.dev-faq .dev-pricing-spacer-mobile {
+    display: none;
+  }
 }
 
 /* ============================================================
@@ -923,17 +1006,18 @@
        right: 428 → leftmost-extreme (rotated TL with +5°) lands on
                     column-left − var(--gutter-extension) (left gutter
                     inlay).
-       top: 436   → post-it top sits 21px below the CTA bottom in
-                    parent coords, matching mobile's CTA-to-post-it
-                    gap. !important overrides Postit's inline top:0
-                    from the anchorTop={0} JSX prop. */
+       top: 231   → post-it visual top (= rotated TL Y after the +5°
+                    tilt) center-aligns with the "optimized for" line
+                    of the body subtitle (line 2 spans parent_y=217-
+                    245, center 231). !important overrides Postit's
+                    inline top:0 from the anchorTop={0} JSX prop. */
   .desktop-experiment.dev-faq-download .dev-download-postit-mobile {
     display: none;
   }
   .desktop-experiment.dev-faq-download .dev-download-postit-desktop {
     display: block;
     right: 428px;
-    top: 436px !important;
+    top: 231px !important;
   }
 }
 

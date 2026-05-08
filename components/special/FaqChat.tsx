@@ -49,6 +49,10 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
     setCurrentIdx((i) => (i + 1) % entries.length)
   }
 
+  const sendByIdx = (idx: number) => {
+    setHistory((h) => [...h, entries[idx]])
+  }
+
   const prev = () => {
     setHasNavigated(true)
     setCurrentIdx((i) => (i - 1 + entries.length) % entries.length)
@@ -61,8 +65,27 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
   const current = entries[currentIdx]
   const isEmpty = history.length === 0
 
+  // Split entries into two columns of 7 for the desktop CTA flanks. Natural
+  // reading order (1-7 left, 8-14 right). Total char counts of question
+  // strings come out roughly balanced (180 vs 194 chars), so visual column
+  // heights stay close.
+  const leftCTAs = entries.slice(0, 7)
+  const rightCTAs = entries.slice(7)
+
   return (
-    <div className="relative">
+    <div className="dev-faq-chat-shell relative">
+      {/* DESKTOP-ONLY: left + right CTA columns flanking the chat-app.
+          Hidden by default; shown at ≥1200 inside .desktop-experiment.dev-
+          faq scope. Each button pushes its question + answer into the
+          chat history (same as the input pill's send). At desktop the
+          chevrons + input pill are hidden, so these are the only entry
+          points to ask a question. */}
+      <div className="dev-faq-cta-col dev-faq-cta-left">
+        {leftCTAs.map((entry, i) => (
+          <FaqQuestionCta key={i} q={entry.q} onClick={() => sendByIdx(i)} />
+        ))}
+      </div>
+
       <PaperApp width="wide" bodyClassName="">
         <div
           className={`px-5 py-6 h-[440px] overflow-hidden flex flex-col ${
@@ -95,7 +118,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
             send) fills the row. Prev / next chevrons live OUTSIDE the
             paper-app — see siblings below. */}
         <div
-          className="border-t border-ink-faint/30 px-8 py-4"
+          className="dev-faq-input-pill border-t border-ink-faint/30 px-8 py-4"
           style={{
             background:
               'linear-gradient(255deg, #EDEAE0 0%, #EDEAE0 28%, #ECE6E0 52%, #E1DAC8 78%, #DBCFB7 100%)',
@@ -133,7 +156,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
         type="button"
         aria-label="Previous question"
         onClick={prev}
-        className={`absolute left-0 -translate-x-[70%] bottom-[20px] z-10 text-purple p-1 hover:opacity-80 transition-opacity ${
+        className={`dev-faq-chevron absolute left-0 -translate-x-[70%] bottom-[20px] z-10 text-purple p-1 hover:opacity-80 transition-opacity ${
           hasNavigated ? '' : 'animate-bracket-blink'
         }`}
       >
@@ -143,12 +166,48 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
         type="button"
         aria-label="Next question"
         onClick={next}
-        className={`absolute right-0 translate-x-[70%] bottom-[20px] z-10 text-purple p-1 hover:opacity-80 transition-opacity ${
+        className={`dev-faq-chevron absolute right-0 translate-x-[70%] bottom-[20px] z-10 text-purple p-1 hover:opacity-80 transition-opacity ${
           hasNavigated ? '' : 'animate-bracket-blink'
         }`}
       >
         <Chevron direction="right" />
       </button>
+
+      {/* DESKTOP-ONLY: right CTA column. Mirror of the left column above. */}
+      <div className="dev-faq-cta-col dev-faq-cta-right">
+        {rightCTAs.map((entry, i) => (
+          <FaqQuestionCta
+            key={i + 7}
+            q={entry.q}
+            onClick={() => sendByIdx(i + 7)}
+          />
+        ))}
+      </div>
     </div>
+  )
+}
+
+/**
+ * FaqQuestionCta — purple IDE-style tile button used as the desktop entry
+ * point for asking a FAQ question. Mirrors SectionTile's IDE classic shell
+ * (rounded-tile + ide-rule border + purple gradient + hover glow) but
+ * STRIPS the marker affordance (no walking-cursor `[ >_ ]`, no walking-knob
+ * pill) per Alex's "without the radio dial and without the equivalent
+ * purple version" spec — the question text itself is the entire tile body.
+ * No eyebrow either; just the question.
+ */
+function FaqQuestionCta({ q, onClick }: { q: string; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="dev-faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color] duration-200 hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)] font-mono text-[15px] font-medium text-ide-fg leading-tight"
+      style={{
+        background:
+          'linear-gradient(to top right, rgba(174, 129, 255, 0.45) 0%, rgba(174, 129, 255, 0.18) 25%, transparent 65%)',
+      }}
+    >
+      {q}
+    </button>
   )
 }

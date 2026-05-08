@@ -219,7 +219,7 @@ export default function FaqPage() {
                     </tr>
                   </tbody>
                 </table>
-                <div className="h-[30px]" aria-hidden />
+                <div className="dev-pricing-spacer-mobile h-[30px]" aria-hidden />
               </div>
             </PaperApp>
             {/* MOBILE + TABLET POST-IT — sits inside paper-app 1's
@@ -365,9 +365,9 @@ export default function FaqPage() {
                   { text: 'below are three ways to get answers' },
                   { text: ':', color: 'text-purple' },
                   { text: ' faq ' },
-                  { text: '"', color: 'text-purple' },
+                  { text: '"' },
                   { text: 'chat box' },
-                  { text: '"', color: 'text-purple' },
+                  { text: '"' },
                   { text: ',', color: 'text-purple' },
                   { text: ' faq doc for ' },
                   { text: 'ai', color: 'text-green' },
@@ -398,7 +398,7 @@ export default function FaqPage() {
                     </span>
                   </p>
                   <p>Tap a question below to ask it.</p>
-                  <p>Use the arrows to navigate.</p>
+                  <p className="dev-faq-arrows-hint">Use the arrows to navigate.</p>
                 </div>
               }
             />
@@ -467,7 +467,7 @@ export default function FaqPage() {
                 variant="app"
                 accent="orange"
                 eyebrow="CLICK HERE"
-                title="Detailed instructions"
+                title="Detailed Instructions"
                 href="/faq-download"
                 markerStyle="contained"
                 className="!mt-10 md:!mt-12"
