@@ -111,9 +111,9 @@ export default function AboutPage() {
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
               alex alderman<span className="text-purple">:</span>
               <br />
-              an <span className="text-green">ai</span> expert and
+              an <span className="text-green">ai</span> expert
               <br />
-              also a <span className="text-orange">TEACHER</span>
+              10yr <span className="text-orange">TEACHER</span>
               <span className="text-purple">.</span>
             </h1>
           </div>
@@ -165,8 +165,7 @@ export default function AboutPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  working with ai since before chatgpt, and teaching and training for over 20 YEARS'}
+                {'working with ai since before chatgpt, and teaching and training for over 20 YEARS'}
               </span>
             </div>
             <div className="col-start-1 row-start-1">
@@ -281,8 +280,7 @@ export default function AboutPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {"  learning new things can be a little scary but i've found a fun and HUMAN approach that helps "}
+                {"learning new things can be a little scary but i've found a fun and HUMAN approach that helps "}
                 <span className="inline-block">_</span>
               </span>
             </div>
