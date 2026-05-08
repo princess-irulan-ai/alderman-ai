@@ -324,7 +324,7 @@ export default function AboutPage() {
                   variant="app"
                   accent="orange"
                   eyebrow="next step"
-                  title="book demo lesson"
+                  title="Book Demo Lesson"
                   href="/contact"
                   markerStyle="contained"
                 />

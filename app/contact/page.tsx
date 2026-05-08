@@ -111,7 +111,7 @@ export default function ContactPage() {
                   accent="orange"
                   eyebrow="Book a call"
                   href="https://cal.com/alex-the-ai-instructor/30m"
-                  title="Let's have a chat"
+                  title="Schedule 1:1 Call"
                   markerStyle="contained"
                   className="!mt-10 md:!mt-12"
                 />

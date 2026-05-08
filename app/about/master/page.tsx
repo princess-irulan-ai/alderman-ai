@@ -174,7 +174,7 @@ export default function AboutMasterPage() {
                     variant="app"
                     accent="orange"
                     eyebrow="see if it lands"
-                    title="Book a demo lesson"
+                    title="Book a Demo Lesson"
                     href="/contact"
                     markerStyle="contained"
                   />
