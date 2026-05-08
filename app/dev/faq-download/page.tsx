@@ -85,11 +85,11 @@ export default function DevFaqDownloadPage() {
 
         <section className="pt-4 pb-10 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            learn about our
+            learn everything
             <br />
-            <span className="text-orange">COMPANY</span> via our
+            about <span className="text-orange">US</span> via
             <br />
-            <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
+            our <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
           </h1>
         </section>
 
