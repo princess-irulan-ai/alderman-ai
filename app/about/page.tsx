@@ -111,10 +111,10 @@ export default function AboutPage() {
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
               alex alderman<span className="text-purple">:</span>
               <br />
-              an <span className="text-green">ai</span> expert
+              <span className="text-green">ai</span> expert and
               <br />
-              10yr <span className="text-orange">TEACHER</span>
-              <span className="text-purple">.</span>
+              20yr <span className="text-orange">TEACHER</span>
+              <span className="text-paper">.</span>
             </h1>
           </div>
 
@@ -222,14 +222,12 @@ export default function AboutPage() {
                   that wraps to 2 lines naturally inside the mobile
                   paper-app, matching canonical /about. */}
               <h2 className="lead-h2 font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                8 years
+                Teaching EN to
                 <br className="hidden md:inline" />
-                {' '}teaching English
-                <br className="hidden md:inline" />
-                {' '}to Czechs
+                {' '}Czechs for 8 Years
               </h2>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                Modern ai is literally built on a principle called natural
+                Modern ai is built on a principle called natural
                 <br />
                 <span className="relative inline-block">
                   <span
@@ -241,7 +239,7 @@ export default function AboutPage() {
                 .
               </p>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
-                And I&apos;m sure you&apos;ve experienced the difference between just a native speaker and a certified
+                And there&apos;s a difference between just a native speaker and a certified
                 <br />
                 <span className="relative inline-block">
                   <span
