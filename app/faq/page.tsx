@@ -326,9 +326,9 @@ export default function FaqPage() {
           </div>
         </section>
 
-        {/* "book a call" — right-edge overhang for compositional rhythm
-            after the centered pricing paper-app. Per desktop-spec.md
-            R/C alternation rules. */}
+        {/* "book a call" — centered (no tile-right-edge) so the first
+            purple CTA after the pricing block lands on the column
+            centerline instead of overhanging the right gutter. */}
         <section className="pt-4 pb-8 md:pt-6 md:pb-10">
           <div>
             <SectionTile
@@ -338,7 +338,6 @@ export default function FaqPage() {
               title="book a call"
               href="/contact"
               markerStyle="contained"
-              className="tile-right-edge"
             />
           </div>
         </section>
