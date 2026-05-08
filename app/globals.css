@@ -915,19 +915,25 @@
   }
 
   /* DOWNLOAD POST-IT — at desktop, the mobile BR post-it is hidden
-     and the desktop BL post-it takes over, positioned with its
-     leftmost (rotated TL) point kissing the LEFT gutter inlay
-     (column-left − var(--gutter-extension)).
-       right: 428 → with paper-app right-overhung, relative-parent-right
-                    sits at column-right + 39. After scale(0.8) and the
-                    +5° rotation around shape center, the leftmost
-                    rendered point lands at column-left − 39. */
+     and the desktop BL post-it takes over, positioned so its
+     unrotated TOP-LEFT corner lands on the CTA's center point per
+     Alex 2026-05-09. With paper-app right-overhung, parent-right =
+     column-right + 39, and CTA centers horizontally inside the 304
+     paper-app body.
+       right: -40 → wrapper visual TR at parent_right + 40, so visual
+                    TL (TR − 192 after scale 0.8) = parent_horizontal
+                    center ≈ CTA center X.
+       top: 370   → CTA vertical center (relative to parent top, with
+                    the canonical paper-app body content stack). The
+                    !important overrides Postit's inline top:0 from
+                    the anchorTop={0} JSX prop. */
   .desktop-experiment.dev-faq-download .dev-download-postit-mobile {
     display: none;
   }
   .desktop-experiment.dev-faq-download .dev-download-postit-desktop {
     display: block;
-    right: 428px;
+    right: -40px;
+    top: 370px !important;
   }
 }
 
@@ -952,5 +958,64 @@
      the .justify-center rule (-51) and the nth-child(8) rule (-45). */
   .desktop-experiment.dev-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
     margin-bottom: -51px !important;
+  }
+}
+
+/* ============================================================
+   /contact — desktop tweaks
+   ============================================================ */
+@media (min-width: 768px) {
+  /* INTRO PAPER-APP — cap at 304, left-aligned, left edge overhangs
+     the column's left rule line into the LEFT gutter by
+     `--gutter-extension` so it lands on the gutter inlay mark
+     (column-left − 39). Mirror of the homepage `#brochure > .relative`
+     pattern but applied to the col-span-3 PaperApp wrapper since the
+     parent here isn't a grid (the col-span-3 is otherwise a no-op).
+     z-index lifts above the column rule pseudo. */
+  .desktop-experiment.dev-contact #contact-intro > .relative > .col-span-3 {
+    max-width: 304px;
+    margin-left: calc(var(--gutter-extension) * -1);
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOBILE CTA ALWAYS-ON GLOW
+   At <768px there is no hover, so the paper-tile CTA hover state
+   (border tint + 28px box-shadow) reads as dead affordance. Pin those
+   styles always-on at mobile so every CTA on every page glows at rest.
+   Targets the existing Tailwind `hover:` classnames by attribute match,
+   so any new CTA that uses the canonical hover-glow string inherits
+   automatically without per-page edits. Desktop (>=768) keeps real
+   hover behavior — these rules are scoped to max-width: 767.
+   TerminalCTA's bg-tint glow is handled separately in its component
+   className via `max-md:bg-orange/10`.
+
+   Menu CTAs (FloatingNav dropdown, side-nav) live inside a `<nav>`
+   element. Those tiles must stay at their resting state — pre-glowing
+   them would make the menu read as the loudest surface on the page.
+   Excluded via `:not(nav *)`. Page-level CTAs (SectionTile App-variant
+   etc.) aren't inside a `<nav>`, so they still pick up the glow.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  [class~="hover:border-purple/60"]:not(nav *) {
+    border-color: rgb(174 129 255 / 0.6);
+  }
+  [class~="hover:border-orange/60"]:not(nav *) {
+    border-color: rgb(253 151 31 / 0.6);
+  }
+  [class~="hover:border-green/60"]:not(nav *) {
+    border-color: rgb(166 226 46 / 0.6);
+  }
+  [class~="hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]"]:not(nav *) {
+    box-shadow: 0 0 28px rgba(174, 129, 255, 0.45);
+  }
+  [class~="hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]"]:not(nav *) {
+    box-shadow: 0 0 28px rgba(253, 151, 31, 0.45);
+  }
+  [class~="hover:shadow-[0_0_28px_rgba(166,226,46,0.45)]"]:not(nav *) {
+    box-shadow: 0 0 28px rgba(166, 226, 46, 0.45);
   }
 }
