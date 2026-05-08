@@ -783,6 +783,13 @@
   display: none;
 }
 
+/* /faq-download desktop post-it — hidden by default; shown at ≥768
+   inside the .dev-faq-download scope, where it switches places with
+   the mobile post-it (see @media block below). */
+.dev-download-postit-desktop {
+  display: none;
+}
+
 @media (min-width: 768px) {
   /* WIDE PAPER-APP CAPS — pricing + FaqChat both render
      `<PaperApp width="wide">` (= `.col-span-3` inner) wrapped in their
@@ -895,6 +902,35 @@
 /* ============================================================
    /dev/faq-download — desktop-spec port of canonical /faq-download
    ============================================================ */
+@media (min-width: 768px) {
+  /* DOWNLOAD PAPER-APP — capped at 304, right-overhangs into the
+     right gutter by `--gutter-extension` (mirrors the homepage hero
+     paper-app pattern at line 208). z-index lifts above the column's
+     ::after rule pseudo so the paper-app paints over the rule line. */
+  .desktop-experiment.dev-faq-download .dev-download-app {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: calc(var(--gutter-extension) * -1);
+    z-index: 1;
+  }
+
+  /* DOWNLOAD POST-IT — at desktop, the mobile BR post-it is hidden
+     and the desktop BL post-it takes over, positioned with its
+     leftmost (rotated TL) point kissing the LEFT gutter inlay
+     (column-left − var(--gutter-extension)).
+       right: 428 → with paper-app right-overhung, relative-parent-right
+                    sits at column-right + 39. After scale(0.8) and the
+                    +5° rotation around shape center, the leftmost
+                    rendered point lands at column-left − 39. */
+  .desktop-experiment.dev-faq-download .dev-download-postit-mobile {
+    display: none;
+  }
+  .desktop-experiment.dev-faq-download .dev-download-postit-desktop {
+    display: block;
+    right: 428px;
+  }
+}
+
 @media (min-width: 1200px) {
   /* TERMINAL-BEFORE-PORTRAIT EMPTY-LINE COMPENSATION — the seam terminal
      above the portrait wraps to 5 lines but the live-typed block fills

@@ -5,6 +5,7 @@ import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
 import { PaperApp } from '@/components/paper/PaperApp'
+import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
@@ -51,6 +52,22 @@ const SIDE_NAV_ITEMS = [
 ] as const
 
 export default function FaqDownloadPage() {
+  // Post-it copy — single heading block mirroring the homepage hero
+  // post-it's text-formatting pattern (HeroSection.tsx, post-2026-04-28
+  // merged-title-into-body treatment). No `children` body slot used.
+  const postitHeading = (
+    <span
+      className="block font-display font-normal"
+      style={{ width: '200px', fontSize: '32px', lineHeight: 1.05 }}
+    >
+      <span className="whitespace-nowrap">Mluvíš česky?</span>
+      <br />
+      <span className="font-bold whitespace-nowrap">Stačí požádat ai</span>
+      <br />
+      <span className="whitespace-nowrap">o přepnutí jazyka</span>
+    </span>
+  )
+
   return (
     <div className="desktop-experiment dev-faq-download">
       <FloatingNav />
@@ -85,54 +102,59 @@ export default function FaqDownloadPage() {
 
         <section className="pt-4 pb-10 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            learn everything
+            download <span className="text-green">ai</span> FAQ
             <br />
-            about <span className="text-orange">US</span> via
+            for interactive
             <br />
-            our <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
+            q<span className="text-purple">&amp;</span>a about <span className="text-orange">US</span><span className="text-purple">.</span>
           </h1>
         </section>
 
-        <section className="pt-4 pb-12 md:pt-6 md:pb-16">
-          <PaperApp width="wide">
-            <div className="space-y-4 md:space-y-5 py-2">
-              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                Download our FAQ.md
-              </h2>
-              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[680px] mx-auto text-center">
-                Markdown files (.md) are special files optimized for
-                <br />
-                <span className="relative inline-block">
-                  <span
-                    aria-hidden
-                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
-                  />
-                  <span className="relative">ai platforms</span>
-                </span>
-              </p>
-              <SectionTile
-                variant="app"
-                accent="orange"
-                gradientAccent="purple"
-                eyebrow="here's the file"
-                title="Download FAQ (en)"
-                href="/alderman-ai-faq.md"
-                download
-                markerStyle="contained"
-                className="!mt-10 md:!mt-12"
-              />
-              <SectionTile
-                variant="app"
-                accent="orange"
-                eyebrow="tady je soubor"
-                title="Stáhnout FAQ (cz)"
-                href="/alderman-ai-faq-cz.md"
-                download
-                markerStyle="contained"
-                className="!mt-8 md:!mt-10"
-              />
-            </div>
-          </PaperApp>
+        <section className="pt-4 pb-[91px] md:pt-6 md:pb-16">
+          <div className="relative dev-download-app">
+            <PaperApp width="narrow">
+              <div className="space-y-4 md:space-y-5 pt-2 pb-[38px] md:py-2">
+                <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                  Download our FAQ.md
+                </h2>
+                <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[680px] mx-auto text-center">
+                  Markdown files (.md) are files optimized for
+                  <br />
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
+                    />
+                    <span className="relative">ai platforms</span>
+                  </span>
+                </p>
+                <SectionTile
+                  variant="app"
+                  accent="orange"
+                  eyebrow="here's the file"
+                  title="download faq.md"
+                  href="/alderman-ai-faq.md"
+                  download
+                  markerStyle="contained"
+                  className="!mt-10 md:!mt-12"
+                />
+              </div>
+            </PaperApp>
+            <Postit
+              className="dev-download-postit-mobile"
+              overhang="br"
+              anchorTop={380}
+              rotation={-5}
+              heading={postitHeading}
+            />
+            <Postit
+              className="dev-download-postit-desktop"
+              overhang="bl"
+              anchorTop={0}
+              rotation={5}
+              heading={postitHeading}
+            />
+          </div>
         </section>
 
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
