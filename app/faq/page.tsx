@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
 import { PageFrame } from '@/components/layout/PageFrame'
@@ -6,6 +8,42 @@ import { FaqChat, type FaqEntry } from '@/components/special/FaqChat'
 import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
+
+// Side-nav menu items — same destinations as the FloatingNav menu, but
+// always visible (no toggle) and styled for the side-nav narrower
+// container. /faq filtered out — current route excluded from its own
+// nav menu (matches canonical / pattern).
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/',
+    label: 'Homepage',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/about',
+    label: 'About Me',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/contact',
+    isPrimary: true,
+    label: (
+      <>
+        Talk to a <span className="uppercase text-orange">HUMAN</span>
+      </>
+    ),
+    gradient:
+      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  },
+] as const
 
 const FAQ_ENTRIES: FaqEntry[] = [
   {
@@ -68,33 +106,78 @@ const FAQ_ENTRIES: FaqEntry[] = [
 
 export default function FaqPage() {
   return (
-    <>
+    <div className="desktop-experiment dev-faq">
       <FloatingNav />
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <section className="pt-4 pb-8 md:pt-8 md:pb-10">
           <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
             have a <span className="text-orange">HUMAN</span>
             <br />
-            <span className="text-purple">(</span>{' '}or <span className="text-green">ai</span>{' '}<span className="text-purple">)</span> answer
+            <span className="text-purple">(</span>{' '}or <span className="text-green">ai</span>{' '}<span className="text-purple">)</span> answer
             <br />{' '}
-            your questions
+            your questions<span className="text-purple">.</span>
           </h1>
         </section>
 
-        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
+        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px] dev-pricing">
           <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Complex topic.
                   <br />
-                  Simple pricing.
+                  {/* Purple highlight on "Simple" — desktop only. The
+                      bg pseudo span is hidden at <1200 via
+                      `.dev-purple-bg-desktop { display: none }`, so
+                      mobile + tablet render plain bold "Simple
+                      pricing." identical to canonical /faq. */}
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="dev-purple-bg-desktop absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                    />
+                    <span className="relative text-ink">Simple</span>
+                  </span>{' '}
+                  pricing.
                 </h2>
                 <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   Cost is the number of 50m teaching hours used across all of your groups per month.
                 </p>
-                <p className="font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                {/* MOBILE + TABLET: "Buy more. Pay less. Simple." sits
+                    inside paper-app 1 as a punchline beat between the
+                    subhead and the table. At desktop tier (≥1200) this
+                    is hidden via `.dev-pricing-buy-mobile { display:
+                    none }` and the text is duplicated into paper-app 2
+                    as the table's TITLE. Mobile + tablet byte-
+                    identical to canonical. */}
+                <p className="dev-pricing-buy-mobile font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
                   Buy more. Pay less.{' '}
                   <span className="relative inline-block">
                     <span
@@ -105,7 +188,16 @@ export default function FaqPage() {
                   </span>
                   .
                 </p>
-                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
+                {/* MOBILE + TABLET: pricing table renders inside the
+                    main paper-app. At desktop tier (≥1200) this is
+                    hidden via `.dev-pricing-table-mobile { display:
+                    none }` and the table is duplicated into the
+                    `.dev-pricing-split-only` section below — so on
+                    desktop the pricing splits into TWO paper-apps:
+                    centered "complex topic / simple pricing"
+                    explanation + left-overhanging table. Mobile and
+                    tablet (<1200) stay byte-identical to canonical. */}
+                <table className="dev-pricing-table-mobile mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
                   <thead>
                     <tr>
                       <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
@@ -127,15 +219,16 @@ export default function FaqPage() {
                     </tr>
                   </tbody>
                 </table>
-                {/* Reserves vertical room for the post-it BR overhang. */}
                 <div className="h-[30px]" aria-hidden />
               </div>
             </PaperApp>
-            {/* Pricing-example post-it. Same BR-overhang pattern as the
-                FAQ download paper-app further down the page — see that
-                block for the full rationale on the mobile scale formula
-                and the desktop fixed-position fallback. */}
+            {/* MOBILE + TABLET POST-IT — sits inside paper-app 1's
+                relative wrapper, anchored at canonical anchorTop=520.
+                Hidden at desktop (≥1200) where a separate post-it
+                renders inside paper-app 2 instead. Mobile + tablet
+                byte-identical to canonical /faq. */}
             <Postit
+              className="dev-pricing-postit-mobile"
               overhang="br"
               anchorTop={520}
               rotation={-5}
@@ -157,6 +250,85 @@ export default function FaqPage() {
           </div>
         </section>
 
+        {/* DESKTOP-ONLY: pricing table extracted into its own paper-app
+            and left-overhung into the left gutter. Hidden by default;
+            only renders at ≥1200px inside the `.desktop-experiment.dev-
+            faq` scope (see globals.css `.dev-pricing-split-only` rule).
+            Mirrors the homepage hero paper-app's right-overhang pattern
+            but flipped to the left side, giving the pricing block a
+            two-beat rhythm at desktop: centered explanation + left-
+            overhanging table. */}
+        <section className="dev-pricing-split-only">
+          <div className="relative">
+            <PaperApp width="wide">
+            <div className="space-y-4 md:space-y-5 py-2">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                Buy more. Pay less.{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative text-ink">Simple</span>
+                </span>
+                .
+              </h2>
+              <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
+                <thead>
+                  <tr>
+                    <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
+                    <th className="border-2 border-ink px-4 py-2 font-bold text-left">Price (each)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">4</td>
+                    <td className="border-2 border-ink px-4 py-2">5000 Kč</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">8</td>
+                    <td className="border-2 border-ink px-4 py-2">4500 Kč</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">16+</td>
+                    <td className="border-2 border-ink px-4 py-2">4000 Kč</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </PaperApp>
+            {/* DESKTOP POST-IT — anchored to paper-app 2's relative
+                wrapper. CSS in globals.css positions it: top edge on
+                the table's vertical center, right edge at the right
+                gutter inlay (column-right + 39). Hidden at <1200; the
+                mobile+tablet post-it inside paper-app 1 renders
+                instead. */}
+            <Postit
+              className="dev-pricing-postit-desktop"
+              overhang="br"
+              anchorTop={0}
+              rotation={-5}
+              heading={
+                <span
+                  className="block font-display font-normal"
+                  style={{ width: '200px', fontSize: '32px', lineHeight: 1.1 }}
+                >
+                  <span className="whitespace-nowrap">2 groups,</span>
+                  <br />
+                  <span className="whitespace-nowrap">once a week</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 8 hrs / mo</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 36.000 Kč</span>
+                </span>
+              }
+            />
+          </div>
+        </section>
+
+        {/* "book a call" — right-edge overhang for compositional rhythm
+            after the centered pricing paper-app. Per desktop-spec.md
+            R/C alternation rules. */}
         <section className="pt-4 pb-8 md:pt-6 md:pb-10">
           <div>
             <SectionTile
@@ -166,30 +338,25 @@ export default function FaqPage() {
               title="book a call"
               href="/contact"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
 
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="relative">
-            {/* Invisible mirror — reserves the final rendered height of
-                the terminal line so the next paper-app holds its
-                position while the line types out. Mirrors the
-                showBrackets={false} 3ch hang (1ch prompt + 2 NBSP
-                leadingSpaces). */}
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {'>  below are three ways to get answers: faq "chat box", faq doc for ai platforms, or just ask a HUMAN'}
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  below are three ways to get answers: faq "chat box", faq doc for ai platforms, or just ask a HUMAN '}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
                 showBrackets={false}
@@ -202,9 +369,12 @@ export default function FaqPage() {
                   { text: '"', color: 'text-purple' },
                   { text: 'chat box' },
                   { text: '"', color: 'text-purple' },
-                  { text: ', faq doc for ' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' faq doc for ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ' platforms, or just ask a ' },
+                  { text: ' platforms' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' or just ask a ' },
                   { text: 'HUMAN', color: 'text-orange' },
                 ]}
               />
@@ -212,10 +382,6 @@ export default function FaqPage() {
           </div>
         </section>
 
-        {/* Chat-style FAQ — paper-app with carousel question selector +
-            accumulating Q&A history. Branding-version of an FAQ section,
-            not real ai (the real-ai option is the markdown download
-            below). */}
         <section className="pt-4 pb-12 md:pt-6 md:pb-14">
           <div>
             <FaqChat
@@ -241,23 +407,19 @@ export default function FaqPage() {
         </section>
 
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="relative">
-            {/* Invisible mirror — reserves the final rendered height of
-                the terminal line so the download CTA below holds its
-                position while the line types out. */}
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {'>  if YOU want more in depth answers, upload the following file into your ai platform of choice'}
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  if YOU want more in depth answers, upload the following file into your ai platform of choice '}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
                 showBrackets={false}
@@ -266,7 +428,9 @@ export default function FaqPage() {
                 segments={[
                   { text: 'if ' },
                   { text: 'YOU', color: 'text-orange' },
-                  { text: ' want more in depth answers, upload the following file into your ' },
+                  { text: ' want more in depth answers' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' upload the following file into your ' },
                   { text: 'ai', color: 'text-green' },
                   { text: ' platform of choice' },
                 ]}
@@ -275,6 +439,8 @@ export default function FaqPage() {
           </div>
         </section>
 
+        {/* "download FAQ file" — right-edge overhang for rhythm break
+            after the centered FaqChat + left-anchored terminal seam. */}
         <section className="pt-10 pb-10 md:pt-20 md:pb-16">
           <div>
             <SectionTile
@@ -284,6 +450,7 @@ export default function FaqPage() {
               title="download FAQ file"
               href="/faq-download"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
@@ -310,39 +477,41 @@ export default function FaqPage() {
           </PaperApp>
         </section>
 
-        {/* Second fallback path — for readers who don't want to engage
-            with ai at all and would rather book a human. Mirrors the
-            terminal+CTA pattern from /faq-download. */}
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="relative">
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {">  don't want to talk to ai? i totally get it"}
+              <span>
+                <span className="select-none">&gt;</span>
+                {"  don't want to talk to ai? i totally get it "}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
                 showBrackets={false}
                 align="left"
                 persistCursor
                 segments={[
-                  { text: "don't want to talk to " },
+                  { text: 'don' },
+                  { text: "'", color: 'text-purple' },
+                  { text: 't want to talk to ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: '? i totally get it' },
+                  { text: '?', color: 'text-purple' },
+                  { text: ' i totally get it' },
                 ]}
               />
             </div>
           </div>
         </section>
 
+        {/* Closing CTA — right-edge overhang as the final emphatic
+            beat. Mirrors /dev/home-page's closing "book a demo lesson"
+            tile pattern. */}
         <section className="pt-6 pb-16 md:pt-10 md:pb-20">
           <div>
             <SectionTile
@@ -352,13 +521,14 @@ export default function FaqPage() {
               title={<>talk to a <span className="normal-case text-orange">HUMAN</span></>}
               href="/contact"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
 
       </PageFrame>
       <Footer />
-    </>
+    </div>
   )
 }
 

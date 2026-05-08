@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
@@ -8,40 +9,103 @@ import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
 /**
- * /about — promoted from dev14 (round 3 variant: editorial pullquote).
+ * /dev/about — desktop port of canonical /about against desktop-spec.md.
  *
- * The locked anchor line ("20 years at the intersection of technology,
- * education, and psychology.") is pulled OUT of the hero and treated as
- * a hero-scale pullquote in the middle of the page — the visual peak,
- * borrowed from magazine layouts where a pullquote interrupts the body.
+ * Mobile JSX mirrors canonical /about (same imports, same prop-shapes,
+ * identical mobile render). Differences from canonical, all desktop-only:
  *
- * Page rhythm:
- *   1. Hero — H1 (3 lines) + headshot PaperApp with stacked-logo overlay.
- *   2. Dark CTA — "let's chat / book a call" SectionTile right under
- *      the portrait.
- *   3. Lead beat — wide centered PaperApp ("Eight years teaching
- *      English in Prague" + 3-clause subtitle + bridge sentence).
- *   4. THE PULLQUOTE — full-canvas TerminalLine on IDE substrate,
- *      generous py-16 md:py-24 breathing room. Left-aligned with
- *      hangingPrompt so the `[ > ` prefix hangs in the outer gutter.
- *      Comma + period in purple per the homepage convention.
- *   5. After-pullquote beat — wide centered PaperApp ("Before Prague:
- *      marketing, freelance, military" + two-sentence subtitle).
- *   6. Closing IDE SectionTile -> /contact.
+ *   1. `desktop-experiment dev-about` outer marker so the .desktop-
+ *      experiment CSS scope kicks in at ≥768px.
+ *   2. Side-nav <aside class="dev-side-nav"> block — replaces FloatingNav
+ *      at ≥1200px (FloatingNav hidden via CSS at that tier).
+ *   3. Terminal seams converted from the older `relative + absolute
+ *      inset-0` ghost pattern to the `.grid + col-start-1 row-start-1`
+ *      pattern — same visual at mobile, but `.grid` is the selector the
+ *      gutter-glow rule hooks into.
+ *   4. H1 ends with a purple period (homepage canon — every page H1).
+ *   5. Headshot wrapper carries `dev-hero-paper` class — used by CSS to
+ *      right-overhang the paper-app at ≥768 (mirrors homepage hero
+ *      paper-app's right-gutter overhang).
+ *   6. Both IDE CTAs carry `tile-right-edge` — right-overhang into the
+ *      right gutter at ≥768.
  *
- * Surface cadence: paper -> IDE peak -> paper -> IDE closer.
+ * Compositional rhythm (C, R, L, R, C, R, L, C):
+ *   1. H1 (3 hard-broken lines) — CENTER
+ *   2. Headshot paper-app — RIGHT (overhangs)
+ *   3. Terminal seam "working with ai since before chatgpt" — LEFT
+ *   4. Dark CTA "let's chat / book an intro call" → /contact — RIGHT
+ *   5. Wide paper-app "8 years teaching English to Czechs" — CENTER
+ *   6. Dark CTA "have questions? / learn how this works" → /faq — RIGHT
+ *   7. Big pullquote "learning new things can be a little scary..." — LEFT
+ *   8. Closing wide paper-app + nested App-variant CTA — CENTER
  */
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/',
+    label: 'Homepage',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/faq',
+    label: 'Pricing / FAQ',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/contact',
+    isPrimary: true,
+    label: (
+      <>
+        Talk to a <span className="uppercase text-orange">HUMAN</span>
+      </>
+    ),
+    gradient:
+      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  },
+] as const
+
 export default function AboutPage() {
   return (
-    <>
+    <div className="desktop-experiment dev-about">
       <FloatingNav />
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
 
-        {/* HERO ZONE — H1 + headshot PaperApp. The anchor line is held
-            back for the mid-page pullquote moment. Smaller H1 size than
-            the homepage so the hero feels lighter and the pullquote can
-            be the visual peak below. */}
+        {/* HERO — H1 (3 lines, purple period) + headshot paper-app
+            (right-overhang at desktop via dev-hero-paper). */}
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
@@ -50,18 +114,14 @@ export default function AboutPage() {
               an <span className="text-green">ai</span> expert and
               <br />
               also a <span className="text-orange">TEACHER</span>
+              <span className="text-purple">.</span>
             </h1>
           </div>
 
-          {/* Headshot PaperApp. Empty chrome strings per convention.
-              Stacked-logo overlay at the BR corner — 20px in from the
-              image's bottom-right edges, with "alex" in JetBrains Mono
-              baseline-aligned to the "man" row of the SVG (man baseline
-              sits ~11.5px above the SVG's bottom edge in this 76px
-              render — viewBox math: man baseline at y≈322 / vbHeight
-              379.5 → 84.8% from top → 64.5px from top of 76px image →
-              11.5px from the image's bottom). */}
-          <div className="relative">
+          {/* Headshot paper-app. `dev-hero-paper` is the desktop hook —
+              CSS caps to 304 + right-overhangs the right gutter by
+              gutter-extension at ≥768px. Below 768 the class is inert. */}
+          <div className="relative dev-hero-paper">
             <PaperApp width="narrow" bodyClassName="">
               <div className="relative">
                 <Image
@@ -91,33 +151,34 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* TERMINAL SEAM — career anchor between the portrait and the
-            dark CTA. Comma in purple per the punctuation convention. */}
+        {/* TERMINAL SEAM — career anchor. Ported to .grid pattern so the
+            gutter-glow rule fires at desktop. Ghost matches canonical's
+            text-only approach (no cursor span) — canonical /about's
+            terminal seam doesn't use persistCursor, so the live's final
+            state has no trailing cursor and the ghost reserves only
+            text height. Comma in purple per punctuation tic. */}
         <section className="pt-8 pb-8 md:pt-10 md:pb-10">
-          <div className="relative">
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {'>  working with ai since before chatgpt, and teaching and training for over 20 YEARS'}
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  working with ai since before chatgpt, and teaching and training for over 20 YEARS'}
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
-                fontSize="22px"
-                align="left"
                 hangingPrompt
                 showBrackets={false}
+                align="left"
                 segments={[
                   { text: 'working with ' },
                   { text: 'ai', color: 'text-green' },
                   { text: ' since before chatgpt' },
-                  { text: ',' },
+                  { text: ',', color: 'text-purple' },
                   { text: ' and teaching and training for over ' },
                   { text: '20 YEARS', color: 'text-orange' },
                 ]}
@@ -126,31 +187,47 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* DARK CTA — sits directly under the portrait. */}
+        {/* CTA1 — "let's chat / book an intro call" → /contact.
+            RIGHT-overhang via tile-right-edge. */}
         <section className="pt-8 pb-8 md:pt-10 md:pb-10">
-          <div>
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow={
-                <>
-                  let<span className="text-purple">&apos;</span>s chat
-                </>
-              }
-              title="book an intro call"
-              href="/contact"
-              markerStyle="contained"
-            />
-          </div>
+          <SectionTile
+            variant="ide"
+            accent="purple"
+            eyebrow={
+              <>
+                let<span className="text-purple">&apos;</span>s chat
+              </>
+            }
+            title="book an intro call"
+            href="/contact"
+            markerStyle="contained"
+            className="tile-right-edge"
+          />
         </section>
 
-        {/* LEAD BEAT — wide centered PaperApp. Strategic anchor: 8 years
-            ESL in Prague, the buying mental model HR already has. */}
+        {/* LEAD BEAT — wide centered PaperApp, 8 years ESL anchor. */}
         <section className="pt-8 pb-8 md:pt-10 md:pb-10">
           <PaperApp width="wide">
             <div className="space-y-5 md:space-y-6 py-2">
-              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                8 years teaching English to Czechs
+              {/* H2 — desktop-only hard breaks for shape control +
+                  lead-h2 hook that drops the 28→35px desktop bump
+                  to 30px. At 35px the middle segment ("teaching
+                  English") measures 245px in the 240px-capped
+                  paper-app body and wraps to a 4th line; 30px lands
+                  all three at <240px so the explicit <br/>s
+                  produce exactly 3 lines.
+                  Mobile keeps canonical's natural-wrap rendering —
+                  the <br/>s carry `hidden md:inline` so they
+                  `display: none` below 768 and the H2 reads as one
+                  flat string ("8 years teaching English to Czechs")
+                  that wraps to 2 lines naturally inside the mobile
+                  paper-app, matching canonical /about. */}
+              <h2 className="lead-h2 font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                8 years
+                <br className="hidden md:inline" />
+                {' '}teaching English
+                <br className="hidden md:inline" />
+                {' '}to Czechs
               </h2>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 Modern ai is literally built on a principle called natural
@@ -180,58 +257,41 @@ export default function AboutPage() {
           </PaperApp>
         </section>
 
-        {/* QUESTIONS-PATH TILE — purple IDE SectionTile -> /faq for
-            the cautious reader who wants service details before
-            booking. Sits between the credibility paper-app and the
-            pullquote, catching the natural "ok, how does this work?"
-            reader question after the credibility beat. */}
+        {/* CTA2 — "have questions? / learn how this works" → /faq.
+            RIGHT-overhang via tile-right-edge. */}
         <section className="pt-8 pb-8 md:pt-10 md:pb-10">
-          <div>
-            <SectionTile
-              variant="ide"
-              accent="purple"
-              eyebrow="have questions?"
-              title="learn how this works"
-              href="/faq"
-              markerStyle="contained"
-            />
-          </div>
+          <SectionTile
+            variant="ide"
+            accent="purple"
+            eyebrow="have questions?"
+            title="learn how this works"
+            href="/faq"
+            markerStyle="contained"
+            className="tile-right-edge"
+          />
         </section>
 
-        {/* THE BIG PULLQUOTE — the locked anchor line at hero scale,
-            full canvas, generous breathing room. IDE substrate keeps
-            the editorial pullquote in the page's authoritative voice;
-            comma + period in purple per the homepage punctuation
-            convention. Left-aligned with hangingPrompt so the `[ > `
-            prefix hangs in the outer gutter, matching the homepage
-            hero treatment. */}
+        {/* THE BIG PULLQUOTE — locked anchor line, hero-scale.
+            LEFT (hangingPrompt) — terminal voice. Ported to .grid pattern. */}
         <section className="py-8 md:py-10">
-          <div className="relative">
-            {/* Invisible mirror — reserves the final rendered height of
-                the terminal line so the "Before Prague" paper-app below
-                holds its position while the line types out. Mirrors
-                hangingPrompt's 3ch hanging math when brackets are off
-                (1ch prompt + 2 leadingSpaces NBSPs) so the reserved box
-                matches the live line exactly. */}
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {">  learning new things can be a little scary but i've found a fun and HUMAN approach that helps"}
+              <span>
+                <span className="select-none">&gt;</span>
+                {"  learning new things can be a little scary but i've found a fun and HUMAN approach that helps "}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
-                fontSize="22px"
-                align="left"
                 hangingPrompt
                 showBrackets={false}
                 persistCursor
+                align="left"
                 segments={[
                   { text: 'learning new things can be a little ' },
                   { text: 'scary', color: 'text-green' },
@@ -244,9 +304,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* CLOSING BEAT — demo-lesson invitation in a paper-app, with
-            an orange App-variant SectionTile nested inside (matches
-            the homepage TrialCTASection pattern). */}
+        {/* CLOSING — demo-lesson invitation, wide paper-app + nested
+            App-variant SectionTile. CENTER. */}
         <section className="pt-8 pb-16 md:pt-10 md:pb-20">
           <PaperApp width="wide">
             <div className="space-y-5 md:space-y-6 py-2">
@@ -279,7 +338,7 @@ export default function AboutPage() {
         </section>
       </PageFrame>
       <Footer />
-    </>
+    </div>
   )
 }
 

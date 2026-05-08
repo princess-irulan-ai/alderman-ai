@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
@@ -7,20 +8,88 @@ import { PaperApp } from '@/components/paper/PaperApp'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
+// Copied from /dev/home-page. Kept inline rather than centralized
+// so each dev page is self-contained — see desktop-spec.md.
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/',
+    label: 'Homepage',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/faq',
+    label: 'Pricing / FAQ',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/about',
+    label: 'About Me',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/contact',
+    isPrimary: true,
+    label: (
+      <>
+        Talk to a <span className="uppercase text-orange">HUMAN</span>
+      </>
+    ),
+    gradient:
+      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+  },
+] as const
+
 export default function FaqDownloadPage() {
   return (
-    <>
+    <div className="desktop-experiment dev-faq-download">
       <FloatingNav />
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
 
         <section className="pt-4 pb-10 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            learn about our
+            learn everything
             <br />
-            <span className="text-orange">COMPANY</span> via the
+            about <span className="text-orange">US</span> via
             <br />
-            interactive <span className="text-green">ai</span> FAQ
+            our <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
           </h1>
         </section>
 
@@ -66,25 +135,20 @@ export default function FaqDownloadPage() {
           </PaperApp>
         </section>
 
-        {/* Terminal seam after the download block. Types in when it
-            scrolls into view. Same invisible-mirror pattern as /faq —
-            reserves the final rendered line height so the block below
-            doesn't jump while the line types out. */}
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="relative">
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {'>  just upload that file into any ai platform for a fully interactive deep dive into our company'}
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  just upload that file into any ai platform for a fully interactive deep dive into our company '}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
                 showBrackets={false}
@@ -100,6 +164,9 @@ export default function FaqDownloadPage() {
           </div>
         </section>
 
+        {/* "download instructions" — right-edge overhang for rhythm
+            after the centered download paper-app + left-anchored
+            terminal. */}
         <section className="pt-6 pb-10 md:pt-10 md:pb-14">
           <div>
             <SectionTile
@@ -110,6 +177,7 @@ export default function FaqDownloadPage() {
               href="/README.txt"
               download
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
@@ -142,25 +210,20 @@ export default function FaqDownloadPage() {
           </PaperApp>
         </section>
 
-        {/* Terminal seam after the "Think this is weird?" paper-app —
-            offers the human-talk fallback before the CTA below. Same
-            invisible-mirror height-reservation pattern as the terminal
-            above. */}
-        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
-          <div className="relative">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10 dev-portrait-seam">
+          <div className="grid">
             <div
               aria-hidden
-              className="font-mono invisible"
-              style={{
-                fontSize: '22px',
-                marginLeft: '-3ch',
-                paddingLeft: '3ch',
-                textIndent: '-3ch',
-              }}
+              className="col-start-1 row-start-1 font-mono flex items-baseline justify-start text-left invisible"
+              style={{ fontSize: 22 }}
             >
-              {'>  prefer to just talk to a HUMAN? no problem. the button below will help you set up a free demo call'}
+              <span>
+                <span className="select-none">&gt;</span>
+                {'  prefer to just talk to a HUMAN? no problem. the button below will help you set up a free demo call '}
+                <span className="inline-block">_</span>
+              </span>
             </div>
-            <div className="absolute inset-0">
+            <div className="col-start-1 row-start-1">
               <TerminalLine
                 hangingPrompt
                 showBrackets={false}
@@ -176,10 +239,6 @@ export default function FaqDownloadPage() {
           </div>
         </section>
 
-        {/* Still-HUMAN portrait — same asset / sizing / ring overlay
-            as / and /contact. Sits between the human-talk terminal
-            seam and the "talk to ALEX" CTA below, giving a face to
-            the offer. */}
         <section className="flex justify-center -mt-4 md:-mt-2">
           <div className="relative aspect-square w-full max-w-[360px]">
             <Image
@@ -203,6 +262,8 @@ export default function FaqDownloadPage() {
           </div>
         </section>
 
+        {/* Closing CTA — right-edge overhang as the final emphatic
+            beat. Mirrors /dev/home-page's closing tile pattern. */}
         <section className="pt-8 pb-16 md:pt-12 md:pb-20">
           <div>
             <SectionTile
@@ -212,13 +273,14 @@ export default function FaqDownloadPage() {
               title={<>talk to <span className="normal-case text-orange">ALEX</span></>}
               href="/contact"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
 
       </PageFrame>
       <Footer />
-    </>
+    </div>
   )
 }
 
