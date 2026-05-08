@@ -737,6 +737,15 @@
 /* ============================================================
    /dev/faq — desktop-spec port of canonical /faq
    ============================================================ */
+
+/* PRICING SPLIT — desktop-only second paper-app. Hidden everywhere
+   by default so mobile + tablet (<1200) render the canonical single
+   paper-app exactly as before. At ≥1200 the .desktop-experiment.dev-
+   faq scope toggles it on (see rules below). */
+.dev-pricing-split-only {
+  display: none;
+}
+
 @media (min-width: 768px) {
   /* WIDE PAPER-APP CAPS — pricing + FaqChat both render
      `<PaperApp width="wide">` (= `.col-span-3` inner) wrapped in their
@@ -750,16 +759,17 @@
     margin-right: auto;
   }
 
-  /* PRICING POST-IT VERTICAL ANCHOR — at desktop, the paper-app caps
-     to 304 wide and content reflows taller (~720). The mobile-tuned
-     `top: 520px` (anchorTop prop) lands the post-it inside the paper-
-     app's lower-third — close to the BR corner but not overhanging.
-     Override `top` to push the post-it's bottom past the paper-app's
-     BR corner so it reads as a sticky note ATTACHED to the corner
-     (mobile design intent). Calibrated against the measured paper-app
-     height post-cap. */
+  /* PRICING POST-IT VERTICAL ANCHOR — at desktop the pricing splits
+     into two paper-apps (table moves to the .dev-pricing-split-only
+     paper-app), so paper-app 1 holds heading + subhead + "Buy more"
+     only and ends up ~509 tall. Override `top` so the post-it
+     attaches to paper-app 1's BR corner with ~78px overhang past the
+     bottom edge — sticky-note feel. Calibrated: 509 (paper-app 1
+     height) + 78 (overhang target) - 197 (post-it scaled height) =
+     390. Mobile-tuned `top: 520` (anchorTop prop) doesn't apply
+     because mobile has the combined paper-app, not split. */
   .desktop-experiment.dev-faq section.dev-pricing > .relative > [data-postit-overhang="br"] {
-    top: 600px !important;
+    top: 390px !important;
   }
 
   /* PRICING POST-IT OVERHANG ABSORPTION — the post-it (192 high
@@ -783,6 +793,34 @@
      same neutralizer). */
   .desktop-experiment.dev-faq .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
     margin-bottom: 0 !important;
+  }
+
+  /* PRICING SPLIT (desktop tier) — show the second paper-app and
+     hide the table inside paper-app 1. Net result: paper-app 1 holds
+     heading + subhead + "Buy more. Pay less. Simple."; paper-app 2
+     holds the pricing table. Two-beat rhythm: centered explanation
+     above, left-overhanging table below. */
+  .desktop-experiment.dev-faq .dev-pricing-split-only {
+    display: block;
+  }
+  .desktop-experiment.dev-faq .dev-pricing-table-mobile {
+    display: none;
+  }
+
+  /* PAPER-APP 2 LEFT-OVERHANG — mirrors the homepage hero paper-app's
+     right-overhang pattern (`.mt-5 > .relative` rule) but flipped:
+     left-aligned, left edge overhangs the left gutter by
+     `--gutter-extension` so it lands on the gutter inlay mark
+     (column-left − 39). Right edge sits at column-left − 39 + 304 =
+     265 (well inside the column). z-index lifts above the column's
+     ::before rule pseudo so the paper-app paints over the rule line
+     where they overlap. The `!important` on margin overrides the
+     centered cap from `.dev-faq .col-span-3` rule above. */
+  .desktop-experiment.dev-faq section.dev-pricing-split-only > .col-span-3 {
+    margin-left: calc(var(--gutter-extension) * -1) !important;
+    margin-right: auto !important;
+    position: relative;
+    z-index: 1;
   }
 }
 

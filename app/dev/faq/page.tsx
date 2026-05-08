@@ -169,7 +169,16 @@ export default function DevFaqPage() {
                   </span>
                   .
                 </p>
-                <table className="mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
+                {/* MOBILE + TABLET: pricing table renders inside the
+                    main paper-app. At desktop tier (≥1200) this is
+                    hidden via `.dev-pricing-table-mobile { display:
+                    none }` and the table is duplicated into the
+                    `.dev-pricing-split-only` section below — so on
+                    desktop the pricing splits into TWO paper-apps:
+                    centered "complex topic / simple pricing"
+                    explanation + left-overhanging table. Mobile and
+                    tablet (<1200) stay byte-identical to canonical. */}
+                <table className="dev-pricing-table-mobile mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
                   <thead>
                     <tr>
                       <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
@@ -214,6 +223,43 @@ export default function DevFaqPage() {
               }
             />
           </div>
+        </section>
+
+        {/* DESKTOP-ONLY: pricing table extracted into its own paper-app
+            and left-overhung into the left gutter. Hidden by default;
+            only renders at ≥1200px inside the `.desktop-experiment.dev-
+            faq` scope (see globals.css `.dev-pricing-split-only` rule).
+            Mirrors the homepage hero paper-app's right-overhang pattern
+            but flipped to the left side, giving the pricing block a
+            two-beat rhythm at desktop: centered explanation + left-
+            overhanging table. */}
+        <section className="dev-pricing-split-only">
+          <PaperApp width="wide">
+            <div className="py-2">
+              <table className="mx-auto border-collapse border-2 border-ink font-display text-[16px] text-ink">
+                <thead>
+                  <tr>
+                    <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
+                    <th className="border-2 border-ink px-4 py-2 font-bold text-left">Price (each)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">4</td>
+                    <td className="border-2 border-ink px-4 py-2">5000 Kč</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">8</td>
+                    <td className="border-2 border-ink px-4 py-2">4500 Kč</td>
+                  </tr>
+                  <tr>
+                    <td className="border-2 border-ink px-4 py-2">16+</td>
+                    <td className="border-2 border-ink px-4 py-2">4000 Kč</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </PaperApp>
         </section>
 
         {/* "book a call" — right-edge overhang for compositional rhythm
