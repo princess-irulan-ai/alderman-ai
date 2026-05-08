@@ -435,8 +435,8 @@
        At 1500vw: left ≈ 633.3, right ≈ 316.7 (column at x=633–1183)
      Override the existing 768-tier `mx-auto` (auto/auto). */
   .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
-    margin-left: calc((100vw - 550px) * 2 / 3);
-    margin-right: calc((100vw - 550px) / 3);
+    margin-left: calc((100% - 550px) * 2 / 3);
+    margin-right: calc((100% - 550px) / 3);
   }
 
   /* HEADER SPACER — 64 so the H1 lands ~80px from viewport top
@@ -476,8 +476,8 @@
   .desktop-experiment footer {
     border-top: none;
     max-width: 550px;
-    margin-left: calc((100vw - 550px) * 2 / 3);
-    margin-right: calc((100vw - 550px) / 3);
+    margin-left: calc((100% - 550px) * 2 / 3);
+    margin-right: calc((100% - 550px) / 3);
     background-color: #1E1F1A; /* ide-2 */
     position: relative;
   }
@@ -509,7 +509,11 @@
   .dev-side-nav {
     position: fixed;
     top: 30px;
-    left: calc((100vw - 550px) / 3 - 150px);
+    /* Subtract --scrollbar-width (set by inline script in layout.tsx)
+       so the side-nav centers in the left gutter using body-width math
+       rather than 100vw which includes the scrollbar. Fallback 0px
+       keeps it correct on overlay-scrollbar platforms (Mac, mobile). */
+    left: calc((100vw - var(--scrollbar-width, 0px) - 550px) / 3 - 150px);
     width: 300px;
     z-index: 50;
     display: flex;
