@@ -87,9 +87,9 @@ export default function DevFaqDownloadPage() {
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             learn about our
             <br />
-            <span className="text-orange">COMPANY</span> via the
+            <span className="text-orange">COMPANY</span> via our
             <br />
-            interactive <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
+            <span className="text-green">ai</span> FAQ<span className="text-purple">.</span>
           </h1>
         </section>
 

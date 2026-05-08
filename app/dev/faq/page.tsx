@@ -9,20 +9,14 @@ import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
 import { TerminalLine } from '@/components/special/TerminalLine'
 
-// Copied from /dev/home-page. Kept inline rather than centralized
-// so each dev page is self-contained — see desktop-spec.md.
+// Side-nav menu items — same destinations as the FloatingNav menu, but
+// always visible (no toggle) and styled for the side-nav narrower
+// container. /faq filtered out — current route excluded from its own
+// nav menu (matches canonical / pattern).
 const SIDE_NAV_ITEMS = [
   {
     href: '/',
     label: 'Homepage',
-    gradient:
-      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
-    hover:
-      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
-  },
-  {
-    href: '/faq',
-    label: 'Pricing / FAQ',
     gradient:
       'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
     hover:
@@ -152,7 +146,7 @@ export default function DevFaqPage() {
           </h1>
         </section>
 
-        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
+        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px] dev-pricing">
           <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
@@ -265,9 +259,12 @@ export default function DevFaqPage() {
                   { text: '"', color: 'text-purple' },
                   { text: 'chat box' },
                   { text: '"', color: 'text-purple' },
-                  { text: ', faq doc for ' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' faq doc for ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ' platforms, or just ask a ' },
+                  { text: ' platforms' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' or just ask a ' },
                   { text: 'HUMAN', color: 'text-orange' },
                 ]}
               />
@@ -321,7 +318,9 @@ export default function DevFaqPage() {
                 segments={[
                   { text: 'if ' },
                   { text: 'YOU', color: 'text-orange' },
-                  { text: ' want more in depth answers, upload the following file into your ' },
+                  { text: ' want more in depth answers' },
+                  { text: ',', color: 'text-purple' },
+                  { text: ' upload the following file into your ' },
                   { text: 'ai', color: 'text-green' },
                   { text: ' platform of choice' },
                 ]}
@@ -330,6 +329,8 @@ export default function DevFaqPage() {
           </div>
         </section>
 
+        {/* "download FAQ file" — right-edge overhang for rhythm break
+            after the centered FaqChat + left-anchored terminal seam. */}
         <section className="pt-10 pb-10 md:pt-20 md:pb-16">
           <div>
             <SectionTile
@@ -339,6 +340,7 @@ export default function DevFaqPage() {
               title="download FAQ file"
               href="/faq-download"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
@@ -385,9 +387,12 @@ export default function DevFaqPage() {
                 align="left"
                 persistCursor
                 segments={[
-                  { text: "don't want to talk to " },
+                  { text: 'don' },
+                  { text: "'", color: 'text-purple' },
+                  { text: 't want to talk to ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: '? i totally get it' },
+                  { text: '?', color: 'text-purple' },
+                  { text: ' i totally get it' },
                 ]}
               />
             </div>

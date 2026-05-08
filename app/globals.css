@@ -735,6 +735,58 @@
 }
 
 /* ============================================================
+   /dev/faq — desktop-spec port of canonical /faq
+   ============================================================ */
+@media (min-width: 768px) {
+  /* WIDE PAPER-APP CAPS — pricing + FaqChat both render
+     `<PaperApp width="wide">` (= `.col-span-3` inner) wrapped in their
+     own `<div class="relative">` (pricing inline, FaqChat internally).
+     The canonical `section > .col-span-3` cap (line 372) only catches
+     direct-section-child paper-apps, so these grandchild ones land at
+     full 550 column width. Cap them to 304 centered to match canon. */
+  .desktop-experiment.dev-faq .col-span-3 {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* PRICING POST-IT VERTICAL ANCHOR — at desktop, the paper-app caps
+     to 304 wide and content reflows taller (~720). The mobile-tuned
+     `top: 520px` (anchorTop prop) lands the post-it inside the paper-
+     app's lower-third — close to the BR corner but not overhanging.
+     Override `top` to push the post-it's bottom past the paper-app's
+     BR corner so it reads as a sticky note ATTACHED to the corner
+     (mobile design intent). Calibrated against the measured paper-app
+     height post-cap. */
+  .desktop-experiment.dev-faq section.dev-pricing > .relative > [data-postit-overhang="br"] {
+    top: 600px !important;
+  }
+
+  /* PRICING POST-IT OVERHANG ABSORPTION — the post-it (192 high
+     scaled) anchored at top:600 has bottom at ~792, while the paper-
+     app box ends at ~720, leaving ~72px of post-it overhanging below.
+     Add `margin-bottom: 80px` to absorb the overhang into the inter-
+     section gap, so visible gap from post-it bottom to next section
+     ≈ 80px. Mirrors the homepage's `#brochure { margin-bottom: 88px }`
+     pattern. */
+  .desktop-experiment.dev-faq section.dev-pricing {
+    margin-bottom: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  /* NEUTRALIZE HOMEPAGE-SPECIFIC `nth-child(8)` HACK — on this page
+     section idx 8 is the "download FAQ file" tile, not a terminal-with-
+     ghost-overshoot. The homepage rule `> div > section:nth-child(8) {
+     margin-bottom: -45 }` (line 678) fires here unintentionally,
+     creating a 45-tighter gap. Override to 0 (mirrors /dev/about's
+     same neutralizer). */
+  .desktop-experiment.dev-faq .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+    margin-bottom: 0 !important;
+  }
+}
+
+/* ============================================================
    /dev/faq-download — desktop-spec port of canonical /faq-download
    ============================================================ */
 @media (min-width: 1200px) {
