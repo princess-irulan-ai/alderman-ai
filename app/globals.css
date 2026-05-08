@@ -695,17 +695,31 @@
    /dev/about — desktop-spec port of canonical /about
    ============================================================ */
 @media (min-width: 768px) {
-  /* HEADSHOT PAPER-APP — caps at 304, right-overhangs the right gutter
-     by gutter-extension. Mirrors the homepage hero paper-app's
-     overhang (`.mt-5 > .relative`) but scoped here via the explicit
-     `dev-hero-paper` marker since /about's hero structure differs
-     from HeroSection's (no `.mt-5` ancestor). */
+  /* HEADSHOT PAPER-APP — caps at 304, centered. The earlier draft
+     right-overhung the right gutter (mirroring homepage hero) but
+     three right-overhangs in a row competed; the headshot is the
+     portrait beat and reads better centered, leaving the right-
+     overhangs for the two IDE CTAs (rows 4 + 6) where the punch
+     into the gutter functions as a "click here" cue. Per Alex
+     2026-05-08. */
   .desktop-experiment .dev-hero-paper {
     max-width: 304px;
     margin-left: auto;
-    margin-right: calc(var(--gutter-extension) * -1);
+    margin-right: auto;
     position: relative;
-    z-index: 1;
+  }
+
+  /* LEAD PAPER-APP H2 — drops the canonical 28→35px desktop bump
+     down to 30px so the hard-broken "8 years / teaching English /
+     to Czechs" lands on 3 lines. At 35px the middle segment
+     measures 245px and overflows the 240px paper-app body width,
+     wrapping to a 4th line. 30px lands all three segments
+     comfortably (max segment ≈210). Other H2s on the page are
+     untouched (closing PaperApp's H2 fits at 35 and reads as the
+     more emphatic of the two by virtue of staying at the bumped
+     size). Per Alex 2026-05-08. */
+  .desktop-experiment.dev-about .shadow-paper-glow .lead-h2 {
+    font-size: 30px;
   }
 }
 
@@ -746,6 +760,22 @@
   display: none;
 }
 
+/* Desktop-only post-it on paper-app 2 (table). Hidden everywhere by
+   default; only renders at ≥1200 inside .desktop-experiment.dev-faq
+   scope. Mobile + tablet keep the canonical post-it inside paper-
+   app 1. */
+.dev-pricing-postit-desktop {
+  display: none;
+}
+
+/* Desktop-only purple highlight bg on paper-app 1's "Simple" word.
+   Hidden everywhere by default; only renders at ≥1200. The text
+   "Simple" itself stays plain bold on mobile + tablet (canonical /faq
+   does not highlight it). */
+.dev-purple-bg-desktop {
+  display: none;
+}
+
 @media (min-width: 768px) {
   /* WIDE PAPER-APP CAPS — pricing + FaqChat both render
      `<PaperApp width="wide">` (= `.col-span-3` inner) wrapped in their
@@ -759,29 +789,12 @@
     margin-right: auto;
   }
 
-  /* PRICING POST-IT VERTICAL ANCHOR — at desktop the pricing splits
-     into two paper-apps. Paper-app 1 holds heading + subhead only
-     ("Buy more. Pay less. Simple." moves to paper-app 2 as its h2
-     title), so paper-app 1 ends up ~407 tall. Override `top` so the
-     post-it attaches to paper-app 1's BR corner with ~78px overhang
-     past the bottom edge — sticky-note feel. Calibrated: 407 (paper-
-     app 1 height) + 78 (overhang target) - 197 (post-it scaled
-     height) = 288. Mobile-tuned `top: 520` (anchorTop prop) doesn't
-     apply because mobile has the combined paper-app, not split. */
-  .desktop-experiment.dev-faq section.dev-pricing > .relative > [data-postit-overhang="br"] {
-    top: 288px !important;
-  }
-
-  /* PRICING POST-IT OVERHANG ABSORPTION — the post-it (192 high
-     scaled) anchored at top:600 has bottom at ~792, while the paper-
-     app box ends at ~720, leaving ~72px of post-it overhanging below.
-     Add `margin-bottom: 80px` to absorb the overhang into the inter-
-     section gap, so visible gap from post-it bottom to next section
-     ≈ 80px. Mirrors the homepage's `#brochure { margin-bottom: 88px }`
-     pattern. */
-  .desktop-experiment.dev-faq section.dev-pricing {
-    margin-bottom: 80px;
-  }
+  /* The mobile post-it inside paper-app 1's relative wrapper is
+     hidden at desktop (gated below at ≥1200) so no positioning rule
+     is needed for it here — the canonical anchorTop=520 is mobile-
+     correct and the wrapper is `display: none` once the desktop tier
+     kicks in. The desktop post-it lives inside paper-app 2's relative
+     wrapper instead — see rules in the ≥1200 block. */
 }
 
 @media (min-width: 1200px) {
@@ -795,17 +808,25 @@
     margin-bottom: 0 !important;
   }
 
-  /* PRICING SPLIT (desktop tier) — show the second paper-app and
-     hide the table + "Buy more" punchline inside paper-app 1. Net
-     result: paper-app 1 holds heading + subhead only; paper-app 2
-     holds "Buy more. Pay less. Simple." (as h2 title) + the pricing
-     table. Two-beat rhythm: centered topic explanation above, left-
-     overhanging table-with-punchline below. */
+  /* PRICING SPLIT (desktop tier) — show paper-app 2, the desktop
+     post-it (anchored over paper-app 2's table), and the purple
+     highlight bg on paper-app 1's "Simple". Hide the inline table,
+     "Buy more" punchline, and mobile post-it inside paper-app 1.
+     Net result: paper-app 1 holds heading + subhead (with "Simple"
+     highlighted purple); paper-app 2 holds "Buy more. Pay less.
+     Simple." (h2 title) + table + post-it. */
   .desktop-experiment.dev-faq .dev-pricing-split-only {
     display: block;
   }
+  .desktop-experiment.dev-faq .dev-pricing-postit-desktop {
+    display: block;
+  }
+  .desktop-experiment.dev-faq .dev-purple-bg-desktop {
+    display: block;
+  }
   .desktop-experiment.dev-faq .dev-pricing-table-mobile,
-  .desktop-experiment.dev-faq .dev-pricing-buy-mobile {
+  .desktop-experiment.dev-faq .dev-pricing-buy-mobile,
+  .desktop-experiment.dev-faq .dev-pricing-postit-mobile {
     display: none;
   }
 
@@ -817,12 +838,50 @@
      265 (well inside the column). z-index lifts above the column's
      ::before rule pseudo so the paper-app paints over the rule line
      where they overlap. The `!important` on margin overrides the
-     centered cap from `.dev-faq .col-span-3` rule above. */
-  .desktop-experiment.dev-faq section.dev-pricing-split-only > .col-span-3 {
+     centered cap from `.dev-faq .col-span-3` rule above. Selector
+     reaches through the new `<div class="relative">` wrapper that
+     hosts paper-app 2 + the desktop post-it. */
+  .desktop-experiment.dev-faq section.dev-pricing-split-only > .relative > .col-span-3 {
     margin-left: calc(var(--gutter-extension) * -1) !important;
     margin-right: auto !important;
     position: relative;
     z-index: 1;
+  }
+
+  /* DESKTOP POST-IT POSITIONING — anchored inside paper-app 2's
+     relative wrapper. Override the Postit component's default
+     `left: 50%` (from the `left-1/2` class) and `transform-origin:
+     top left` (from `origin-top-left`) so the post-it's RIGHT edge
+     anchors at the gutter inlay mark (column-right + 39) instead of
+     the parent's center. transform-origin top-right keeps the right
+     edge fixed across the scale(0.8) transform.
+       right: -39 → right edge at relative-wrapper-right + 39 =
+                    column-right + 39 (gutter inlay mark) per Alex
+       top: 289    → measured: table top in section coords = 205,
+                    table height = 169, center = 289. Post-it's top
+                    edge sits on the table's vertical center line
+                    per Alex.
+       left: auto  → kill the inherited `left: 50%`
+       transform-origin: top right → scale anchors at top-right corner
+                                     so right edge stays put */
+  .desktop-experiment.dev-faq .dev-pricing-postit-desktop {
+    left: auto !important;
+    right: calc(var(--gutter-extension) * -1) !important;
+    top: 289px !important;
+    transform-origin: top right !important;
+  }
+
+  /* PAPER-APP 2 POST-IT OVERHANG ABSORPTION — the post-it (197 high
+     scaled, top:289 in section coords) bottoms at section_top + 486
+     while paper-app 2 ends at section_top + 422, leaving 64px of
+     post-it overhanging past the section box. Without compensation
+     the visible gap from post-it bottom to next section top is just
+     80 - 64 = 16. Add `margin-bottom: 64px` so the inter-section
+     spacing becomes 80 (parent flex gap) + 64 (mb) - 64 (overhang)
+     = 80 visible. Mirrors the homepage `#brochure { margin-bottom:
+     88px }` pattern. */
+  .desktop-experiment.dev-faq section.dev-pricing-split-only {
+    margin-bottom: 64px;
   }
 }
 

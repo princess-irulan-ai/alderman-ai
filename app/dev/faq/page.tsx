@@ -153,7 +153,19 @@ export default function DevFaqPage() {
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Complex topic.
                   <br />
-                  Simple pricing.
+                  {/* Purple highlight on "Simple" — desktop only. The
+                      bg pseudo span is hidden at <1200 via
+                      `.dev-purple-bg-desktop { display: none }`, so
+                      mobile + tablet render plain bold "Simple
+                      pricing." identical to canonical /faq. */}
+                  <span className="relative inline-block">
+                    <span
+                      aria-hidden
+                      className="dev-purple-bg-desktop absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                    />
+                    <span className="relative text-ink">Simple</span>
+                  </span>{' '}
+                  pricing.
                 </h2>
                 <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                   Cost is the number of 50m teaching hours used across all of your groups per month.
@@ -210,7 +222,13 @@ export default function DevFaqPage() {
                 <div className="h-[30px]" aria-hidden />
               </div>
             </PaperApp>
+            {/* MOBILE + TABLET POST-IT — sits inside paper-app 1's
+                relative wrapper, anchored at canonical anchorTop=520.
+                Hidden at desktop (≥1200) where a separate post-it
+                renders inside paper-app 2 instead. Mobile + tablet
+                byte-identical to canonical /faq. */}
             <Postit
+              className="dev-pricing-postit-mobile"
               overhang="br"
               anchorTop={520}
               rotation={-5}
@@ -241,7 +259,8 @@ export default function DevFaqPage() {
             two-beat rhythm at desktop: centered explanation + left-
             overhanging table. */}
         <section className="dev-pricing-split-only">
-          <PaperApp width="wide">
+          <div className="relative">
+            <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Buy more. Pay less.{' '}
@@ -278,6 +297,33 @@ export default function DevFaqPage() {
               </table>
             </div>
           </PaperApp>
+            {/* DESKTOP POST-IT — anchored to paper-app 2's relative
+                wrapper. CSS in globals.css positions it: top edge on
+                the table's vertical center, right edge at the right
+                gutter inlay (column-right + 39). Hidden at <1200; the
+                mobile+tablet post-it inside paper-app 1 renders
+                instead. */}
+            <Postit
+              className="dev-pricing-postit-desktop"
+              overhang="br"
+              anchorTop={0}
+              rotation={-5}
+              heading={
+                <span
+                  className="block font-display font-normal"
+                  style={{ width: '200px', fontSize: '32px', lineHeight: 1.1 }}
+                >
+                  <span className="whitespace-nowrap">2 groups,</span>
+                  <br />
+                  <span className="whitespace-nowrap">once a week</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 8 hrs / mo</span>
+                  <br />
+                  <span className="whitespace-nowrap">= 36.000 Kč</span>
+                </span>
+              }
+            />
+          </div>
         </section>
 
         {/* "book a call" — right-edge overhang for compositional rhythm
