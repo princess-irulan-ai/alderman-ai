@@ -217,8 +217,25 @@ export default function DevAboutPage() {
         <section className="pt-8 pb-8 md:pt-10 md:pb-10">
           <PaperApp width="wide">
             <div className="space-y-5 md:space-y-6 py-2">
-              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
-                8 years teaching English to Czechs
+              {/* H2 — desktop-only hard breaks for shape control +
+                  lead-h2 hook that drops the 28→35px desktop bump
+                  to 30px. At 35px the middle segment ("teaching
+                  English") measures 245px in the 240px-capped
+                  paper-app body and wraps to a 4th line; 30px lands
+                  all three at <240px so the explicit <br/>s
+                  produce exactly 3 lines.
+                  Mobile keeps canonical's natural-wrap rendering —
+                  the <br/>s carry `hidden md:inline` so they
+                  `display: none` below 768 and the H2 reads as one
+                  flat string ("8 years teaching English to Czechs")
+                  that wraps to 2 lines naturally inside the mobile
+                  paper-app, matching canonical /about. */}
+              <h2 className="lead-h2 font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
+                8 years
+                <br className="hidden md:inline" />
+                {' '}teaching English
+                <br className="hidden md:inline" />
+                {' '}to Czechs
               </h2>
               <p className="font-display text-[18px] font-normal leading-snug text-ink-soft max-w-[780px] mx-auto text-center">
                 Modern ai is literally built on a principle called natural
