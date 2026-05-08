@@ -915,25 +915,25 @@
   }
 
   /* DOWNLOAD POST-IT — at desktop, the mobile BR post-it is hidden
-     and the desktop BL post-it takes over, positioned so its
-     unrotated TOP-LEFT corner lands on the CTA's center point per
-     Alex 2026-05-09. With paper-app right-overhung, parent-right =
-     column-right + 39, and CTA centers horizontally inside the 304
-     paper-app body.
-       right: -40 → wrapper visual TR at parent_right + 40, so visual
-                    TL (TR − 192 after scale 0.8) = parent_horizontal
-                    center ≈ CTA center X.
-       top: 370   → CTA vertical center (relative to parent top, with
-                    the canonical paper-app body content stack). The
-                    !important overrides Postit's inline top:0 from
-                    the anchorTop={0} JSX prop. */
+     and the desktop BL post-it takes over. Mirrors /contact's
+     "post-it below CTA + section pb absorbs overhang" pattern, but
+     flipped to the left gutter (this page's paper-app is right-
+     overhung, so the post-it sits opposite — same left/right symmetry
+     as the credentials section).
+       right: 428 → leftmost-extreme (rotated TL with +5°) lands on
+                    column-left − var(--gutter-extension) (left gutter
+                    inlay).
+       top: 436   → post-it top sits 21px below the CTA bottom in
+                    parent coords, matching mobile's CTA-to-post-it
+                    gap. !important overrides Postit's inline top:0
+                    from the anchorTop={0} JSX prop. */
   .desktop-experiment.dev-faq-download .dev-download-postit-mobile {
     display: none;
   }
   .desktop-experiment.dev-faq-download .dev-download-postit-desktop {
     display: block;
-    right: -40px;
-    top: 370px !important;
+    right: 428px;
+    top: 436px !important;
   }
 }
 
@@ -978,6 +978,42 @@
     margin-right: auto;
     position: relative;
     z-index: 1;
+  }
+
+  /* INTRO PAPER-APP TRAILING SPACER — the canonical mobile JSX has a
+     55px trailing spacer reserving room for a post-it that overhung
+     the bottom-right of the full-width paper-app. Now that the paper-
+     app is capped at 304 and left-overhung, the post-it floats in the
+     right column space (see rule below) and the trailing spacer reads
+     as dead whitespace. Hide at desktop only — mobile keeps the
+     spacer for its canonical post-it overhang behavior. */
+  .desktop-experiment.dev-contact #contact-intro .h-\[55px\] {
+    display: none;
+  }
+
+  /* INTRO POST-IT — anchor so the inner shape's top-left corner sits
+     at the vertical center of subtitle line 2, with the visible right
+     edge landing on the right gutter inlay (column-right + 39).
+       - Vertical: subtitle line 2 spans y=217-245 (from .relative top)
+         → center y=231. Inner top sits 8px above wrapper top, so
+         wrapper-top = 231 + 8 = 239.
+       - Horizontal: the wrapper has CSS width 240 plus a scale(0.8)
+         transform from top-left origin, so the visual width is 192
+         and the visual right edge sits at (CSS left + 192). The inner
+         shape extends 8px past that visual right. Want inner visual
+         right = relRight + 39 (gutter inlay), so:
+           wrapper visual right = relRight + 31
+           wrapper CSS left     = relRight + 31 − 192
+                                = (550 − 192 + 31)
+                                = 389 from rel-left
+         Anchor by `left: 389; right: auto` so the scale's top-left
+         origin sits exactly where we want the visual left edge.
+     !important to beat the inline `top: 390` from anchorTop and the
+     site-wide BR post-it `right: 370` rule. */
+  .desktop-experiment.dev-contact #contact-intro [data-postit-overhang="br"] {
+    top: 239px !important;
+    left: 389px !important;
+    right: auto !important;
   }
 }
 

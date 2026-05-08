@@ -85,11 +85,11 @@ export default function ContactPage() {
         <div className="h-[120px]" aria-hidden />
         <section className="pt-4 pb-12 md:pt-8 md:pb-16">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            in the age of <span className="text-green">ai</span> it can be nice to talk to a <span className="text-orange">HUMAN</span><span className="text-purple">.</span>
+            in the <span className="text-green">ai</span> age<br />it&apos;s nice to talk<br />to a <span className="text-orange">HUMAN</span><span className="text-purple">.</span>
           </h1>
         </section>
 
-        <section className="pt-8 pb-[138px] md:pt-10 md:pb-[170px]">
+        <section id="contact-intro" className="pt-8 pb-[138px] md:pt-10 md:pb-[170px]">
           <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
