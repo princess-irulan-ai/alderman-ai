@@ -733,3 +733,30 @@
     margin-bottom: 0 !important;
   }
 }
+
+/* ============================================================
+   /dev/faq-download — desktop-spec port of canonical /faq-download
+   ============================================================ */
+@media (min-width: 1200px) {
+  /* TERMINAL-BEFORE-PORTRAIT EMPTY-LINE COMPENSATION — the seam terminal
+     above the portrait wraps to 5 lines but the live-typed block fills
+     fewer lines (cursor settles before the ghost's full reserved
+     height), leaving a ~45px empty band at the bottom of the section
+     box. Without compensation the visible gap from the live "demo
+     call _" to the portrait's visible circle is ~125px instead of the
+     canonical 80px. Mirrors the homepage `nth-child(8)` rule but
+     scoped via the dev-portrait-seam marker so the section index
+     doesn't have to be hardcoded. */
+  .desktop-experiment.dev-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.dev-portrait-seam {
+    margin-bottom: -45px;
+  }
+
+  /* PORTRAIT BOTTOM — restore the canonical -51 mb that the homepage
+     `nth-child(8)` rule overrides (portrait happens to land at idx 8
+     on this page). Without this override the gap below the portrait
+     ends up 6px tighter than the 80px target. Specificity beats both
+     the .justify-center rule (-51) and the nth-child(8) rule (-45). */
+  .desktop-experiment.dev-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
+    margin-bottom: -51px !important;
+  }
+}

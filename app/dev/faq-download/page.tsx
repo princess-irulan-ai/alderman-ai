@@ -210,7 +210,7 @@ export default function DevFaqDownloadPage() {
           </PaperApp>
         </section>
 
-        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10 dev-portrait-seam">
           <div className="grid">
             <div
               aria-hidden
