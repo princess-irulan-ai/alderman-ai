@@ -690,3 +690,46 @@
     display: flex;
   }
 }
+
+/* ============================================================
+   /dev/about — desktop-spec port of canonical /about
+   ============================================================ */
+@media (min-width: 768px) {
+  /* HEADSHOT PAPER-APP — caps at 304, right-overhangs the right gutter
+     by gutter-extension. Mirrors the homepage hero paper-app's
+     overhang (`.mt-5 > .relative`) but scoped here via the explicit
+     `dev-hero-paper` marker since /about's hero structure differs
+     from HeroSection's (no `.mt-5` ancestor). */
+  .desktop-experiment .dev-hero-paper {
+    max-width: 304px;
+    margin-left: auto;
+    margin-right: calc(var(--gutter-extension) * -1);
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@media (min-width: 1200px) {
+  /* HERO SECTION INTERNAL GAP — /about's hero section uses `gap-8`
+     (canonical mobile) for the H1 → headshot internal spacing. The
+     homepage's gap-6 → 80px override doesn't fire here, so add a
+     gap-8 → 80px rule scoped to /dev/about. Combined with the
+     existing `h1 { margin-bottom: 0 !important }` override, this
+     gives a clean 80px gap from H1-bottom to headshot-top, matching
+     the 80px rule. */
+  .desktop-experiment.dev-about section.flex.flex-col.gap-8 {
+    gap: 80px;
+  }
+  .desktop-experiment.dev-about section.flex.flex-col.gap-8 > * {
+    margin-top: 0 !important;
+  }
+
+  /* NEUTRALIZE HOMEPAGE-SPECIFIC `nth-child(8)` HACK — the rule at
+     `> div > section:nth-child(8) { margin-bottom: -45px }` is a
+     homepage-specific compensation for the second terminal seam's
+     5-line ghost. /about's section ordering is different and the rule
+     would fire on an unrelated section. Override to 0. */
+  .desktop-experiment.dev-about .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+    margin-bottom: 0 !important;
+  }
+}
