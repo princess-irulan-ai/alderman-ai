@@ -36,6 +36,10 @@ import type { CSSProperties, ReactNode } from 'react'
  * `accentDotOrder`, `paperStyle`) remain available for future per-instance
  * overrides but are no longer sandbox-scoped.
  *
+ * Copy convention: H2 titles inside a PaperApp render in Title Case
+ * (capitalize nouns/verbs/adjectives/adverbs; lowercase short connectives:
+ * to, for, and, a, the, in, of). Body prose stays sentence case.
+ *
  * Spec: os-model-concept.md "The three primitives (visual specification)",
  *       "Ambient glow", "Chrome (visual spec)".
  */
