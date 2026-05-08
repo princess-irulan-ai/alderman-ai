@@ -58,13 +58,15 @@ export default function FaqDownloadPage() {
   const postitHeading = (
     <span
       className="block font-display font-normal"
-      style={{ width: '200px', fontSize: '32px', lineHeight: 1.05 }}
+      style={{ width: '200px', fontSize: '28px', lineHeight: 1.05 }}
     >
       <span className="whitespace-nowrap">Mluvíš česky?</span>
       <br />
-      <span className="font-bold whitespace-nowrap">Stačí požádat ai</span>
+      <span className="font-bold whitespace-nowrap">Stačí požádat</span>
       <br />
-      <span className="whitespace-nowrap">o přepnutí jazyka</span>
+      <span className="whitespace-nowrap">ai o přepnutí</span>
+      <br />
+      <span className="whitespace-nowrap">jazyka</span>
     </span>
   )
 
@@ -102,15 +104,15 @@ export default function FaqDownloadPage() {
 
         <section className="pt-4 pb-10 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            download <span className="text-green">ai</span> FAQ
+            download <span className="text-green">ai</span> faq
             <br />
             for interactive
             <br />
-            q<span className="text-purple">&amp;</span>a about <span className="text-orange">US</span><span className="text-purple">.</span>
+            q<span className="text-purple">&amp;</span>a about <span className="text-orange">US</span><span className="text-paper">.</span>
           </h1>
         </section>
 
-        <section className="pt-4 pb-[91px] md:pt-6 md:pb-16">
+        <section className="pt-4 pb-[138px] md:pt-6 md:mb-[10px]">
           <div className="relative dev-download-app">
             <PaperApp width="narrow">
               <div className="space-y-4 md:space-y-5 pt-2 pb-[38px] md:py-2">
@@ -132,7 +134,7 @@ export default function FaqDownloadPage() {
                   variant="app"
                   accent="orange"
                   eyebrow="here's the file"
-                  title="download faq.md"
+                  title="Download FAQ.md"
                   href="/alderman-ai-faq.md"
                   download
                   markerStyle="contained"
@@ -143,7 +145,7 @@ export default function FaqDownloadPage() {
             <Postit
               className="dev-download-postit-mobile"
               overhang="br"
-              anchorTop={380}
+              anchorTop={390}
               rotation={-5}
               heading={postitHeading}
             />
@@ -166,7 +168,7 @@ export default function FaqDownloadPage() {
             >
               <span>
                 <span className="select-none">&gt;</span>
-                {'  just upload that file into any ai platform for a fully interactive deep dive into our company '}
+                {'  just upload that file into any ai platform for an interactive deep dive into our company '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -179,7 +181,7 @@ export default function FaqDownloadPage() {
                 segments={[
                   { text: 'just upload that file into any ' },
                   { text: 'ai', color: 'text-green' },
-                  { text: ' platform for a fully interactive deep dive into our company' },
+                  { text: ' platform for an interactive deep dive into our company' },
                 ]}
               />
             </div>
