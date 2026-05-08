@@ -660,9 +660,12 @@
      element's box bottom to the eyebrow top is 80 − 19 = 61.
      Pushing IDE-tile-bearing sections down 19 makes the eyebrow
      land at previous_box_bottom + 80, restoring uniform 80 visible
-     gaps. Targets sections whose direct child is an IDE tile (link
-     with the canonical .rounded-tile.border-ide-rule class combo). */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:has(> .rounded-tile.border-ide-rule) {
+     gaps. Matches sections containing an IDE tile at any depth (homepage
+     and /about have the tile as a direct child; /faq + /faq-download
+     wrap it in a `<div>`). App-variant tiles use border-orange not
+     border-ide-rule so the selector ignores them — paper-app sections
+     containing nested App-variant CTAs aren't pushed. */
+  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:has(.rounded-tile.border-ide-rule) {
     margin-top: 19px !important;
   }
   /* SECOND TERMINAL SEAM HEIGHT COMPENSATION — the ghost div for the
