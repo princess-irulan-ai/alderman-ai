@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { FloatingNav } from '@/components/chrome/FloatingNav'
 import { Footer } from '@/components/chrome/Footer'
@@ -6,17 +7,85 @@ import { PageFrame } from '@/components/layout/PageFrame'
 import { PaperApp } from '@/components/paper/PaperApp'
 import { Postit } from '@/components/special/Postit'
 import { SectionTile } from '@/components/special/SectionTile'
-import { TerminalLine } from '@/components/special/TerminalLine'
+
+/**
+ * /contact — canonical, promoted from /dev/contact.
+ *
+ * Mobile JSX matches the prior canonical /contact; differences are
+ * desktop-only and gated by `.desktop-experiment` + media queries:
+ *
+ *   1. `desktop-experiment dev-contact` outer marker (the dev-* class
+ *      naming is shared with the other promoted pages and will rename
+ *      site-wide in the marker-class sweep).
+ *   2. Side-nav <aside class="dev-side-nav"> block — replaces FloatingNav
+ *      at >=1200. /contact filtered out of SIDE_NAV_ITEMS (current route).
+ *   3. H1 closing period in purple — cross-page brand tic per
+ *      desktop-spec.md.
+ *   4. Email IDE SectionTile gains `tile-right-edge` for right-gutter
+ *      overhang at desktop, matching /about's IDE CTA pattern.
+ */
+const SIDE_NAV_ITEMS = [
+  {
+    href: '/',
+    label: 'Homepage',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/faq',
+    label: 'Pricing / FAQ',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+  {
+    href: '/about',
+    label: 'About Me',
+    gradient:
+      'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+    hover:
+      'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+  },
+] as const
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="desktop-experiment dev-contact">
       <FloatingNav />
+      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
+        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+          <img
+            src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
+            alt=""
+            aria-hidden
+            className="dev-side-nav-logo block"
+          />
+        </Link>
+        <div className="dev-side-nav-menu">
+          <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
+            <nav className="flex flex-col gap-2 p-[10px]">
+              {SIDE_NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className={`block rounded-tile border-2 border-ink/15 ${item.hover} transition-[box-shadow,border-color] duration-200 px-3 py-2 font-display font-bold text-[20px] text-ink text-right`}
+                  style={{ background: item.gradient }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </PaperApp>
+        </div>
+      </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
         <section className="pt-4 pb-12 md:pt-8 md:pb-16">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
-            in the age of <span className="text-green">ai</span> it can be nice to talk to a <span className="text-orange">HUMAN</span>
+            in the age of <span className="text-green">ai</span> it can be nice to talk to a <span className="text-orange">HUMAN</span><span className="text-purple">.</span>
           </h1>
         </section>
 
@@ -98,6 +167,7 @@ export default function ContactPage() {
               title="or send me an email"
               href="mailto:alex@alderman.ai"
               markerStyle="contained"
+              className="tile-right-edge"
             />
           </div>
         </section>
@@ -172,7 +242,7 @@ export default function ContactPage() {
         </section>
       </PageFrame>
       <Footer />
-    </>
+    </div>
   )
 }
 
