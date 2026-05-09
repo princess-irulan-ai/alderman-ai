@@ -146,10 +146,10 @@ export default function FaqPage() {
           </h1>
         </section>
 
-        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
+        <section className="pt-8 pb-[148px] md:pt-10 md:pb-[180px]">
           <div className="relative">
             <PaperApp width="wide">
-              <div className="space-y-4 md:space-y-5 py-2">
+              <div className="space-y-5 md:space-y-5 py-2">
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Complex topic.
                   <br />
@@ -230,7 +230,7 @@ export default function FaqPage() {
             <Postit
               className="pricing-postit-mobile"
               overhang="br"
-              anchorTop={520}
+              anchorTop={516}
               rotation={-5}
               heading={
                 <span
@@ -380,7 +380,7 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="pt-4 pb-12 md:pt-6 md:pb-14">
+        <section className="pt-4 pb-8 md:pt-6 md:pb-14">
           <div>
             <FaqChat
               entries={FAQ_ENTRIES}
@@ -438,7 +438,7 @@ export default function FaqPage() {
 
         {/* "download FAQ file" — right-edge overhang for rhythm break
             after the centered FaqChat + left-anchored terminal seam. */}
-        <section className="pt-10 pb-10 md:pt-20 md:pb-16">
+        <section className="pt-8 pb-8 md:pt-20 md:pb-16">
           <div>
             <SectionTile
               variant="ide"
@@ -452,9 +452,9 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <section className="pt-4 pb-12 md:pt-6 md:pb-14">
+        <section className="pt-8 pb-8 md:pt-6 md:pb-14">
           <PaperApp width="wide">
-            <div className="space-y-4 md:space-y-5 py-2">
+            <div className="space-y-5 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Need some help with FAQ file?
               </h2>
@@ -508,7 +508,7 @@ export default function FaqPage() {
         {/* Closing CTA — right-edge overhang as the final emphatic
             beat. Mirrors /dev/home-page's closing "book a demo lesson"
             tile pattern. */}
-        <section className="pt-6 pb-16 md:pt-10 md:pb-20">
+        <section className="pt-8 pb-16 md:pt-10 md:pb-20">
           <div>
             <SectionTile
               variant="ide"

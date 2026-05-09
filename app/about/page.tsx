@@ -108,7 +108,7 @@ export default function AboutPage() {
             (right-overhang at desktop via hero-paper). */}
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
-            <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
+            <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-8 md:mb-10">
               alex alderman<span className="text-purple">:</span>
               <br />
               <span className="text-green">ai</span> expert and

@@ -102,7 +102,7 @@ export default function FaqDownloadPage() {
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
 
-        <section className="pt-4 pb-10 md:pt-8 md:pb-14">
+        <section className="pt-4 pb-8 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             download <span className="text-green">ai</span> faq
             <br />
@@ -112,10 +112,10 @@ export default function FaqDownloadPage() {
           </h1>
         </section>
 
-        <section className="pt-4 pb-[138px] md:pt-6 md:mb-[10px]">
+        <section className="pt-8 pb-[132px] md:pt-6 md:pb-[138px] md:mb-[10px]">
           <div className="relative download-app">
             <PaperApp width="narrow">
-              <div className="space-y-4 md:space-y-5 pt-2 pb-[38px] md:py-2">
+              <div className="space-y-5 md:space-y-5 pt-2 pb-[38px] md:py-2">
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Download our FAQ.md
                 </h2>
@@ -145,7 +145,7 @@ export default function FaqDownloadPage() {
             <Postit
               className="download-postit-mobile"
               overhang="br"
-              anchorTop={390}
+              anchorTop={366}
               rotation={-5}
               heading={postitHeading}
             />
@@ -190,7 +190,7 @@ export default function FaqDownloadPage() {
         {/* "download instructions" — right-edge overhang for rhythm
             after the centered download paper-app + left-anchored
             terminal. */}
-        <section className="pt-6 pb-10 md:pt-10 md:pb-14">
+        <section className="pt-8 pb-8 md:pt-10 md:pb-14">
           <div>
             <SectionTile
               variant="ide"
@@ -205,7 +205,7 @@ export default function FaqDownloadPage() {
           </div>
         </section>
 
-        <section className="pt-4 pb-12 md:pt-6 md:pb-16">
+        <section className="pt-8 pb-8 md:pt-6 md:pb-16">
           <PaperApp width="wide">
             <div className="space-y-5 md:space-y-6 py-2">
               <h2 className="font-display text-[26px] font-bold leading-[1.15] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
@@ -261,7 +261,7 @@ export default function FaqDownloadPage() {
           </div>
         </section>
 
-        <section className="flex justify-center -mt-4 md:-mt-2">
+        <section className="flex justify-center md:-mt-2">
           <div className="relative aspect-square w-full max-w-[360px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"
@@ -286,7 +286,7 @@ export default function FaqDownloadPage() {
 
         {/* Closing CTA — right-edge overhang as the final emphatic
             beat. Mirrors /dev/home-page's closing tile pattern. */}
-        <section className="pt-8 pb-16 md:pt-12 md:pb-20">
+        <section className="pt-8 pb-16 md:pt-12 md:pb-20 -mt-2 md:mt-0">
           <div>
             <SectionTile
               variant="ide"

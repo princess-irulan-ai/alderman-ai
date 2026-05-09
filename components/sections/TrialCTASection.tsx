@@ -24,12 +24,12 @@ export function TrialCTASection() {
   return (
     <section
       id="brochure"
-      className="pt-12 pb-16 md:pt-16 md:pb-16 scroll-mt-24"
+      className="pt-8 pb-[130px] md:pt-16 md:pb-16 scroll-mt-24"
       aria-label="Credentials"
     >
       <div className="relative">
         <PaperApp width="wide">
-          <div className="space-y-4 md:space-y-5 pt-2 pb-[96px]">
+          <div className="space-y-5 md:space-y-5 pt-2 pb-[96px]">
             <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
               I&rsquo;ve Taught for
               <br />
@@ -79,7 +79,7 @@ export function TrialCTASection() {
         <Postit
           overhang="bl"
           anchorTop="100%"
-          anchorMarginTop={-92}
+          anchorMarginTop={-85}
           flipX
           rotation={5}
           heading={

@@ -450,7 +450,7 @@ function CyclingTriptych() {
 
 export function WhatYouGetSection() {
   return (
-    <section className="pt-10 pb-16 md:py-16">
+    <section className="pt-8 pb-8 md:py-16">
       <PaperApp width="wide">
         <div className="space-y-10 md:space-y-12">
           <div className="space-y-4 md:space-y-5">

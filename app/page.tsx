@@ -118,7 +118,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="pt-12 pb-8 md:pt-16 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-16 md:pb-10">
           <SectionTile
             variant="ide"
             accent="purple"
@@ -130,7 +130,7 @@ export default function HomePage() {
           />
         </section>
         <TrialCTASection />
-        <section className="flex justify-center mt-[36px] md:mt-8">
+        <section className="flex justify-center md:mt-8">
           <div className="relative aspect-square w-full max-w-[360px]">
             <Image
               src="/brand-assets/photography/still-human-circle-portrait.svg"
@@ -152,7 +152,7 @@ export default function HomePage() {
             />
           </div>
         </section>
-        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10 -mt-2 md:mt-0">
           <div className="grid">
             <div
               aria-hidden

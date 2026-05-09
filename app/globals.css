@@ -822,12 +822,19 @@
     margin-right: auto;
   }
 
-  /* The mobile post-it inside paper-app 1's relative wrapper is
-     hidden at desktop (gated below at ≥1200) so no positioning rule
-     is needed for it here — the canonical anchorTop=520 is mobile-
-     correct and the wrapper is `display: none` once the desktop tier
-     kicks in. The desktop post-it lives inside paper-app 2's relative
-     wrapper instead — see rules in the ≥1200 block. */
+  /* The mobile post-it inside paper-app 1's relative wrapper renders
+     at tablet tier (768-1199) and is hidden only at ≥1200 (desktop
+     tier — see the ≥1200 block below). The mobile-spacing-unification
+     pass (2026-05-09) retuned the JSX `anchorTop` from 520 → 516 so
+     mobile overhang past the paper-app body lands at +100px. At
+     tablet tier the post-it still renders, and the original
+     anchorTop=520 is the visual target there — restore via inline-
+     beating !important on the data-postit-overhang wrapper. At
+     ≥1200 the post-it is `display:none`, so this rule is harmless
+     there. */
+  .desktop-spec.route-faq .pricing-postit-mobile {
+    top: 520px !important;
+  }
 }
 
 @media (min-width: 1200px) {

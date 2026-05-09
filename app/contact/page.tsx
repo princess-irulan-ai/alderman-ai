@@ -83,16 +83,16 @@ export default function ContactPage() {
       </aside>
       <PageFrame>
         <div className="h-[120px]" aria-hidden />
-        <section className="pt-4 pb-12 md:pt-8 md:pb-16">
+        <section className="pt-4 pb-8 md:pt-8 md:pb-16">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             in the <span className="text-green">ai</span> age<br />it&apos;s nice to talk<br />to a <span className="text-orange">HUMAN</span><span className="text-purple">.</span>
           </h1>
         </section>
 
-        <section id="contact-intro" className="pt-8 pb-[138px] md:pt-10 md:pb-[170px]">
+        <section id="contact-intro" className="pt-8 pb-[148px] md:pt-10 md:pb-[170px]">
           <div className="relative">
             <PaperApp width="wide">
-              <div className="space-y-4 md:space-y-5 py-2">
+              <div className="space-y-5 md:space-y-5 py-2">
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                   Get in touch any way you&apos;d like
                 </h2>
@@ -120,7 +120,7 @@ export default function ContactPage() {
             </PaperApp>
             <Postit
               overhang="br"
-              anchorTop={390}
+              anchorTop={412}
               rotation={-5}
               heading={
                 <span
@@ -195,9 +195,9 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="pt-8 pb-8 md:pt-12 md:pb-10">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10 -mt-2 md:mt-0">
           <PaperApp width="wide">
-            <div className="space-y-4 md:space-y-5 py-2">
+            <div className="space-y-5 md:space-y-5 py-2">
               <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
                 Not ready to chat?
               </h2>
