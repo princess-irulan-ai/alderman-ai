@@ -87,8 +87,7 @@ export function HeroSection() {
           style={{ fontSize: '22px' }}
         >
           <span>
-            <span className="select-none">&gt;</span>
-            {'  ai fluency lessons help attract / retain top TALENT and also prepare for a new era of work '}
+            {'ai fluency lessons help attract / retain top TALENT and also prepare for a new era of work '}
             <span className="inline-block">_</span>
           </span>
         </div>
@@ -150,8 +149,7 @@ export function HeroSection() {
           style={{ fontSize: '22px' }}
         >
           <span>
-            <span className="select-none">&gt;</span>
-            {"  fluency helps your TEAMS navigate new tools while reducing their anxiety about being replaced "}
+            {"fluency helps your TEAMS navigate new tools while reducing their anxiety about being replaced "}
             <span className="inline-block">_</span>
           </span>
         </div>

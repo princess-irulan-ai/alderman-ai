@@ -97,8 +97,7 @@ export default function HomePage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  fluency lessons are hands on usage of ai with a HUMAN guiding the process '}
+                {'fluency lessons are hands on usage of ai with a HUMAN guiding the process '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -161,8 +160,7 @@ export default function HomePage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  take a HUMAN approach to ai adoption and make sure no one is left behind '}
+                {'take a HUMAN approach to ai adoption and make sure no one is left behind '}
                 <span className="inline-block">_</span>
               </span>
             </div>

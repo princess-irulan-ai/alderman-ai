@@ -167,8 +167,7 @@ export default function FaqDownloadPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  just upload that file into any ai platform for an interactive deep dive into our company '}
+                {'just upload that file into any ai platform for an interactive deep dive into our company '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -242,8 +241,7 @@ export default function FaqDownloadPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  prefer to just talk to a HUMAN? no problem. the button below will help you set up a free demo call '}
+                {'prefer to just talk to a HUMAN? no problem. the button below will help you set up a free demo call '}
                 <span className="inline-block">_</span>
               </span>
             </div>

@@ -350,8 +350,7 @@ export default function FaqPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  below are three ways to get answers: faq "chat box", faq doc for ai platforms, or just ask a HUMAN '}
+                {'below are three ways to get answers: faq "chat box", faq doc for ai platforms, or just ask a HUMAN '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -413,8 +412,7 @@ export default function FaqPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {'  if YOU want more in depth answers, upload the following file into your ai platform of choice '}
+                {'if YOU want more in depth answers, upload the following file into your ai platform of choice '}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -484,8 +482,7 @@ export default function FaqPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                <span className="select-none">&gt;</span>
-                {"  don't want to talk to ai? i totally get it "}
+                {"don't want to talk to ai? i totally get it "}
                 <span className="inline-block">_</span>
               </span>
             </div>
