@@ -71,18 +71,18 @@ export default function FaqDownloadPage() {
   )
 
   return (
-    <div className="desktop-experiment dev-faq-download">
+    <div className="desktop-spec route-faq-download">
       <FloatingNav />
-      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
-        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+      <aside aria-label="Site navigation (desktop)" className="side-nav">
+        <Link href="/" aria-label="alderman.ai" className="side-nav-logo-link">
           <img
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt=""
             aria-hidden
-            className="dev-side-nav-logo block"
+            className="side-nav-logo block"
           />
         </Link>
-        <div className="dev-side-nav-menu">
+        <div className="side-nav-menu">
           <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
             <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (
@@ -113,7 +113,7 @@ export default function FaqDownloadPage() {
         </section>
 
         <section className="pt-4 pb-[138px] md:pt-6 md:mb-[10px]">
-          <div className="relative dev-download-app">
+          <div className="relative download-app">
             <PaperApp width="narrow">
               <div className="space-y-4 md:space-y-5 pt-2 pb-[38px] md:py-2">
                 <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight max-w-[780px] mx-auto text-center">
@@ -143,14 +143,14 @@ export default function FaqDownloadPage() {
               </div>
             </PaperApp>
             <Postit
-              className="dev-download-postit-mobile"
+              className="download-postit-mobile"
               overhang="br"
               anchorTop={390}
               rotation={-5}
               heading={postitHeading}
             />
             <Postit
-              className="dev-download-postit-desktop"
+              className="download-postit-desktop"
               overhang="bl"
               anchorTop={0}
               rotation={5}
@@ -234,7 +234,7 @@ export default function FaqDownloadPage() {
           </PaperApp>
         </section>
 
-        <section className="pt-8 pb-8 md:pt-12 md:pb-10 dev-portrait-seam">
+        <section className="pt-8 pb-8 md:pt-12 md:pb-10 portrait-seam">
           <div className="grid">
             <div
               aria-hidden

@@ -14,16 +14,16 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  * Mobile JSX mirrors canonical /about (same imports, same prop-shapes,
  * identical mobile render). Differences from canonical, all desktop-only:
  *
- *   1. `desktop-experiment dev-about` outer marker so the .desktop-
+ *   1. `desktop-spec route-about` outer marker so the .desktop-
  *      experiment CSS scope kicks in at ≥768px.
- *   2. Side-nav <aside class="dev-side-nav"> block — replaces FloatingNav
+ *   2. Side-nav <aside class="side-nav"> block — replaces FloatingNav
  *      at ≥1200px (FloatingNav hidden via CSS at that tier).
  *   3. Terminal seams converted from the older `relative + absolute
  *      inset-0` ghost pattern to the `.grid + col-start-1 row-start-1`
  *      pattern — same visual at mobile, but `.grid` is the selector the
  *      gutter-glow rule hooks into.
  *   4. H1 ends with a purple period (homepage canon — every page H1).
- *   5. Headshot wrapper carries `dev-hero-paper` class — used by CSS to
+ *   5. Headshot wrapper carries `hero-paper` class — used by CSS to
  *      right-overhang the paper-app at ≥768 (mirrors homepage hero
  *      paper-app's right-gutter overhang).
  *   6. Both IDE CTAs carry `tile-right-edge` — right-overhang into the
@@ -73,18 +73,18 @@ const SIDE_NAV_ITEMS = [
 
 export default function AboutPage() {
   return (
-    <div className="desktop-experiment dev-about">
+    <div className="desktop-spec route-about">
       <FloatingNav />
-      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
-        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+      <aside aria-label="Site navigation (desktop)" className="side-nav">
+        <Link href="/" aria-label="alderman.ai" className="side-nav-logo-link">
           <img
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt=""
             aria-hidden
-            className="dev-side-nav-logo block"
+            className="side-nav-logo block"
           />
         </Link>
-        <div className="dev-side-nav-menu">
+        <div className="side-nav-menu">
           <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
             <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (
@@ -105,7 +105,7 @@ export default function AboutPage() {
         <div className="h-[120px]" aria-hidden />
 
         {/* HERO — H1 (3 lines, purple period) + headshot paper-app
-            (right-overhang at desktop via dev-hero-paper). */}
+            (right-overhang at desktop via hero-paper). */}
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-10">
@@ -118,10 +118,10 @@ export default function AboutPage() {
             </h1>
           </div>
 
-          {/* Headshot paper-app. `dev-hero-paper` is the desktop hook —
+          {/* Headshot paper-app. `hero-paper` is the desktop hook —
               CSS caps to 304 + right-overhangs the right gutter by
               gutter-extension at ≥768px. Below 768 the class is inert. */}
-          <div className="relative dev-hero-paper">
+          <div className="relative hero-paper">
             <PaperApp width="narrow" bodyClassName="">
               <div className="relative">
                 <Image

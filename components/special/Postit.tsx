@@ -90,7 +90,7 @@ type PostitProps = {
    *          (often `'100%'`) and (typically negative) `anchorMarginTop`.
    *
    * The wrapper carries a `data-postit-overhang` attribute used as
-   * the stable selector hook by `.desktop-experiment` rules in
+   * the stable selector hook by `.desktop-spec` rules in
    * `globals.css`. Scale is `calc(var(--page-half) / 250px)` — the
    * 250 (vs the source's 240) accounts for the rotated bbox at ±5°
    * so the rotated tip lands at viewport-edge on narrow mobile.

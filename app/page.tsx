@@ -50,25 +50,25 @@ const SIDE_NAV_ITEMS = [
 
 export default function HomePage() {
   return (
-    <div className="desktop-experiment">
+    <div className="desktop-spec">
       <FloatingNav />
       {/* DESKTOP SIDE NAV — only visible at >=1200px via the
-          .dev-side-nav rules in globals.css. Below that gate it's
+          .side-nav rules in globals.css. Below that gate it's
           `display: none`. The existing FloatingNav stays the
           navigation surface at <1200px (mobile + tablet); at >=1200
           FloatingNav is also hidden via CSS and this aside takes
           over. Both elements render unconditionally — gating happens
           purely in CSS so React state is untouched. */}
-      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
-        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+      <aside aria-label="Site navigation (desktop)" className="side-nav">
+        <Link href="/" aria-label="alderman.ai" className="side-nav-logo-link">
           <img
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt=""
             aria-hidden
-            className="dev-side-nav-logo block"
+            className="side-nav-logo block"
           />
         </Link>
-        <div className="dev-side-nav-menu">
+        <div className="side-nav-menu">
           <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
             <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (

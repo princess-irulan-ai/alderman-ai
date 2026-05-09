@@ -18,7 +18,7 @@
     /* Terminal-line font size — single knob read by every TerminalLine
        (default fontSize prop is `var(--font-terminal)`) and by ghost
        copies that need to match. Mobile-locked pages keep this at 22px
-       at every viewport. The `.desktop-experiment` scope in the
+       at every viewport. The `.desktop-spec` scope in the
        desktop block below bumps it to 30px at tablet+ so terminal
        lines on /dev/home-page scale with the wider 550 column while
        preserving the 20-chars-per-line wrap proportion. */
@@ -37,7 +37,7 @@
    ============================================================
    Activation: every rule below is gated by BOTH
      (a) `@media (min-width: 768px)` — viewport is at least tablet
-     (b) `.desktop-experiment` ancestor — currently set on the outer
+     (b) `.desktop-spec` ancestor — currently set on the outer
          wrapper of `app/dev/home-page/page.tsx` and nowhere else
    Below 768px these rules are NOT in the cascade, so mobile is
    untouchable. On other routes (no marker class), these rules don't
@@ -48,7 +48,7 @@
    change here either (a) overrides an existing Tailwind utility
    class on the canonical JSX, or (b) is a `::before` / `::after`
    pseudo-element on an existing element. To roll the desktop spec
-   out site-wide, drop the `.desktop-experiment` ancestor from each
+   out site-wide, drop the `.desktop-spec` ancestor from each
    selector — the rules become global at desktop, JSX never moves.
 
    Spec captured 2026-05-07 from session-38 visual lock. See
@@ -58,7 +58,7 @@
    ============================================================ */
 @media (min-width: 768px) {
   /* TERMINAL FONT SIZE — bump the canonical 22px to 30px at desktop
-     for any TerminalLine inside a `.desktop-experiment` ancestor.
+     for any TerminalLine inside a `.desktop-spec` ancestor.
      TerminalLine's default fontSize prop is `var(--font-terminal)`,
      so this bump propagates automatically to every visible terminal
      output. Ghost copies that use a literal `fontSize: 22` inline
@@ -86,7 +86,7 @@
      the TerminalLine refactor that made `>` `position: absolute`)
      lets the prompt track gutter-extension independently of where
      text starts. */
-  .desktop-experiment {
+  .desktop-spec {
     --font-terminal: 30px;
     --gutter-extension: 39px;
     --prompt-offset: -60px;
@@ -94,13 +94,13 @@
 
   /* COLUMN — widen 400 → 550, add 1px rule lines at edges, drop the
      12% interior gutter so the column itself is the visual edge. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto {
     max-width: 550px;
     position: relative;
     z-index: 0;
   }
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::before,
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::after {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::before,
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::after {
     content: '';
     position: absolute;
     top: 0;
@@ -108,26 +108,26 @@
     width: 2px;
     background-color: #3A3B33; /* ide-rule */
   }
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::before { left: -2px; }
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::after { right: -2px; }
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::before { left: -2px; }
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::after { right: -2px; }
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div {
     padding-left: 0;
     padding-right: 0;
   }
 
   /* HEADER SPACER — taller on desktop to push H1 below the FloatingNav. */
-  .desktop-experiment .h-\[120px\] {
+  .desktop-spec .h-\[120px\] {
     height: 294px;
   }
 
   /* H1 — 78px on desktop. `position: relative` so the GutterGlow
      pseudo-elements anchor to the H1's bbox. */
-  .desktop-experiment h1 {
+  .desktop-spec h1 {
     font-size: 78px !important;
     position: relative;
   }
-  .desktop-experiment h1::before,
-  .desktop-experiment h1::after {
+  .desktop-spec h1::before,
+  .desktop-spec h1::after {
     content: '';
     position: absolute;
     top: -10px;
@@ -141,7 +141,7 @@
      edge, fading 0.55 → 0.30 → 0.10 → 0 across the gutter-extension
      envelope. Stops are calibrated for a Gaussian-ish falloff that
      reads as ambient light, not a graphic element. */
-  .desktop-experiment h1::before {
+  .desktop-spec h1::before {
     left: calc(var(--gutter-extension) * -1);
     background-image: radial-gradient(ellipse var(--gutter-extension) 50% at 100% 50%,
       rgba(174, 129, 255, 0.55) 0%,
@@ -150,7 +150,7 @@
       rgba(174, 129, 255, 0) 100%);
   }
   /* Purple GutterGlow — right side, mirror of left. */
-  .desktop-experiment h1::after {
+  .desktop-spec h1::after {
     right: calc(var(--gutter-extension) * -1);
     background-image: radial-gradient(ellipse var(--gutter-extension) 50% at 0% 50%,
       rgba(174, 129, 255, 0.55) 0%,
@@ -164,8 +164,8 @@
      style="font-size: 22px") and the invisible ghost copies in
      page.tsx + HeroSection. !important is needed because inline
      styles outrank classed rules. */
-  .desktop-experiment [style*="font-size: 22px"],
-  .desktop-experiment [style*="font-size:22px"] {
+  .desktop-spec [style*="font-size: 22px"],
+  .desktop-spec [style*="font-size:22px"] {
     font-size: 30px !important;
   }
 
@@ -182,7 +182,7 @@
      directly under the H1's own left glow; stacking reads heavy).
      `position: relative` is added to the grid rule below so the
      absolute pseudo anchors correctly. */
-  .desktop-experiment section > .grid:not(:has(.no-gutter-glow))::before {
+  .desktop-spec section > .grid:not(:has(.no-gutter-glow))::before {
     content: '';
     position: absolute;
     top: 0;
@@ -205,7 +205,7 @@
      paints over the rule line where they overlap. The hero paper-app's
      wrapper is `.mt-5 > .relative` (a stable selector unique to the
      hero — no other paper-app uses this wrapper). */
-  .desktop-experiment .mt-5 > .relative {
+  .desktop-spec .mt-5 > .relative {
     max-width: 304px;
     margin-left: auto;
     margin-right: calc(var(--gutter-extension) * -1);
@@ -221,7 +221,7 @@
      it doesn't match this rule. NB: when /dev/contact and /dev/faq
      get built, their BR post-its will also carry the "br" data
      attribute — at that point this rule may need page-level scoping. */
-  .desktop-experiment [data-postit-overhang="br"] {
+  .desktop-spec [data-postit-overhang="br"] {
     left: 370px;
     z-index: 10;
   }
@@ -236,11 +236,11 @@
      `top: 244px` are both overridden via !important here (inline
      styles beat class rules without it). z-index: 10 inherited from
      the rule above. */
-  .desktop-experiment .mt-5 > .relative > [data-postit-overhang="br"] {
+  .desktop-spec .mt-5 > .relative > [data-postit-overhang="br"] {
     left: -294px;
     top: 224px !important;
   }
-  .desktop-experiment .mt-5 > .relative > [data-postit-overhang="br"] > div {
+  .desktop-spec .mt-5 > .relative > [data-postit-overhang="br"] > div {
     transform: rotate(5deg) !important;
   }
 
@@ -252,7 +252,7 @@
      No GutterGlow per session-38 code (the commit message claimed an
      orange glow here but the diff didn't add one — only the hero got
      a glow). */
-  .desktop-experiment #brochure > .relative {
+  .desktop-spec #brochure > .relative {
     max-width: 304px;
     margin-left: calc(var(--gutter-extension) * -1);
     margin-right: auto;
@@ -260,13 +260,13 @@
   /* CREDENTIALS PAPER-APP INNER PADDING — collapse pb-[96px] → 0.5rem
      because the BL post-it doesn't overhang the body at desktop
      (the post-it shifts to right: 370 inside the 304-wide app). */
-  .desktop-experiment #brochure .pb-\[96px\] {
+  .desktop-spec #brochure .pb-\[96px\] {
     padding-bottom: 0.5rem;
   }
   /* CREDENTIALS POST-IT — right:50% → right:370px (mirror of hero
      post-it). Targets the stable `data-postit-overhang="bl"` hook
      emitted by Postit's overhang wrapper. */
-  .desktop-experiment [data-postit-overhang="bl"] {
+  .desktop-spec [data-postit-overhang="bl"] {
     right: 370px;
   }
   /* CREDENTIALS POST-IT (dev override) — paper-app's relative div now
@@ -283,7 +283,7 @@
      its body crosses col-right. The flipped+rotated shape extends ~8px
      past the wrapper's right edge. Scoped to `#brochure > .relative`
      so future /dev/<page> BL post-its don't inherit. */
-  .desktop-experiment #brochure > .relative > [data-postit-overhang="bl"] {
+  .desktop-spec #brochure > .relative > [data-postit-overhang="bl"] {
     right: -301px;
     margin-top: -112px !important;
     z-index: 10;
@@ -293,13 +293,13 @@
      `<Postit flipX>`. Inline style on the inner shape is `rotate(5deg)
      scaleX(-1)`, so the override has to include scaleX(-1) to keep
      the post-it mirrored. !important needed to beat the inline. */
-  .desktop-experiment #brochure > .relative > [data-postit-overhang="bl"] > div {
+  .desktop-spec #brochure > .relative > [data-postit-overhang="bl"] > div {
     transform: rotate(-5deg) scaleX(-1) !important;
   }
 
   /* FLOATING NAV — widen inner column-constrained div to match the
      550 page column. Logo + hamburger keep their mobile sizes. */
-  .desktop-experiment nav > div > div.md\:max-w-\[400px\] {
+  .desktop-spec nav > div > div.md\:max-w-\[400px\] {
     max-width: 550px;
     margin-left: auto;
     margin-right: auto;
@@ -318,7 +318,7 @@
      decouples it from this margin so they no longer have to move
      together. Preserves the 20-chars-per-line proportion at the
      bumped 30px terminal font. */
-  .desktop-experiment section > .grid {
+  .desktop-spec section > .grid {
     max-width: 407px;
     margin-left: 21px;
     position: relative;
@@ -330,7 +330,7 @@
      the wider canvas. The APP-variant tile inside the credentials
      paper-app uses a different border color (orange, not ide-rule) so
      it doesn't match this selector and stays at its own width. */
-  .desktop-experiment .rounded-tile.border-ide-rule {
+  .desktop-spec .rounded-tile.border-ide-rule {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -345,7 +345,7 @@
      the rule line where they overlap. Mirrors the hero paper-app's
      overhang treatment. Used on /dev/home-page's "have questions?"
      CTA. */
-  .desktop-experiment .rounded-tile.tile-right-edge {
+  .desktop-spec .rounded-tile.tile-right-edge {
     margin-left: auto;
     margin-right: calc(var(--gutter-extension) * -1);
     position: relative;
@@ -369,7 +369,7 @@
      width inside the 550 column. (Credentials section's wide PaperApp
      is wrapped in `<div class="relative">` so it's a grandchild, not
      a direct section child — this selector doesn't catch it.) */
-  .desktop-experiment section > .col-span-3 {
+  .desktop-spec section > .col-span-3 {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -382,7 +382,7 @@
      so post-its and other elements outside the paper-app body don't
      get bumped — post-its are absolute siblings of PaperApp inside
      the wrapper, not descendants of `.shadow-paper-glow`. */
-  .desktop-experiment .shadow-paper-glow .text-\[28px\] {
+  .desktop-spec .shadow-paper-glow .text-\[28px\] {
     font-size: 35px;
   }
   /* text-[22px] bump removed 2026-05-07 — was making the App-variant
@@ -390,7 +390,7 @@
      paper-app title. Stays at canonical 22px on desktop now. The
      hero perks h2 ("2025 Job Benefits") also rides this class and
      stays at 22px in tandem. */
-  .desktop-experiment .shadow-paper-glow .text-\[18px\] {
+  .desktop-spec .shadow-paper-glow .text-\[18px\] {
     font-size: 22.5px;
   }
 }
@@ -423,7 +423,7 @@
 @media (min-width: 1200px) {
   /* HIDE the top FloatingNav entirely — the side-nav <aside> takes
      over as the navigation surface at this tier. */
-  .desktop-experiment > nav {
+  .desktop-spec > nav {
     display: none;
   }
 
@@ -434,14 +434,14 @@
        At 1200vw: left ≈ 433.3, right ≈ 216.7 (column at x=433–983)
        At 1500vw: left ≈ 633.3, right ≈ 316.7 (column at x=633–1183)
      Override the existing 768-tier `mx-auto` (auto/auto). */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto {
     margin-left: calc((100% - 550px) * 2 / 3);
     margin-right: calc((100% - 550px) / 3);
   }
 
   /* HEADER SPACER — 64 so the H1 lands ~80px from viewport top
      (64 spacer + 16 section pt-4). */
-  .desktop-experiment .h-\[120px\] {
+  .desktop-spec .h-\[120px\] {
     height: 64px;
   }
 
@@ -452,13 +452,13 @@
      substrate is uniform vertically — the gutter color extends down
      through the footer area instead of dropping back to ide-2 below
      PageFrame. Below 1200 the substrate stays ide-2 uniformly. */
-  body:has(.desktop-experiment) {
+  body:has(.desktop-spec) {
     background-color: #272822;
   }
-  .desktop-experiment .min-h-screen.bg-ide-2 {
+  .desktop-spec .min-h-screen.bg-ide-2 {
     background-color: #272822;
   }
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto {
     background-color: #1E1F1A;
   }
 
@@ -473,7 +473,7 @@
      extend the column's 2px gutter rule lines down through the
      footer area. They sit at the same -2/-2 offsets the column
      uses, so the lines line up edge-to-edge across the boundary. */
-  .desktop-experiment footer {
+  .desktop-spec footer {
     border-top: none;
     max-width: 550px;
     margin-left: calc((100% - 550px) * 2 / 3);
@@ -481,8 +481,8 @@
     background-color: #1E1F1A; /* ide-2 */
     position: relative;
   }
-  .desktop-experiment footer::before,
-  .desktop-experiment footer::after {
+  .desktop-spec footer::before,
+  .desktop-spec footer::after {
     content: '';
     position: absolute;
     top: 0;
@@ -490,8 +490,8 @@
     width: 2px;
     background-color: #3A3B33; /* ide-rule */
   }
-  .desktop-experiment footer::before { left: -2px; }
-  .desktop-experiment footer::after { right: -2px; }
+  .desktop-spec footer::before { left: -2px; }
+  .desktop-spec footer::after { right: -2px; }
 
   /* SIDE NAV — fixed in the left gutter, vertically centered around
      the visible content area near the top of the page. Center X of
@@ -506,7 +506,7 @@
      `position: fixed` so it stays anchored to the viewport as the
      user scrolls — the menu is always available without scrolling
      back to the top. */
-  .dev-side-nav {
+  .side-nav {
     position: fixed;
     top: 30px;
     /* Subtract --scrollbar-width (set by inline script in layout.tsx)
@@ -525,12 +525,12 @@
   /* LOGO inside side nav — 200px wide, centered horizontally in the
      300px container. The img's intrinsic dimensions are 76×76; we
      scale up via width/height. The wordmark SVG scales cleanly. */
-  .dev-side-nav-logo {
+  .side-nav-logo {
     width: 200px;
     height: 200px;
     margin-left: 0; /* override the canonical -ml-3 if it leaked */
   }
-  .dev-side-nav-logo-link {
+  .side-nav-logo-link {
     display: block;
   }
 
@@ -546,11 +546,11 @@
      element (which carries `w-fit` from PaperApp's `width="fit"`); the
      wrapper floor alone wouldn't propagate through `w-fit`. Per Alex
      2026-05-09. */
-  .dev-side-nav-menu,
-  .dev-side-nav-menu .shadow-paper-glow {
+  .side-nav-menu,
+  .side-nav-menu .shadow-paper-glow {
     min-width: 192px;
   }
-  .dev-side-nav-menu {
+  .side-nav-menu {
     width: max-content;
   }
   /* MENU PAPER-APP SHADOW — quieter than the canonical orange
@@ -562,7 +562,7 @@
          tail) — visible warm wash that ties to the brand chord but
          reads as navigation chrome rather than content.
        - Dark grounding kept verbatim. */
-  .dev-side-nav-menu .shadow-paper-glow {
+  .side-nav-menu .shadow-paper-glow {
     box-shadow:
       3px 3px 0 0 rgba(117, 113, 94, 0.80),
       8px 10px 24px rgba(253, 151, 31, 0.18),
@@ -580,7 +580,7 @@
      are zeroed so the parent gap is the only spacer. Header
      spacer collapses to 0. Footer also gets margin-top: 80 since
      it's a sibling of PageFrame, not a child. Per Alex 2026-05-07. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div {
     display: flex;
     flex-direction: column;
     gap: 80px;
@@ -590,23 +590,23 @@
      section (e.g. portrait `md:mt-8`) would add to the gap.
      margin-bottom is left alone so post-it overhang compensation
      below can use it on specific sections. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > * {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div > * {
     margin-top: 0 !important;
   }
-  .desktop-experiment .h-\[120px\] {
+  .desktop-spec .h-\[120px\] {
     height: 0;
   }
-  .desktop-experiment section {
+  .desktop-spec section {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
-  .desktop-experiment section.flex.flex-col.gap-6 {
+  .desktop-spec section.flex.flex-col.gap-6 {
     gap: 80px;
   }
-  .desktop-experiment section.flex.flex-col.gap-6 > * {
+  .desktop-spec section.flex.flex-col.gap-6 > * {
     margin-top: 0 !important;
   }
-  .desktop-experiment h1 {
+  .desktop-spec h1 {
     margin-bottom: 0 !important;
   }
   /* FOOTER FLUSH WITH COLUMN — was margin-top: 80px, removed per
@@ -616,7 +616,7 @@
      dark bg covers the area between the last section and the
      footer; visual gap from CTA tile bottom to footer top is 80
      but with column color throughout (no ribbon). */
-  .desktop-experiment footer {
+  .desktop-spec footer {
     margin-top: 0;
   }
   /* COLUMN BOTTOM PADDING — 60px below the last section. The footer's
@@ -626,7 +626,7 @@
      bottom to footer's first visible content. Replaces the
      margin-top: 80 approach, which left the gap painted in body
      bg (the "ribbon"). */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div {
     padding-bottom: 60px;
   }
   /* COLUMN RULE LINES — extend the column's ::before/::after rule
@@ -635,8 +635,8 @@
      a visible break in the rule lines). 80 matches the footer
      margin-top exactly so the column rules meet the footer rules
      edge-to-edge. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::before,
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto::after {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::before,
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto::after {
     bottom: -80px;
   }
   /* POST-IT OVERHANG COMPENSATION — both post-its visually extend
@@ -647,10 +647,10 @@
      it's BOTTOM and the next element's TOP. Calibrated values below
      are post-it-position-specific; if a rotation or top changes such
      that the overhang shifts, adjust here. */
-  .desktop-experiment section.flex.flex-col.gap-6 > .mt-5 {
+  .desktop-spec section.flex.flex-col.gap-6 > .mt-5 {
     margin-bottom: 62px;
   }
-  .desktop-experiment #brochure {
+  .desktop-spec #brochure {
     margin-bottom: 88px;
   }
   /* PORTRAIT SECTION TOP/BOTTOM COMPENSATION — the portrait's
@@ -664,7 +664,7 @@
      bottom shrinks the gap to the next terminal line below the
      visible bottom. Higher specificity + !important to beat the
      global zero-margin rule above. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
     margin-top: -43px !important;
     margin-bottom: -51px;
   }
@@ -680,7 +680,7 @@
      wrap it in a `<div>`). App-variant tiles use border-orange not
      border-ide-rule so the selector ignores them — paper-app sections
      containing nested App-variant CTAs aren't pushed. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:has(.rounded-tile.border-ide-rule) {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div > section:has(.rounded-tile.border-ide-rule) {
     margin-top: 19px !important;
   }
   /* SECOND TERMINAL SEAM HEIGHT COMPENSATION — the ghost div for the
@@ -693,18 +693,18 @@
      tile eyebrow top is 80, matching the first seam's gap. Scoped to
      nth-child(8) so seam 1 (which wraps to 4 lines naturally) is
      unaffected. */
-  .desktop-experiment .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+  .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
     margin-bottom: -45px;
   }
 }
 
 /* Below 1200px, the side nav is invisible — the canonical
    FloatingNav at the top handles navigation. */
-.dev-side-nav {
+.side-nav {
   display: none;
 }
 @media (min-width: 1200px) {
-  .dev-side-nav {
+  .side-nav {
     display: flex;
   }
 }
@@ -720,7 +720,7 @@
      overhangs for the two IDE CTAs (rows 4 + 6) where the punch
      into the gutter functions as a "click here" cue. Per Alex
      2026-05-08. */
-  .desktop-experiment .dev-hero-paper {
+  .desktop-spec .hero-paper {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -736,7 +736,7 @@
      untouched (closing PaperApp's H2 fits at 35 and reads as the
      more emphatic of the two by virtue of staying at the bumped
      size). Per Alex 2026-05-08. */
-  .desktop-experiment.dev-about .shadow-paper-glow .lead-h2 {
+  .desktop-spec.route-about .shadow-paper-glow .lead-h2 {
     font-size: 30px;
   }
 }
@@ -749,10 +749,10 @@
      existing `h1 { margin-bottom: 0 !important }` override, this
      gives a clean 80px gap from H1-bottom to headshot-top, matching
      the 80px rule. */
-  .desktop-experiment.dev-about section.flex.flex-col.gap-8 {
+  .desktop-spec.route-about section.flex.flex-col.gap-8 {
     gap: 80px;
   }
-  .desktop-experiment.dev-about section.flex.flex-col.gap-8 > * {
+  .desktop-spec.route-about section.flex.flex-col.gap-8 > * {
     margin-top: 0 !important;
   }
 
@@ -761,7 +761,7 @@
      homepage-specific compensation for the second terminal seam's
      5-line ghost. /about's section ordering is different and the rule
      would fire on an unrelated section. Override to 0. */
-  .desktop-experiment.dev-about .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+  .desktop-spec.route-about .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
     margin-bottom: 0 !important;
   }
 }
@@ -772,25 +772,25 @@
 
 /* PRICING SPLIT — desktop-only second paper-app. Hidden everywhere
    by default so mobile + tablet (<1200) render the canonical single
-   paper-app exactly as before. At ≥1200 the .desktop-experiment.dev-
+   paper-app exactly as before. At ≥1200 the .desktop-spec.dev-
    faq scope toggles it on (see rules below). */
-.dev-pricing-split-only {
+.pricing-split-only {
   display: none;
 }
 
 /* Desktop-only post-it on paper-app 2 (table). Hidden everywhere by
-   default; only renders at ≥1200 inside .desktop-experiment.dev-faq
+   default; only renders at ≥1200 inside .desktop-spec.route-faq
    scope. Mobile + tablet keep the canonical post-it inside paper-
    app 1. */
-.dev-pricing-postit-desktop {
+.pricing-postit-desktop {
   display: none;
 }
 
 /* FaqChat desktop CTA flank columns — 14 question CTAs split 7/7
    either side of the chat-app paper-app. Hidden everywhere by default;
-   only render at ≥1200 inside .desktop-experiment.dev-faq scope. Mobile
+   only render at ≥1200 inside .desktop-spec.route-faq scope. Mobile
    + tablet keep the canonical chevron + input-pill carousel. */
-.dev-faq-cta-col {
+.faq-cta-col {
   display: none;
 }
 
@@ -798,14 +798,14 @@
    Hidden everywhere by default; only renders at ≥1200. The text
    "Simple" itself stays plain bold on mobile + tablet (canonical /faq
    does not highlight it). */
-.dev-purple-bg-desktop {
+.purple-bg-desktop {
   display: none;
 }
 
 /* /faq-download desktop post-it — hidden by default; shown at ≥768
-   inside the .dev-faq-download scope, where it switches places with
+   inside the .route-faq-download scope, where it switches places with
    the mobile post-it (see @media block below). */
-.dev-download-postit-desktop {
+.download-postit-desktop {
   display: none;
 }
 
@@ -816,7 +816,7 @@
      The canonical `section > .col-span-3` cap (line 372) only catches
      direct-section-child paper-apps, so these grandchild ones land at
      full 550 column width. Cap them to 304 centered to match canon. */
-  .desktop-experiment.dev-faq .col-span-3 {
+  .desktop-spec.route-faq .col-span-3 {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -837,7 +837,7 @@
      margin-bottom: -45 }` (line 678) fires here unintentionally,
      creating a 45-tighter gap. Override to 0 (mirrors /dev/about's
      same neutralizer). */
-  .desktop-experiment.dev-faq .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
+  .desktop-spec.route-faq .min-h-screen.bg-ide-2 > .mx-auto > div > section:nth-child(8) {
     margin-bottom: 0 !important;
   }
 
@@ -848,18 +848,18 @@
      Net result: paper-app 1 holds heading + subhead (with "Simple"
      highlighted purple); paper-app 2 holds "Buy more. Pay less.
      Simple." (h2 title) + table + post-it. */
-  .desktop-experiment.dev-faq .dev-pricing-split-only {
+  .desktop-spec.route-faq .pricing-split-only {
     display: block;
   }
-  .desktop-experiment.dev-faq .dev-pricing-postit-desktop {
+  .desktop-spec.route-faq .pricing-postit-desktop {
     display: block;
   }
-  .desktop-experiment.dev-faq .dev-purple-bg-desktop {
+  .desktop-spec.route-faq .purple-bg-desktop {
     display: block;
   }
-  .desktop-experiment.dev-faq .dev-pricing-table-mobile,
-  .desktop-experiment.dev-faq .dev-pricing-buy-mobile,
-  .desktop-experiment.dev-faq .dev-pricing-postit-mobile {
+  .desktop-spec.route-faq .pricing-table-mobile,
+  .desktop-spec.route-faq .pricing-buy-mobile,
+  .desktop-spec.route-faq .pricing-postit-mobile {
     display: none;
   }
 
@@ -871,10 +871,10 @@
      265 (well inside the column). z-index lifts above the column's
      ::before rule pseudo so the paper-app paints over the rule line
      where they overlap. The `!important` on margin overrides the
-     centered cap from `.dev-faq .col-span-3` rule above. Selector
+     centered cap from `.route-faq .col-span-3` rule above. Selector
      reaches through the new `<div class="relative">` wrapper that
      hosts paper-app 2 + the desktop post-it. */
-  .desktop-experiment.dev-faq section.dev-pricing-split-only > .relative > .col-span-3 {
+  .desktop-spec.route-faq section.pricing-split-only > .relative > .col-span-3 {
     margin-left: calc(var(--gutter-extension) * -1) !important;
     margin-right: auto !important;
     position: relative;
@@ -897,7 +897,7 @@
        left: auto  → kill the inherited `left: 50%`
        transform-origin: top right → scale anchors at top-right corner
                                      so right edge stays put */
-  .desktop-experiment.dev-faq .dev-pricing-postit-desktop {
+  .desktop-spec.route-faq .pricing-postit-desktop {
     left: auto !important;
     right: calc(var(--gutter-extension) * -1) !important;
     top: 289px !important;
@@ -913,7 +913,7 @@
      spacing becomes 80 (parent flex gap) + 64 (mb) - 64 (overhang)
      = 80 visible. Mirrors the homepage `#brochure { margin-bottom:
      88px }` pattern. */
-  .desktop-experiment.dev-faq section.dev-pricing-split-only {
+  .desktop-spec.route-faq section.pricing-split-only {
     margin-bottom: 64px;
   }
 
@@ -942,7 +942,7 @@
      Acceptable for first iteration; revisit by either gating to a
      higher min-width or moving the side-nav out of the way at this
      section. */
-  .desktop-experiment.dev-faq .dev-faq-chat-shell {
+  .desktop-spec.route-faq .faq-chat-shell {
     display: grid;
     grid-template-columns: 220px 304px 220px;
     column-gap: 24px;
@@ -951,22 +951,22 @@
     margin-left: -121px;
     z-index: 1;
   }
-  .desktop-experiment.dev-faq .dev-faq-cta-col {
+  .desktop-spec.route-faq .faq-cta-col {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-  .desktop-experiment.dev-faq .dev-faq-cta-left {
+  .desktop-spec.route-faq .faq-cta-left {
     grid-column: 1;
     grid-row: 1;
   }
-  .desktop-experiment.dev-faq .dev-faq-cta-right {
+  .desktop-spec.route-faq .faq-cta-right {
     grid-column: 3;
     grid-row: 1;
   }
-  .desktop-experiment.dev-faq .dev-faq-chevron,
-  .desktop-experiment.dev-faq .dev-faq-input-pill,
-  .desktop-experiment.dev-faq .dev-faq-arrows-hint {
+  .desktop-spec.route-faq .faq-chevron,
+  .desktop-spec.route-faq .faq-input-pill,
+  .desktop-spec.route-faq .faq-arrows-hint {
     display: none;
   }
 
@@ -977,7 +977,7 @@
      paper-app 2, so paper-app 1 no longer has tall content beneath
      the subhead — the 30 spacer + 20 space-y gap = 50px of dead
      whitespace at the paper-app's bottom edge. */
-  .desktop-experiment.dev-faq .dev-pricing-spacer-mobile {
+  .desktop-spec.route-faq .pricing-spacer-mobile {
     display: none;
   }
 }
@@ -990,7 +990,7 @@
      right gutter by `--gutter-extension` (mirrors the homepage hero
      paper-app pattern at line 208). z-index lifts above the column's
      ::after rule pseudo so the paper-app paints over the rule line. */
-  .desktop-experiment.dev-faq-download .dev-download-app {
+  .desktop-spec.route-faq-download .download-app {
     max-width: 304px;
     margin-left: auto;
     margin-right: calc(var(--gutter-extension) * -1);
@@ -1011,10 +1011,10 @@
                     of the body subtitle (line 2 spans parent_y=217-
                     245, center 231). !important overrides Postit's
                     inline top:0 from the anchorTop={0} JSX prop. */
-  .desktop-experiment.dev-faq-download .dev-download-postit-mobile {
+  .desktop-spec.route-faq-download .download-postit-mobile {
     display: none;
   }
-  .desktop-experiment.dev-faq-download .dev-download-postit-desktop {
+  .desktop-spec.route-faq-download .download-postit-desktop {
     display: block;
     right: 428px;
     top: 231px !important;
@@ -1029,9 +1029,9 @@
      box. Without compensation the visible gap from the live "demo
      call _" to the portrait's visible circle is ~125px instead of the
      canonical 80px. Mirrors the homepage `nth-child(8)` rule but
-     scoped via the dev-portrait-seam marker so the section index
+     scoped via the portrait-seam marker so the section index
      doesn't have to be hardcoded. */
-  .desktop-experiment.dev-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.dev-portrait-seam {
+  .desktop-spec.route-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.portrait-seam {
     margin-bottom: -45px;
   }
 
@@ -1040,7 +1040,7 @@
      on this page). Without this override the gap below the portrait
      ends up 6px tighter than the 80px target. Specificity beats both
      the .justify-center rule (-51) and the nth-child(8) rule (-45). */
-  .desktop-experiment.dev-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
+  .desktop-spec.route-faq-download .min-h-screen.bg-ide-2 > .mx-auto > div > section.justify-center {
     margin-bottom: -51px !important;
   }
 }
@@ -1056,7 +1056,7 @@
      pattern but applied to the col-span-3 PaperApp wrapper since the
      parent here isn't a grid (the col-span-3 is otherwise a no-op).
      z-index lifts above the column rule pseudo. */
-  .desktop-experiment.dev-contact #contact-intro > .relative > .col-span-3 {
+  .desktop-spec.route-contact #contact-intro > .relative > .col-span-3 {
     max-width: 304px;
     margin-left: calc(var(--gutter-extension) * -1);
     margin-right: auto;
@@ -1071,7 +1071,7 @@
      right column space (see rule below) and the trailing spacer reads
      as dead whitespace. Hide at desktop only — mobile keeps the
      spacer for its canonical post-it overhang behavior. */
-  .desktop-experiment.dev-contact #contact-intro .h-\[55px\] {
+  .desktop-spec.route-contact #contact-intro .h-\[55px\] {
     display: none;
   }
 
@@ -1094,7 +1094,7 @@
          origin sits exactly where we want the visual left edge.
      !important to beat the inline `top: 390` from anchorTop and the
      site-wide BR post-it `right: 370` rule. */
-  .desktop-experiment.dev-contact #contact-intro [data-postit-overhang="br"] {
+  .desktop-spec.route-contact #contact-intro [data-postit-overhang="br"] {
     top: 239px !important;
     left: 389px !important;
     right: auto !important;

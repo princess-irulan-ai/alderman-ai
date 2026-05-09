@@ -106,18 +106,18 @@ const FAQ_ENTRIES: FaqEntry[] = [
 
 export default function FaqPage() {
   return (
-    <div className="desktop-experiment dev-faq">
+    <div className="desktop-spec route-faq">
       <FloatingNav />
-      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
-        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+      <aside aria-label="Site navigation (desktop)" className="side-nav">
+        <Link href="/" aria-label="alderman.ai" className="side-nav-logo-link">
           <img
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt=""
             aria-hidden
-            className="dev-side-nav-logo block"
+            className="side-nav-logo block"
           />
         </Link>
-        <div className="dev-side-nav-menu">
+        <div className="side-nav-menu">
           <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
             <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (
@@ -146,7 +146,7 @@ export default function FaqPage() {
           </h1>
         </section>
 
-        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px] dev-pricing">
+        <section className="pt-8 pb-[160px] md:pt-10 md:pb-[180px]">
           <div className="relative">
             <PaperApp width="wide">
               <div className="space-y-4 md:space-y-5 py-2">
@@ -155,13 +155,13 @@ export default function FaqPage() {
                   <br />
                   {/* Purple highlight on "Simple" — desktop only. The
                       bg pseudo span is hidden at <1200 via
-                      `.dev-purple-bg-desktop { display: none }`, so
+                      `.purple-bg-desktop { display: none }`, so
                       mobile + tablet render plain bold "Simple
                       pricing." identical to canonical /faq. */}
                   <span className="relative inline-block">
                     <span
                       aria-hidden
-                      className="dev-purple-bg-desktop absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                      className="purple-bg-desktop absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                     />
                     <span className="relative text-ink">Simple</span>
                   </span>{' '}
@@ -173,11 +173,11 @@ export default function FaqPage() {
                 {/* MOBILE + TABLET: "Buy more. Pay less. Simple." sits
                     inside paper-app 1 as a punchline beat between the
                     subhead and the table. At desktop tier (≥1200) this
-                    is hidden via `.dev-pricing-buy-mobile { display:
+                    is hidden via `.pricing-buy-mobile { display:
                     none }` and the text is duplicated into paper-app 2
                     as the table's TITLE. Mobile + tablet byte-
                     identical to canonical. */}
-                <p className="dev-pricing-buy-mobile font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
+                <p className="pricing-buy-mobile font-display text-[18px] font-bold leading-snug text-ink max-w-[780px] mx-auto text-center !mt-8 md:!mt-10">
                   Buy more. Pay less.{' '}
                   <span className="relative inline-block">
                     <span
@@ -190,14 +190,14 @@ export default function FaqPage() {
                 </p>
                 {/* MOBILE + TABLET: pricing table renders inside the
                     main paper-app. At desktop tier (≥1200) this is
-                    hidden via `.dev-pricing-table-mobile { display:
+                    hidden via `.pricing-table-mobile { display:
                     none }` and the table is duplicated into the
-                    `.dev-pricing-split-only` section below — so on
+                    `.pricing-split-only` section below — so on
                     desktop the pricing splits into TWO paper-apps:
                     centered "complex topic / simple pricing"
                     explanation + left-overhanging table. Mobile and
                     tablet (<1200) stay byte-identical to canonical. */}
-                <table className="dev-pricing-table-mobile mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
+                <table className="pricing-table-mobile mx-auto !mt-8 md:!mt-10 border-collapse border-2 border-ink font-display text-[16px] text-ink">
                   <thead>
                     <tr>
                       <th className="border-2 border-ink px-4 py-2 font-bold text-left">Hours</th>
@@ -219,7 +219,7 @@ export default function FaqPage() {
                     </tr>
                   </tbody>
                 </table>
-                <div className="dev-pricing-spacer-mobile h-[30px]" aria-hidden />
+                <div className="pricing-spacer-mobile h-[30px]" aria-hidden />
               </div>
             </PaperApp>
             {/* MOBILE + TABLET POST-IT — sits inside paper-app 1's
@@ -228,7 +228,7 @@ export default function FaqPage() {
                 renders inside paper-app 2 instead. Mobile + tablet
                 byte-identical to canonical /faq. */}
             <Postit
-              className="dev-pricing-postit-mobile"
+              className="pricing-postit-mobile"
               overhang="br"
               anchorTop={520}
               rotation={-5}
@@ -252,13 +252,13 @@ export default function FaqPage() {
 
         {/* DESKTOP-ONLY: pricing table extracted into its own paper-app
             and left-overhung into the left gutter. Hidden by default;
-            only renders at ≥1200px inside the `.desktop-experiment.dev-
-            faq` scope (see globals.css `.dev-pricing-split-only` rule).
+            only renders at ≥1200px inside the `.desktop-spec.dev-
+            faq` scope (see globals.css `.pricing-split-only` rule).
             Mirrors the homepage hero paper-app's right-overhang pattern
             but flipped to the left side, giving the pricing block a
             two-beat rhythm at desktop: centered explanation + left-
             overhanging table. */}
-        <section className="dev-pricing-split-only">
+        <section className="pricing-split-only">
           <div className="relative">
             <PaperApp width="wide">
             <div className="space-y-4 md:space-y-5 py-2">
@@ -304,7 +304,7 @@ export default function FaqPage() {
                 mobile+tablet post-it inside paper-app 1 renders
                 instead. */}
             <Postit
-              className="dev-pricing-postit-desktop"
+              className="pricing-postit-desktop"
               overhang="br"
               anchorTop={0}
               rotation={-5}
@@ -398,7 +398,7 @@ export default function FaqPage() {
                     </span>
                   </p>
                   <p>Tap a question below to ask it.</p>
-                  <p className="dev-faq-arrows-hint">Use the arrows to navigate.</p>
+                  <p className="faq-arrows-hint">Use the arrows to navigate.</p>
                 </div>
               }
             />

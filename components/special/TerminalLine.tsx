@@ -21,7 +21,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
  *   fontSize       var(--font-terminal) — resolves to the page's
  *                  canonical terminal-line size (22px on mobile-locked
  *                  pages; bumped to 30px on /dev/home-page at desktop
- *                  via the .desktop-experiment scope in globals.css).
+ *                  via the .desktop-spec scope in globals.css).
  *   leadingSpaces  2  (NBSPs prepended to typed content in NON-HANGING
  *                  mode only; in HANGING mode the prompt is in the
  *                  gutter, no NBSP gap needed and leadingSpaces is
@@ -129,7 +129,7 @@ export type TerminalLineProps = {
   /**
    * Font size. Default `var(--font-terminal)` — resolves to the page's
    * canonical terminal-line size (22px on mobile-locked pages; bumped
-   * to 30px on /dev/home-page at desktop via the `.desktop-experiment`
+   * to 30px on /dev/home-page at desktop via the `.desktop-spec`
    * scope in globals.css).
    */
   fontSize?: number | string

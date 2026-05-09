@@ -12,12 +12,12 @@ import { SectionTile } from '@/components/special/SectionTile'
  * /contact — canonical, promoted from /dev/contact.
  *
  * Mobile JSX matches the prior canonical /contact; differences are
- * desktop-only and gated by `.desktop-experiment` + media queries:
+ * desktop-only and gated by `.desktop-spec` + media queries:
  *
- *   1. `desktop-experiment dev-contact` outer marker (the dev-* class
+ *   1. `desktop-spec route-contact` outer marker (the dev-* class
  *      naming is shared with the other promoted pages and will rename
  *      site-wide in the marker-class sweep).
- *   2. Side-nav <aside class="dev-side-nav"> block — replaces FloatingNav
+ *   2. Side-nav <aside class="side-nav"> block — replaces FloatingNav
  *      at >=1200. /contact filtered out of SIDE_NAV_ITEMS (current route).
  *   3. H1 closing period in purple — cross-page brand tic per
  *      desktop-spec.md.
@@ -53,18 +53,18 @@ const SIDE_NAV_ITEMS = [
 
 export default function ContactPage() {
   return (
-    <div className="desktop-experiment dev-contact">
+    <div className="desktop-spec route-contact">
       <FloatingNav />
-      <aside aria-label="Site navigation (desktop)" className="dev-side-nav">
-        <Link href="/" aria-label="alderman.ai" className="dev-side-nav-logo-link">
+      <aside aria-label="Site navigation (desktop)" className="side-nav">
+        <Link href="/" aria-label="alderman.ai" className="side-nav-logo-link">
           <img
             src="/brand-assets/logos/alderman-ai-stacked-logo-v1.svg"
             alt=""
             aria-hidden
-            className="dev-side-nav-logo block"
+            className="side-nav-logo block"
           />
         </Link>
-        <div className="dev-side-nav-menu">
+        <div className="side-nav-menu">
           <PaperApp width="fit" chromeLeft="" chromeRight="" bodyClassName="">
             <nav className="flex flex-col gap-2 p-[10px]">
               {SIDE_NAV_ITEMS.map((item, i) => (
