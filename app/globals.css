@@ -203,9 +203,14 @@
      right edge sits at column-right + gutter-extension. `z-index: 1`
      raises it above the column's ::after rule pseudo so the paper-app
      paints over the rule line where they overlap. The hero paper-app's
-     wrapper is `.mt-5 > .relative` (a stable selector unique to the
-     hero — no other paper-app uses this wrapper). */
-  .desktop-spec .mt-5 > .relative {
+     wrapper is `.md\:mt-5 > .relative` (a stable selector unique to
+     the hero — no other paper-app uses this wrapper). The wrapper's
+     literal class is `mt-10 md:mt-5` (mobile-spacing-unification pass
+     2026-05-09 added the `mt-10` mobile bonus + `md:` prefix on the
+     desktop value), so we hook on the `md:mt-5` class here — the
+     escaped `\:` matches the literal class name regardless of viewport,
+     and this rule's @media gate handles the desktop activation. */
+  .desktop-spec .md\:mt-5 > .relative {
     max-width: 304px;
     margin-left: auto;
     margin-right: calc(var(--gutter-extension) * -1);
@@ -236,11 +241,11 @@
      `top: 244px` are both overridden via !important here (inline
      styles beat class rules without it). z-index: 10 inherited from
      the rule above. */
-  .desktop-spec .mt-5 > .relative > [data-postit-overhang="br"] {
-    left: -294px;
-    top: 224px !important;
+  .desktop-spec .md\:mt-5 > .relative > [data-postit-overhang="br"] {
+    left: -316px;
+    top: 204px !important;
   }
-  .desktop-spec .mt-5 > .relative > [data-postit-overhang="br"] > div {
+  .desktop-spec .md\:mt-5 > .relative > [data-postit-overhang="br"] > div {
     transform: rotate(5deg) !important;
   }
 
@@ -392,6 +397,13 @@
      stays at 22px in tandem. */
   .desktop-spec .shadow-paper-glow .text-\[18px\] {
     font-size: 22.5px;
+  }
+  /* FaqChat empty-state wrapper carries `text-[22.5px]` (a +25% bump
+     from the canonical 18 on mobile per Alex 2026-05-10). Bump it
+     another 25% at desktop so the two ghost paragraphs read at
+     ~28px inside the wider chat paper-app. */
+  .desktop-spec .shadow-paper-glow .text-\[22\.5px\] {
+    font-size: 28px;
   }
 }
 
@@ -962,6 +974,11 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    /* Drop the column down by the chat paper-app chrome strip height
+       (h-10 = 40px) so the first question button's top edge aligns
+       with the chat body's top (= bottom of the chrome strip), not
+       with the top of the chrome itself. */
+    margin-top: 40px;
   }
   .desktop-spec.route-faq .faq-cta-left {
     grid-column: 1;
@@ -971,10 +988,72 @@
     grid-column: 3;
     grid-row: 1;
   }
+  /* Chat paper-app explicitly into the middle column. Its wrapper is
+     `.col-span-3` (from PaperApp `width="wide"`); without this override
+     the col-span auto-flows the chat onto row 2, leaving column 2
+     empty in row 1 and stacking the chat below the flanking CTAs.
+     Explicit `width: 304px` prevents the wrapper from shrink-to-
+     fitting its content in the empty state — when no message bubbles
+     fill the body, the inner empty-state text (~165-220 wide) was
+     pulling the paper-app wrapper down to ~204 wide. Filled state
+     read at 304 because chat bubbles stretched it. Locking width
+     keeps the paper-app the same 304 in both states. */
+  .desktop-spec.route-faq .faq-chat-shell > .col-span-3 {
+    grid-column: 2;
+    grid-row: 1;
+    width: 304px;
+  }
   .desktop-spec.route-faq .faq-chevron,
-  .desktop-spec.route-faq .faq-input-pill,
   .desktop-spec.route-faq .faq-arrows-hint {
     display: none;
+  }
+  /* Input pill stays visible at desktop, but the rendered question
+     text inside the inner button is hidden so the pill reads as a
+     blank text-entry field with just the up-arrow icon visible. The
+     first child span is the `{current?.q}` text wrapper; the second
+     span (aria-hidden) is the up-arrow icon and stays visible. */
+  .desktop-spec.route-faq .faq-input-pill button > span:first-child {
+    display: none;
+  }
+  /* Opaque ide-2 paint behind the inline purple gradient so the CTA
+     tiles block the column rule lines + gutter substrate where they
+     overlap. Same trick as `tile-right-edge` (line ~363) — the inline
+     `style="background: linear-gradient(...transparent 65%)"`
+     shorthand resets background-color to transparent, so the rule
+     line bleeds through the right side of each tile. !important
+     because inline shorthand outranks classed longhand. */
+  .desktop-spec.route-faq .faq-cta-col .faq-question-cta {
+    background-color: #1E1F1A !important;
+  }
+  /* On hover, each CTA glides 20px outward from the chat — left
+     column slides further left, right column slides further right.
+     The transform transition is enabled on the button (className
+     includes `transition-[box-shadow,border-color,transform]`) so the
+     glide tweens smoothly. The `.faq-cta-pulsed` class on the right
+     mirrors the hover state — it's toggled by FaqChat's auto-pulse
+     timer to demo the affordance on first paint. */
+  .desktop-spec.route-faq .faq-cta-left .faq-question-cta:hover,
+  .desktop-spec.route-faq .faq-cta-left .faq-question-cta.faq-cta-pulsed {
+    transform: translateX(-20px);
+    border-color: rgba(174, 129, 255, 0.6);
+    box-shadow: 0 0 28px rgba(174, 129, 255, 0.45);
+  }
+  .desktop-spec.route-faq .faq-cta-right .faq-question-cta:hover,
+  .desktop-spec.route-faq .faq-cta-right .faq-question-cta.faq-cta-pulsed {
+    transform: translateX(20px);
+    border-color: rgba(174, 129, 255, 0.6);
+    box-shadow: 0 0 28px rgba(174, 129, 255, 0.45);
+  }
+
+  /* PRICING TABLE (desktop paper-app 2) — recolor borders to orange.
+     Cell text stays at the canonical ink color. Source JSX uses
+     `border-ink` + `text-ink`; this override swaps borders only.
+     `.pricing-split-only` is display:none at non-desktop, so scoping
+     here is clean. */
+  .desktop-spec.route-faq .pricing-split-only table,
+  .desktop-spec.route-faq .pricing-split-only table th,
+  .desktop-spec.route-faq .pricing-split-only table td {
+    border-color: #FD971F !important;
   }
 
   /* PRICING PAPER-APP 1 — drop the 30px in-paper spacer at desktop.

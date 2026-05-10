@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 import { PaperApp } from '@/components/paper/PaperApp'
 
@@ -43,6 +43,27 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
   const [currentIdx, setCurrentIdx] = useState(0)
   const [history, setHistory] = useState<FaqEntry[]>([])
   const [hasNavigated, setHasNavigated] = useState(false)
+  // Auto-pulse demo: cycles a "highlighted" state across each CTA
+  // one-by-one so a first-time visitor sees the affordance. Stops the
+  // moment the user hovers any CTA themselves (they've got it). Null
+  // = cycle inactive. Respects prefers-reduced-motion.
+  const [pulseIdx, setPulseIdx] = useState<number | null>(0)
+  const stopPulse = () => setPulseIdx(null)
+
+  useEffect(() => {
+    if (pulseIdx === null) return
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      setPulseIdx(null)
+      return
+    }
+    const id = setInterval(() => {
+      setPulseIdx((i) => (i === null ? null : (i + 1) % entries.length))
+    }, 1100)
+    return () => clearInterval(id)
+  }, [pulseIdx, entries.length])
 
   const send = () => {
     setHistory((h) => [...h, entries[currentIdx]])
@@ -82,7 +103,13 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
           points to ask a question. */}
       <div className="faq-cta-col faq-cta-left">
         {leftCTAs.map((entry, i) => (
-          <FaqQuestionCta key={i} q={entry.q} onClick={() => sendByIdx(i)} />
+          <FaqQuestionCta
+            key={i}
+            q={entry.q}
+            onClick={() => sendByIdx(i)}
+            pulsed={pulseIdx === i}
+            onUserHover={stopPulse}
+          />
         ))}
       </div>
 
@@ -95,7 +122,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
           }`}
         >
           {isEmpty ? (
-            <div className="font-display text-[18px] leading-snug italic text-ink-faint text-center">
+            <div className="font-display text-[22.5px] leading-snug italic text-ink-faint text-center">
               {emptyState ?? 'tap a question below to begin'}
             </div>
           ) : (
@@ -180,6 +207,8 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
             key={i + 7}
             q={entry.q}
             onClick={() => sendByIdx(i + 7)}
+            pulsed={pulseIdx === i + 7}
+            onUserHover={stopPulse}
           />
         ))}
       </div>
@@ -196,18 +225,31 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
  * purple version" spec — the question text itself is the entire tile body.
  * No eyebrow either; just the question.
  */
-function FaqQuestionCta({ q, onClick }: { q: string; onClick: () => void }) {
+function FaqQuestionCta({
+  q,
+  onClick,
+  pulsed,
+  onUserHover,
+}: {
+  q: string
+  onClick: () => void
+  pulsed: boolean
+  onUserHover: () => void
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className="faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color] duration-200 hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)] font-mono text-[15px] font-medium text-ide-fg leading-tight"
+      onMouseEnter={onUserHover}
+      className={`faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color,transform] duration-200 hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)] font-mono text-[15px] font-medium text-ink leading-tight${
+        pulsed ? ' faq-cta-pulsed' : ''
+      }`}
       style={{
         background:
-          'linear-gradient(to top right, rgba(174, 129, 255, 0.45) 0%, rgba(174, 129, 255, 0.18) 25%, transparent 65%)',
+          'linear-gradient(to top right, #AE81FF 0%, #F6F4EE 40%, #F6F4EE 100%)',
       }}
     >
-      {q}
+      <span className="line-clamp-2">{q}</span>
     </button>
   )
 }

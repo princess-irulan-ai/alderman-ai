@@ -47,7 +47,7 @@ const SIDE_NAV_ITEMS = [
 
 const FAQ_ENTRIES: FaqEntry[] = [
   {
-    q: 'Who is this for?',
+    q: 'Who are ai fluency lessons for?',
     a: 'Proactive companies who want to attract, retain, and upskill current and future employees to prepare them and your company for your eventual ai transformation.',
   },
   {
@@ -67,7 +67,7 @@ const FAQ_ENTRIES: FaqEntry[] = [
     a: 'Open-ended. Like language lessons, ai is ongoing skill-building – not a 12-week course with a finish line.',
   },
   {
-    q: 'Online or in-person?',
+    q: 'Are sessions online or in person?',
     a: 'Online. These are hands-on lessons using ai, so an instructor in front of a whiteboard is ineffective. It also lets your team use personal hardware if your IT restricts all ai.',
   },
   {
@@ -75,15 +75,15 @@ const FAQ_ENTRIES: FaqEntry[] = [
     a: 'No. Most teams start as beginners – about 95% of people, despite the marketing buzz. The ai itself adapts to each student, so mixed-experience groups still work.',
   },
   {
-    q: 'Can lessons be tailored to specific teams?',
+    q: 'Can we create groups by department?',
     a: 'Yes. By default, lessons are general – works for any team. If a whole team is interested (marketing, accounting), we tailor lessons to their actual work.',
   },
   {
-    q: 'What ai tools do you use?',
+    q: 'What ai platform will we need?',
     a: 'Whatever your IT allows. Free ChatGPT, paid Claude, even what’s built into Microsoft Word – we make lessons compatible with what your company permits.',
   },
   {
-    q: 'Czech or English?',
+    q: 'Are sessions in Czech or English?',
     a: 'Lessons in English, with Czech help when needed. The ai itself can teach in any language. Think of the ai as your teacher and me as the assistant. (ale mluvím česky docela dobře)',
   },
   {
@@ -91,11 +91,11 @@ const FAQ_ENTRIES: FaqEntry[] = [
     a: 'By the teaching hour. The more hours per month, the lower the per-hour rate – see the table at the top of this page.',
   },
   {
-    q: 'What’s the commitment?',
+    q: 'How long is the business commitment?',
     a: 'Month-to-month with one month notice on either side. Missed sessions can be rescheduled within two weeks. Annual deals are available if you want to lock in pricing.',
   },
   {
-    q: 'How is this different from an online course?',
+    q: 'How’s this different from online courses?',
     a: 'An online course doesn’t help when people are resistant to ai in the first place. I have the cultural and pedagogical experience to get them actually engaging with the topic – not just opting out.',
   },
   {
@@ -243,7 +243,16 @@ export default function FaqPage() {
                   <br />
                   <span className="whitespace-nowrap">= 8 hrs / mo</span>
                   <br />
-                  <span className="whitespace-nowrap">= 36.000 Kč</span>
+                  <span className="whitespace-nowrap">
+                    ={' '}
+                    <span className="relative inline-block">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-2 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
+                      />
+                      <span className="relative text-ink">36.000 Kč</span>
+                    </span>
+                  </span>
                 </span>
               }
             />
@@ -319,7 +328,16 @@ export default function FaqPage() {
                   <br />
                   <span className="whitespace-nowrap">= 8 hrs / mo</span>
                   <br />
-                  <span className="whitespace-nowrap">= 36.000 Kč</span>
+                  <span className="whitespace-nowrap">
+                    ={' '}
+                    <span className="relative inline-block">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-2 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
+                      />
+                      <span className="relative text-ink">36.000 Kč</span>
+                    </span>
+                  </span>
                 </span>
               }
             />
@@ -385,18 +403,38 @@ export default function FaqPage() {
             <FaqChat
               entries={FAQ_ENTRIES}
               emptyState={
-                <div className="space-y-6">
+                <div className="space-y-14 max-w-[220px] mx-auto">
                   <p>
-                    This is a branded FAQ —{' '}
+                    This is a branded
+                    <br />
+                    FAQ —{' '}
                     <span className="relative inline-block">
                       <span
                         aria-hidden
                         className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
                       />
-                      <span className="relative">not ai</span>
+                      <span className="relative text-ink">not ai</span>
                     </span>
                   </p>
-                  <p>Tap a question below to ask it.</p>
+                  <p className="leading-snug">
+                    select questions
+                    <br />
+                    <span className="relative inline-block mr-3">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
+                      />
+                      <span className="relative text-ink">&lt;</span>
+                    </span>
+                    for more info
+                    <span className="relative inline-block ml-3">
+                      <span
+                        aria-hidden
+                        className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
+                      />
+                      <span className="relative text-ink">&gt;</span>
+                    </span>
+                  </p>
                   <p className="faq-arrows-hint">Use the arrows to navigate.</p>
                 </div>
               }
