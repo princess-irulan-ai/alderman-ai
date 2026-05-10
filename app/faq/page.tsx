@@ -165,7 +165,7 @@ export default function FaqPage() {
                       aria-hidden
                       className="purple-bg-desktop absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                     />
-                    <span className="relative text-ink">Simple</span>
+                    <span className="relative text-ink font-bold">Simple</span>
                   </span>{' '}
                   pricing.
                 </h2>
@@ -186,7 +186,7 @@ export default function FaqPage() {
                       aria-hidden
                       className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                     />
-                    <span className="relative text-ink">Simple</span>
+                    <span className="relative text-ink font-bold">Simple</span>
                   </span>
                   .
                 </p>
@@ -252,7 +252,7 @@ export default function FaqPage() {
                         aria-hidden
                         className="absolute -inset-x-2 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
                       />
-                      <span className="relative text-ink">36.000 Kč</span>
+                      <span className="relative text-ink font-bold">36.000 Kč</span>
                     </span>
                   </span>
                 </span>
@@ -280,7 +280,7 @@ export default function FaqPage() {
                     aria-hidden
                     className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
                   />
-                  <span className="relative text-ink">Simple</span>
+                  <span className="relative text-ink font-bold">Simple</span>
                 </span>
                 .
               </h2>
@@ -337,7 +337,7 @@ export default function FaqPage() {
                         aria-hidden
                         className="absolute -inset-x-2 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
                       />
-                      <span className="relative text-ink">36.000 Kč</span>
+                      <span className="relative text-ink font-bold">36.000 Kč</span>
                     </span>
                   </span>
                 </span>
@@ -415,29 +415,26 @@ export default function FaqPage() {
                         aria-hidden
                         className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-green/55"
                       />
-                      <span className="relative text-ink">not ai</span>
+                      <span className="relative text-ink font-bold">not ai</span>
                     </span>
                   </p>
-                  <p className="leading-snug">
-                    select questions
-                    <br />
-                    <span className="relative inline-block mr-3">
+                  <div className="faq-arrows-hint flex items-center justify-center gap-2 leading-snug">
+                    <span className="relative inline-block flex-shrink-0">
                       <span
                         aria-hidden
                         className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
                       />
-                      <span className="relative text-ink">&lt;</span>
+                      <span className="relative text-ink font-bold">&lt;</span>
                     </span>
-                    for more info
-                    <span className="relative inline-block ml-3">
+                    <p>use the arrows to <span className="text-ink font-bold">select questions</span> for more info</p>
+                    <span className="relative inline-block flex-shrink-0">
                       <span
                         aria-hidden
                         className="absolute -inset-x-1 -inset-y-0.5 -rotate-1 rounded-md bg-purple/55"
                       />
-                      <span className="relative text-ink">&gt;</span>
+                      <span className="relative text-ink font-bold">&gt;</span>
                     </span>
-                  </p>
-                  <p className="faq-arrows-hint">Use the arrows to navigate.</p>
+                  </div>
                 </div>
               }
             />

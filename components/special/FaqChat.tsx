@@ -154,9 +154,9 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
           <button
             type="button"
             onClick={send}
-            className="w-full bg-paper text-ink rounded-2xl pl-4 pr-14 py-3 text-[15px] leading-tight font-display text-left border border-ink-faint/30 hover:border-purple/60 transition-colors min-h-[80px] flex items-center relative"
+            className="w-full bg-paper text-ink rounded-2xl pl-4 pr-14 py-4 text-[19px] leading-tight font-display text-left border border-ink-faint/30 hover:border-purple/60 transition-colors min-h-[108px] flex items-center relative"
           >
-            <span className="line-clamp-2 pr-1">{current?.q}</span>
+            <span className="line-clamp-3 pr-1">{current?.q}</span>
             <span
               aria-hidden
               className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-ink text-purple rounded-full w-10 h-10 flex items-center justify-center pointer-events-none"
