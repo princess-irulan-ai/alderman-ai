@@ -49,6 +49,15 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
   // = cycle inactive. Respects prefers-reduced-motion.
   const [pulseIdx, setPulseIdx] = useState<number | null>(0)
   const stopPulse = () => setPulseIdx(null)
+  // Per-CTA "has been clicked this session" tracking. Once a question
+  // is sent via its desktop CTA, that tile flips its gradient + hover
+  // accent from orange (unread) to purple (read). Persists in component
+  // state only — page reload resets all tiles to orange. Mobile flow
+  // (input pill `send`) deliberately doesn't mark anything since the
+  // CTAs aren't visible at <1200px anyway.
+  const [clickedSet, setClickedSet] = useState<ReadonlySet<number>>(
+    () => new Set(),
+  )
 
   useEffect(() => {
     if (pulseIdx === null) return
@@ -72,6 +81,12 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
 
   const sendByIdx = (idx: number) => {
     setHistory((h) => [...h, entries[idx]])
+    setClickedSet((prev) => {
+      if (prev.has(idx)) return prev
+      const next = new Set(prev)
+      next.add(idx)
+      return next
+    })
   }
 
   const prev = () => {
@@ -109,6 +124,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
             onClick={() => sendByIdx(i)}
             pulsed={pulseIdx === i}
             onUserHover={stopPulse}
+            clicked={clickedSet.has(i)}
           />
         ))}
       </div>
@@ -209,6 +225,7 @@ export function FaqChat({ entries, emptyState }: FaqChatProps) {
             onClick={() => sendByIdx(i + 7)}
             pulsed={pulseIdx === i + 7}
             onUserHover={stopPulse}
+            clicked={clickedSet.has(i + 7)}
           />
         ))}
       </div>
@@ -230,23 +247,31 @@ function FaqQuestionCta({
   onClick,
   pulsed,
   onUserHover,
+  clicked,
 }: {
   q: string
   onClick: () => void
   pulsed: boolean
   onUserHover: () => void
+  clicked: boolean
 }) {
+  // Once clicked this session, the tile flips orange → purple. Both the
+  // bottom-left gradient anchor color and the hover-state border + glow
+  // swap. The `.faq-cta-clicked` marker class lets globals.css override
+  // the orange `:hover` rule (which has higher specificity than these
+  // utility hover: classes) — without it, hover would still paint orange
+  // even after click.
+  const baseColor = clicked ? '#AE81FF' : '#FD971F'
   return (
     <button
       type="button"
       onClick={onClick}
       onMouseEnter={onUserHover}
-      className={`faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color,transform] duration-200 hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)] font-mono text-[15px] font-medium text-ink leading-tight${
+      className={`faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color,transform] duration-200 font-mono text-[15px] font-medium text-ink leading-tight${
         pulsed ? ' faq-cta-pulsed' : ''
-      }`}
+      }${clicked ? ' faq-cta-clicked' : ''}`}
       style={{
-        background:
-          'linear-gradient(to top right, #FD971F 0%, #F6F4EE 40%, #F6F4EE 100%)',
+        background: `linear-gradient(to top right, ${baseColor} 0%, #F6F4EE 40%, #F6F4EE 100%)`,
       }}
     >
       <span className="line-clamp-2">{q}</span>
