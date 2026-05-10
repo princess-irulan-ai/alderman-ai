@@ -72,7 +72,7 @@
      21, `>` far edge at column-left − 39), the gap on either side of
      the column rule line is 21px. Used by:
        - H1 GutterGlow (::before/::after envelope width + offset)
-       - Hero paper-app overhang into right gutter
+       - Paper-app overhang into right gutter
      Any future "hangs into the gutter" element should consume this
      same var so the ragged edges line up across page elements.
 
@@ -116,7 +116,7 @@
   }
 
   /* HEADER SPACER — taller on desktop to push H1 below the FloatingNav. */
-  .desktop-spec .h-\[120px\] {
+  .desktop-spec .page-header-spacer {
     height: 294px;
   }
 
@@ -178,7 +178,7 @@
      fully-typed wrap height invisibly. If the glow lived on the live
      container it would expand vertically as text typed out. The
      `:not(:has(...))` opts out grids whose live TerminalLine carries
-     `no-gutter-glow` — used on the very top hero terminal (sits
+     `no-gutter-glow` — used on the top terminal-line (sits
      directly under the H1's own left glow; stacking reads heavy).
      `position: relative` is added to the grid rule below so the
      absolute pseudo anchors correctly. */
@@ -198,54 +198,49 @@
       rgba(174, 129, 255, 0) 100%);
   }
 
-  /* HERO PAPER-APP — capped at 304, hangs OVER the column's right
+  /* HOMEPAGE PAPER-APP — capped at 304, hangs OVER the column's right
      rule line into the right gutter by `--gutter-extension`. Paper-app's
      right edge sits at column-right + gutter-extension. `z-index: 1`
      raises it above the column's ::after rule pseudo so the paper-app
-     paints over the rule line where they overlap. The hero paper-app's
-     wrapper is `.md\:mt-5 > .relative` (a stable selector unique to
-     the hero — no other paper-app uses this wrapper). The wrapper's
-     literal class is `mt-10 md:mt-5` (mobile-spacing-unification pass
-     2026-05-09 added the `mt-10` mobile bonus + `md:` prefix on the
-     desktop value), so we hook on the `md:mt-5` class here — the
-     escaped `\:` matches the literal class name regardless of viewport,
-     and this rule's @media gate handles the desktop activation. */
-  .desktop-spec .md\:mt-5 > .relative {
+     paints over the rule line where they overlap. The paper-app's
+     wrapper carries the stable `.perks-paper` class (added 2026-05-10
+     after a Tailwind utility-class hook silently broke when the wrapper's
+     margin classes were retuned for mobile spacing — semantic class
+     makes the dependency explicit). */
+  .desktop-spec .perks-paper > .relative {
     max-width: 304px;
     margin-left: auto;
     margin-right: calc(var(--gutter-extension) * -1);
     z-index: 1;
   }
 
-  /* HERO POST-IT — offset from `left: 50%` (paper-app horizontal
+  /* BR POST-IT — offset from `left: 50%` (paper-app horizontal
      center) to `left: 370px` so it lands relative to the column,
      not the paper-app, at the wider canvas. z-10 so it paints over
      the right rule line. Targets the stable `data-postit-overhang="br"`
      hook emitted by Postit's overhang wrapper (Postit.tsx). The
      credentials BL post-it carries `data-postit-overhang="bl"` so
-     it doesn't match this rule. NB: when /dev/contact and /dev/faq
-     get built, their BR post-its will also carry the "br" data
-     attribute — at that point this rule may need page-level scoping. */
+     it doesn't match this rule. */
   .desktop-spec [data-postit-overhang="br"] {
     left: 370px;
     z-index: 10;
   }
-  /* HERO POST-IT (dev override) — relocates from right side of the
-     column to the LEFT gutter region, with the −10°-rotated shape's
-     TL extreme corner kissing the left gutter extension line
+  /* HOMEPAGE POST-IT (desktop override) — relocates from right side
+     of the column to the LEFT gutter region, with the −10°-rotated
+     shape's TL extreme corner kissing the left gutter extension line
      (column-left − var(--gutter-extension)). Top bumped up 20px from
      the canonical 244 so the post-it sits higher in the column at
-     desktop. Scoped to the hero's `.mt-5 > .relative` ancestor so
-     future /dev/<page> BR post-its don't inherit. The inner shape's
+     desktop. Scoped to the homepage paper-app's `.perks-paper > .relative`
+     ancestor so other BR post-its don't inherit. The inner shape's
      inline `transform: rotate(-5deg)` and the wrapper's inline
      `top: 244px` are both overridden via !important here (inline
      styles beat class rules without it). z-index: 10 inherited from
      the rule above. */
-  .desktop-spec .md\:mt-5 > .relative > [data-postit-overhang="br"] {
-    left: -316px;
-    top: 204px !important;
+  .desktop-spec .perks-paper > .relative > [data-postit-overhang="br"] {
+    left: -294px;
+    top: 224px !important;
   }
-  .desktop-spec .md\:mt-5 > .relative > [data-postit-overhang="br"] > div {
+  .desktop-spec .perks-paper > .relative > [data-postit-overhang="br"] > div {
     transform: rotate(5deg) !important;
   }
 
@@ -253,10 +248,10 @@
      OVER the column's left rule line into the LEFT gutter by
      `--gutter-extension`. Paper-app's left edge sits at column-left
      − gutter-extension (the left gutter extension line). Mirror of
-     the hero paper-app's right-side overhang. Per Alex 2026-05-07.
+     the homepage paper-app's right-side overhang. Per Alex 2026-05-07.
      No GutterGlow per session-38 code (the commit message claimed an
-     orange glow here but the diff didn't add one — only the hero got
-     a glow). */
+     orange glow here but the diff didn't add one — only the homepage
+     paper-app got a glow). */
   .desktop-spec #brochure > .relative {
     max-width: 304px;
     margin-left: calc(var(--gutter-extension) * -1);
@@ -268,9 +263,9 @@
   .desktop-spec #brochure .pb-\[96px\] {
     padding-bottom: 0.5rem;
   }
-  /* CREDENTIALS POST-IT — right:50% → right:370px (mirror of hero
-     post-it). Targets the stable `data-postit-overhang="bl"` hook
-     emitted by Postit's overhang wrapper. */
+  /* CREDENTIALS POST-IT — right:50% → right:370px (mirror of the
+     homepage BR post-it). Targets the stable `data-postit-overhang="bl"`
+     hook emitted by Postit's overhang wrapper. */
   .desktop-spec [data-postit-overhang="bl"] {
     right: 370px;
   }
@@ -303,15 +298,20 @@
   }
 
   /* FLOATING NAV — widen inner column-constrained div to match the
-     550 page column. Logo + hamburger keep their mobile sizes. */
-  .desktop-spec nav > div > div.md\:max-w-\[400px\] {
+     550 page column. Logo + hamburger keep their mobile sizes.
+     Hooks the stable `.floating-nav-inner` semantic class on the
+     wrapper (FloatingNav.tsx) rather than the Tailwind utility class
+     `md:max-w-[400px]` it's paired with — so future tweaks to the
+     mobile cap don't break the desktop widen. */
+  .desktop-spec .floating-nav-inner {
     max-width: 550px;
     margin-left: auto;
     margin-right: auto;
   }
 
-  /* TERMINAL-LINE GRID WRAPPERS — hero line 1, hero line 2, H2.5 seam,
-     and "take a HUMAN approach" seam. All four are direct children of
+  /* TERMINAL-LINE GRID WRAPPERS — the two opening terminal-lines on
+     the homepage, the H2.5 seam, and the "take a HUMAN approach" seam.
+     All four are direct children of
      a `<section>` and carry the `.grid` class. Cap at 407 wrap zone
      left-aligned with 21px gap from column-left, so typed text starts
      at column-left + 21 — symmetric to the `>` prompt's near (right)
@@ -347,8 +347,8 @@
      `--gutter-extension`, so the tile's right edge lands on the
      gutter inlay mark (column-right + 39). `z-index: 1` lifts it
      above the column's ::after rule pseudo so the tile paints over
-     the rule line where they overlap. Mirrors the hero paper-app's
-     overhang treatment. Used on /dev/home-page's "have questions?"
+     the rule line where they overlap. Mirrors the homepage paper-app's
+     overhang treatment. Used on the homepage's "have questions?"
      CTA. */
   .desktop-spec .rounded-tile.tile-right-edge {
     margin-left: auto;
@@ -368,13 +368,15 @@
     background-color: #1E1F1A !important;
   }
 
-  /* WHAT-YOU-GET SECTION — its `<PaperApp width="wide">` renders as
-     `.col-span-3` direct child of section. Cap at 304 centered at
-     desktop so the onboarding paper-app reads at mobile-equivalent
-     width inside the 550 column. (Credentials section's wide PaperApp
-     is wrapped in `<div class="relative">` so it's a grandchild, not
-     a direct section child — this selector doesn't catch it.) */
-  .desktop-spec section > .col-span-3 {
+  /* WHAT-YOU-GET SECTION — its `<PaperApp width="wide">` is a direct
+     child of section. PaperApp emits `.paper-app-wide` (semantic) +
+     `.col-span-3` (Tailwind grid) on the wrapper; we hook the semantic
+     class. Cap at 304 centered at desktop so the onboarding paper-app
+     reads at mobile-equivalent width inside the 550 column.
+     (Credentials section's wide PaperApp is wrapped in
+     `<div class="relative">` so it's a grandchild, not a direct
+     section child — this selector doesn't catch it.) */
+  .desktop-spec section > .paper-app-wide {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -382,19 +384,20 @@
 
   /* PAPER-APP TYPE — bump titles + subtitles 50% inside any paper-app
      body. Targets the canonical Tailwind size classes used across all
-     three paper-apps (hero perks, WhatYouGetSection, TrialCTASection).
-     Scoped under `.shadow-paper-glow` (PaperApp's inner paper element)
-     so post-its and other elements outside the paper-app body don't
-     get bumped — post-its are absolute siblings of PaperApp inside
-     the wrapper, not descendants of `.shadow-paper-glow`. */
+     three homepage paper-apps (perks, WhatYouGetSection,
+     TrialCTASection). Scoped under `.shadow-paper-glow` (PaperApp's
+     inner paper element) so post-its and other elements outside the
+     paper-app body don't get bumped — post-its are absolute siblings
+     of PaperApp inside the wrapper, not descendants of
+     `.shadow-paper-glow`. */
   .desktop-spec .shadow-paper-glow .text-\[28px\] {
     font-size: 35px;
   }
   /* text-[22px] bump removed 2026-05-07 — was making the App-variant
      SectionTile title ("See My Experience") sit too close to the
      paper-app title. Stays at canonical 22px on desktop now. The
-     hero perks h2 ("2025 Job Benefits") also rides this class and
-     stays at 22px in tandem. */
+     homepage perks h2 ("2025 Job Benefits") also rides this class
+     and stays at 22px in tandem. */
   .desktop-spec .shadow-paper-glow .text-\[18px\] {
     font-size: 22.5px;
   }
@@ -453,7 +456,7 @@
 
   /* HEADER SPACER — 64 so the H1 lands ~80px from viewport top
      (64 spacer + 16 section pt-4). */
-  .desktop-spec .h-\[120px\] {
+  .desktop-spec .page-header-spacer {
     height: 64px;
   }
 
@@ -587,8 +590,9 @@
      H1-to-viewport-top distance (header spacer 0 + parent flex
      gap 80 = 80) at this tier. PageFrame's inner column div
      becomes a flex column with gap:80, and the per-section
-     pt/pb plus internal margins (h1 mb-14, hero's mt-5 paper-
-     app wrapper, mt-[calc(--page-half-82px)] terminal 2 wrapper)
+     pt/pb plus internal margins (h1 mb-14, the homepage paper-
+     app's `.perks-paper` wrapper, mt-[calc(--page-half-82px)] terminal
+     2 wrapper)
      are zeroed so the parent gap is the only spacer. Header
      spacer collapses to 0. Footer also gets margin-top: 80 since
      it's a sibling of PageFrame, not a child. Per Alex 2026-05-07. */
@@ -605,17 +609,17 @@
   .desktop-spec .min-h-screen.bg-ide-2 > .mx-auto > div > * {
     margin-top: 0 !important;
   }
-  .desktop-spec .h-\[120px\] {
+  .desktop-spec .page-header-spacer {
     height: 0;
   }
   .desktop-spec section {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
-  .desktop-spec section.flex.flex-col.gap-6 {
+  .desktop-spec .homepage-top-section {
     gap: 80px;
   }
-  .desktop-spec section.flex.flex-col.gap-6 > * {
+  .desktop-spec .homepage-top-section > * {
     margin-top: 0 !important;
   }
   .desktop-spec h1 {
@@ -659,7 +663,7 @@
      it's BOTTOM and the next element's TOP. Calibrated values below
      are post-it-position-specific; if a rotation or top changes such
      that the overhang shifts, adjust here. */
-  .desktop-spec section.flex.flex-col.gap-6 > .mt-5 {
+  .desktop-spec .homepage-top-section > .perks-paper {
     margin-bottom: 62px;
   }
   .desktop-spec #brochure {
@@ -726,13 +730,13 @@
    ============================================================ */
 @media (min-width: 768px) {
   /* HEADSHOT PAPER-APP — caps at 304, centered. The earlier draft
-     right-overhung the right gutter (mirroring homepage hero) but
-     three right-overhangs in a row competed; the headshot is the
-     portrait beat and reads better centered, leaving the right-
-     overhangs for the two IDE CTAs (rows 4 + 6) where the punch
-     into the gutter functions as a "click here" cue. Per Alex
+     right-overhung the right gutter (mirroring the homepage paper-
+     app) but three right-overhangs in a row competed; the headshot
+     is the portrait beat and reads better centered, leaving the
+     right-overhangs for the two IDE CTAs (rows 4 + 6) where the
+     punch into the gutter functions as a "click here" cue. Per Alex
      2026-05-08. */
-  .desktop-spec .hero-paper {
+  .desktop-spec .headshot-paper {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -754,7 +758,7 @@
 }
 
 @media (min-width: 1200px) {
-  /* HERO SECTION INTERNAL GAP — /about's hero section uses `gap-8`
+  /* TOP SECTION INTERNAL GAP — /about's top section uses `gap-8`
      (canonical mobile) for the H1 → headshot internal spacing. The
      homepage's gap-6 → 80px override doesn't fire here, so add a
      gap-8 → 80px rule scoped to /dev/about. Combined with the
@@ -823,12 +827,13 @@
 
 @media (min-width: 768px) {
   /* WIDE PAPER-APP CAPS — pricing + FaqChat both render
-     `<PaperApp width="wide">` (= `.col-span-3` inner) wrapped in their
-     own `<div class="relative">` (pricing inline, FaqChat internally).
-     The canonical `section > .col-span-3` cap (line 372) only catches
-     direct-section-child paper-apps, so these grandchild ones land at
-     full 550 column width. Cap them to 304 centered to match canon. */
-  .desktop-spec.route-faq .col-span-3 {
+     `<PaperApp width="wide">` (= `.paper-app-wide` semantic class)
+     wrapped in their own `<div class="relative">` (pricing inline,
+     FaqChat internally). The canonical `section > .paper-app-wide` cap
+     above only catches direct-section-child paper-apps, so these
+     grandchild ones land at full 550 column width. Cap them to 304
+     centered to match canon. */
+  .desktop-spec.route-faq .paper-app-wide {
     max-width: 304px;
     margin-left: auto;
     margin-right: auto;
@@ -882,18 +887,18 @@
     display: none;
   }
 
-  /* PAPER-APP 2 LEFT-OVERHANG — mirrors the homepage hero paper-app's
-     right-overhang pattern (`.mt-5 > .relative` rule) but flipped:
+  /* PAPER-APP 2 LEFT-OVERHANG — mirrors the homepage paper-app's
+     right-overhang pattern (`.perks-paper > .relative` rule) but flipped:
      left-aligned, left edge overhangs the left gutter by
      `--gutter-extension` so it lands on the gutter inlay mark
      (column-left − 39). Right edge sits at column-left − 39 + 304 =
      265 (well inside the column). z-index lifts above the column's
      ::before rule pseudo so the paper-app paints over the rule line
      where they overlap. The `!important` on margin overrides the
-     centered cap from `.route-faq .col-span-3` rule above. Selector
-     reaches through the new `<div class="relative">` wrapper that
-     hosts paper-app 2 + the desktop post-it. */
-  .desktop-spec.route-faq section.pricing-split-only > .relative > .col-span-3 {
+     centered cap from `.route-faq .paper-app-wide` rule above.
+     Selector reaches through the new `<div class="relative">` wrapper
+     that hosts paper-app 2 + the desktop post-it. */
+  .desktop-spec.route-faq section.pricing-split-only > .relative > .paper-app-wide {
     margin-left: calc(var(--gutter-extension) * -1) !important;
     margin-right: auto !important;
     position: relative;
@@ -988,17 +993,18 @@
     grid-column: 3;
     grid-row: 1;
   }
-  /* Chat paper-app explicitly into the middle column. Its wrapper is
-     `.col-span-3` (from PaperApp `width="wide"`); without this override
-     the col-span auto-flows the chat onto row 2, leaving column 2
-     empty in row 1 and stacking the chat below the flanking CTAs.
-     Explicit `width: 304px` prevents the wrapper from shrink-to-
-     fitting its content in the empty state — when no message bubbles
-     fill the body, the inner empty-state text (~165-220 wide) was
-     pulling the paper-app wrapper down to ~204 wide. Filled state
-     read at 304 because chat bubbles stretched it. Locking width
-     keeps the paper-app the same 304 in both states. */
-  .desktop-spec.route-faq .faq-chat-shell > .col-span-3 {
+  /* Chat paper-app explicitly into the middle column. Its wrapper
+     carries `.paper-app-wide` (semantic) + `.col-span-3` (Tailwind
+     grid) from PaperApp `width="wide"`; without this override the
+     col-span auto-flows the chat onto row 2, leaving column 2 empty
+     in row 1 and stacking the chat below the flanking CTAs. Explicit
+     `width: 304px` prevents the wrapper from shrink-to-fitting its
+     content in the empty state — when no message bubbles fill the
+     body, the inner empty-state text (~165-220 wide) was pulling the
+     paper-app wrapper down to ~204 wide. Filled state read at 304
+     because chat bubbles stretched it. Locking width keeps the paper-
+     app the same 304 in both states. */
+  .desktop-spec.route-faq .faq-chat-shell > .paper-app-wide {
     grid-column: 2;
     grid-row: 1;
     width: 304px;
@@ -1035,14 +1041,14 @@
   .desktop-spec.route-faq .faq-cta-left .faq-question-cta:hover,
   .desktop-spec.route-faq .faq-cta-left .faq-question-cta.faq-cta-pulsed {
     transform: translateX(-20px);
-    border-color: rgba(174, 129, 255, 0.6);
-    box-shadow: 0 0 28px rgba(174, 129, 255, 0.45);
+    border-color: rgba(253, 151, 31, 0.6);
+    box-shadow: 0 0 28px rgba(253, 151, 31, 0.45);
   }
   .desktop-spec.route-faq .faq-cta-right .faq-question-cta:hover,
   .desktop-spec.route-faq .faq-cta-right .faq-question-cta.faq-cta-pulsed {
     transform: translateX(20px);
-    border-color: rgba(174, 129, 255, 0.6);
-    box-shadow: 0 0 28px rgba(174, 129, 255, 0.45);
+    border-color: rgba(253, 151, 31, 0.6);
+    box-shadow: 0 0 28px rgba(253, 151, 31, 0.45);
   }
 
   /* PRICING TABLE (desktop paper-app 2) — recolor borders to orange.
@@ -1073,9 +1079,9 @@
    ============================================================ */
 @media (min-width: 768px) {
   /* DOWNLOAD PAPER-APP — capped at 304, right-overhangs into the
-     right gutter by `--gutter-extension` (mirrors the homepage hero
-     paper-app pattern at line 208). z-index lifts above the column's
-     ::after rule pseudo so the paper-app paints over the rule line. */
+     right gutter by `--gutter-extension` (mirrors the homepage
+     paper-app pattern). z-index lifts above the column's ::after
+     rule pseudo so the paper-app paints over the rule line. */
   .desktop-spec.route-faq-download .download-app {
     max-width: 304px;
     margin-left: auto;
@@ -1139,10 +1145,11 @@
      the column's left rule line into the LEFT gutter by
      `--gutter-extension` so it lands on the gutter inlay mark
      (column-left − 39). Mirror of the homepage `#brochure > .relative`
-     pattern but applied to the col-span-3 PaperApp wrapper since the
-     parent here isn't a grid (the col-span-3 is otherwise a no-op).
-     z-index lifts above the column rule pseudo. */
-  .desktop-spec.route-contact #contact-intro > .relative > .col-span-3 {
+     pattern but applied to the wide PaperApp wrapper (`.paper-app-wide`
+     semantic class) since the parent here isn't a grid (the col-span-3
+     companion class is otherwise a no-op). z-index lifts above the
+     column rule pseudo. */
+  .desktop-spec.route-contact #contact-intro > .relative > .paper-app-wide {
     max-width: 304px;
     margin-left: calc(var(--gutter-extension) * -1);
     margin-right: auto;

@@ -120,7 +120,7 @@ const dotColorClass: Record<AccentDotColor, string> = {
 const widthClass: Record<NonNullable<PaperAppProps['width']>, string> = {
   narrow: 'col-start-3 col-span-1',
   medium: 'col-start-2 col-span-2',
-  wide: 'col-span-3',
+  wide: 'col-span-3 paper-app-wide',
   fit: '',
 }
 

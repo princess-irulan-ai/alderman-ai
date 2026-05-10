@@ -63,7 +63,7 @@ export function TrialCTASection() {
             </div>
           </div>
         </PaperApp>
-        {/* Bottom-left post-it — mirror of the hero's BR post-it. Sits
+        {/* Bottom-left post-it — mirror of the homepage BR post-it. Sits
             ON the paper-app (overlaps its bottom-left corner area)
             and overhangs DOWN-LEFT past the paper-app's BL corner.
               - `right-1/2` anchors the post-it's right edge at the
@@ -75,7 +75,7 @@ export function TrialCTASection() {
                 DOWN from that anchor.
               - `origin-top-right` scales from that anchor so the
                 rotated+scaled tip lands at the viewport's left edge
-                on mobile (mirror of the hero math). */}
+                on mobile (mirror of the homepage post-it math). */}
         <Postit
           overhang="bl"
           anchorTop="100%"

@@ -61,7 +61,7 @@ export function FloatingNav() {
           {/* Column-constrained on desktop so the nav aligns with the
               page content column. Inner div carries the 12% gutter
               padding — same pattern as PageFrame. */}
-          <div className="md:mx-auto md:max-w-[400px]">
+          <div className="floating-nav-inner md:mx-auto md:max-w-[400px]">
             {/* Two-element bar: identity on the left, menu affordance on
                 the right. Removed from DOM entirely when the menu is
                 open — the menu paper-app takes over as the only thing

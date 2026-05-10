@@ -66,7 +66,7 @@ export function HeroSection() {
   )
 
   return (
-    <section className="flex flex-col gap-6 pt-4 pb-8">
+    <section className="homepage-top-section flex flex-col gap-6 pt-4 pb-8">
       <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-10 md:mb-14">
         <span className="text-green">ai</span> is a language
         <br />
@@ -125,7 +125,7 @@ export function HeroSection() {
           length/length = unitless ratio = valid. The 250px (vs the
           source's 240) accounts for the rotated bbox: at -5° the
           bottom-right tip moves to x≈250. */}
-      <div className="mt-10 md:mt-5">
+      <div className="mt-10 md:mt-5 perks-paper">
         <div className="relative">
           <PaperApp width="narrow">{perks}</PaperApp>
           <Postit

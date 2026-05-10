@@ -82,7 +82,7 @@ export default function ContactPage() {
         </div>
       </aside>
       <PageFrame>
-        <div className="h-[120px]" aria-hidden />
+        <div className="page-header-spacer h-[120px]" aria-hidden />
         <section className="pt-4 pb-8 md:pt-8 md:pb-16">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">
             in the <span className="text-green">ai</span> age<br />it&apos;s nice to talk<br />to a <span className="text-orange">HUMAN</span><span className="text-purple">.</span>

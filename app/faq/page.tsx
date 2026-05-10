@@ -38,10 +38,12 @@ const SIDE_NAV_ITEMS = [
         Talk to a <span className="uppercase text-orange">HUMAN</span>
       </>
     ),
-    gradient:
-      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    // Primary CTA: no background, always-on purple border + glow
+    // (no hover state since it's already at the hover-look). `!` on
+    // border-purple/60 overrides the default `border-ink/15`.
+    gradient: '',
     hover:
-      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+      '!border-purple/60 shadow-[0_0_28px_rgba(174,129,255,0.45)]',
   },
 ] as const
 
@@ -135,7 +137,7 @@ export default function FaqPage() {
         </div>
       </aside>
       <PageFrame>
-        <div className="h-[120px]" aria-hidden />
+        <div className="page-header-spacer h-[120px]" aria-hidden />
         <section className="pt-4 pb-8 md:pt-8 md:pb-10">
           <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg">
             have a <span className="text-orange">HUMAN</span>
@@ -263,7 +265,7 @@ export default function FaqPage() {
             and left-overhung into the left gutter. Hidden by default;
             only renders at ≥1200px inside the `.desktop-spec.dev-
             faq` scope (see globals.css `.pricing-split-only` rule).
-            Mirrors the homepage hero paper-app's right-overhang pattern
+            Mirrors the homepage paper-app's right-overhang pattern
             but flipped to the left side, giving the pricing block a
             two-beat rhythm at desktop: centered explanation + left-
             overhanging table. */}
@@ -520,7 +522,7 @@ export default function FaqPage() {
               style={{ fontSize: 22 }}
             >
               <span>
-                {"don't want to talk to ai? i totally get it "}
+                {"for something like this it's better to show than tell. let me answer YOUR concerns with a 1:1 demo "}
                 <span className="inline-block">_</span>
               </span>
             </div>
@@ -531,12 +533,11 @@ export default function FaqPage() {
                 align="left"
                 persistCursor
                 segments={[
-                  { text: 'don' },
-                  { text: "'", color: 'text-purple' },
-                  { text: 't want to talk to ' },
-                  { text: 'ai', color: 'text-green' },
-                  { text: '?', color: 'text-purple' },
-                  { text: ' i totally get it' },
+                  { text: "for something like this it's better to show than tell. let me answer " },
+                  { text: 'YOUR', color: 'text-orange' },
+                  { text: ' concerns with a 1' },
+                  { text: ':', color: 'text-purple' },
+                  { text: '1 demo' },
                 ]}
               />
             </div>
@@ -551,11 +552,10 @@ export default function FaqPage() {
             <SectionTile
               variant="ide"
               accent="purple"
-              eyebrow="book a call"
-              title={<>talk to a <span className="normal-case text-orange">HUMAN</span></>}
+              eyebrow="book a demo"
+              title={<>talk to <span className="normal-case text-orange">ALEX</span></>}
               href="/contact"
               markerStyle="contained"
-              className="tile-right-edge"
             />
           </div>
         </section>

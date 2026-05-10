@@ -23,9 +23,11 @@ import { TerminalLine } from '@/components/special/TerminalLine'
  *      pattern — same visual at mobile, but `.grid` is the selector the
  *      gutter-glow rule hooks into.
  *   4. H1 ends with a purple period (homepage canon — every page H1).
- *   5. Headshot wrapper carries `hero-paper` class — used by CSS to
- *      right-overhang the paper-app at ≥768 (mirrors homepage hero
- *      paper-app's right-gutter overhang).
+ *   5. Headshot wrapper carries `headshot-paper` class — used by CSS
+ *      to constrain the paper-app to 304 centered at ≥768 (the
+ *      earlier draft right-overhung the right gutter mirroring the
+ *      homepage paper-app, but three right-overhangs in a row
+ *      competed; centered reads better as the portrait beat).
  *   6. Both IDE CTAs carry `tile-right-edge` — right-overhang into the
  *      right gutter at ≥768.
  *
@@ -64,10 +66,12 @@ const SIDE_NAV_ITEMS = [
         Talk to a <span className="uppercase text-orange">HUMAN</span>
       </>
     ),
-    gradient:
-      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    // Primary CTA: no background, always-on purple border + glow
+    // (no hover state since it's already at the hover-look). `!` on
+    // border-purple/60 overrides the default `border-ink/15`.
+    gradient: '',
     hover:
-      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+      '!border-purple/60 shadow-[0_0_28px_rgba(174,129,255,0.45)]',
   },
 ] as const
 
@@ -102,10 +106,10 @@ export default function AboutPage() {
         </div>
       </aside>
       <PageFrame>
-        <div className="h-[120px]" aria-hidden />
+        <div className="page-header-spacer h-[120px]" aria-hidden />
 
-        {/* HERO — H1 (3 lines, purple period) + headshot paper-app
-            (right-overhang at desktop via hero-paper). */}
+        {/* TOP SECTION — H1 (3 lines, purple period) + headshot
+            paper-app (304 centered at desktop via headshot-paper). */}
         <section className="flex flex-col gap-8 pt-4 pb-8">
           <div>
             <h1 className="font-display text-[37px] font-bold leading-[1.05] tracking-display-tight text-ide-fg text-center mb-8 md:mb-10">
@@ -118,10 +122,10 @@ export default function AboutPage() {
             </h1>
           </div>
 
-          {/* Headshot paper-app. `hero-paper` is the desktop hook —
-              CSS caps to 304 + right-overhangs the right gutter by
-              gutter-extension at ≥768px. Below 768 the class is inert. */}
-          <div className="relative hero-paper">
+          {/* Headshot paper-app. `headshot-paper` is the desktop
+              hook — CSS caps to 304 centered at ≥768px. Below 768
+              the class is inert. */}
+          <div className="relative headshot-paper">
             <PaperApp width="narrow" bodyClassName="">
               <div className="relative">
                 <Image

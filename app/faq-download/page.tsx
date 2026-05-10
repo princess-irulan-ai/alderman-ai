@@ -44,15 +44,17 @@ const SIDE_NAV_ITEMS = [
         Talk to a <span className="uppercase text-orange">HUMAN</span>
       </>
     ),
-    gradient:
-      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    // Primary CTA: no background, always-on purple border + glow
+    // (no hover state since it's already at the hover-look). `!` on
+    // border-purple/60 overrides the default `border-ink/15`.
+    gradient: '',
     hover:
-      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+      '!border-purple/60 shadow-[0_0_28px_rgba(174,129,255,0.45)]',
   },
 ] as const
 
 export default function FaqDownloadPage() {
-  // Post-it copy — single heading block mirroring the homepage hero
+  // Post-it copy — single heading block mirroring the homepage
   // post-it's text-formatting pattern (HeroSection.tsx, post-2026-04-28
   // merged-title-into-body treatment). No `children` body slot used.
   const postitHeading = (
@@ -100,7 +102,7 @@ export default function FaqDownloadPage() {
         </div>
       </aside>
       <PageFrame>
-        <div className="h-[120px]" aria-hidden />
+        <div className="page-header-spacer h-[120px]" aria-hidden />
 
         <section className="pt-4 pb-8 md:pt-8 md:pb-14">
           <h1 className="text-center font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-ide-fg">

@@ -3,8 +3,8 @@ import type { ReactNode } from 'react'
 /**
  * Postit — the orange sticky note.
  *
- * Used in 4 places: hero perks, credentials (BL flipped), /contact,
- * /faq. Each call site renders a paper-app overhang via the
+ * Used in 4 places: / perks paper-app, / credentials (BL flipped),
+ * /contact, /faq. Each call site renders a paper-app overhang via the
  * `overhang` prop, which internalizes the previously-inline absolute
  * positioning + scale-by-`--page-half` math. See the prop docs below.
  *

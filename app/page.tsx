@@ -41,10 +41,12 @@ const SIDE_NAV_ITEMS = [
         Talk to a <span className="uppercase text-orange">HUMAN</span>
       </>
     ),
-    gradient:
-      'linear-gradient(to top right, rgba(174, 129, 255, 0.65) 0%, rgba(174, 129, 255, 0.30) 25%, transparent 75%)',
+    // Primary CTA: no background, always-on purple border + glow
+    // (no hover state since it's already at the hover-look). `!` on
+    // border-purple/60 overrides the default `border-ink/15`.
+    gradient: '',
     hover:
-      'hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)]',
+      '!border-purple/60 shadow-[0_0_28px_rgba(174,129,255,0.45)]',
   },
 ] as const
 
@@ -86,7 +88,7 @@ export default function HomePage() {
         </div>
       </aside>
       <PageFrame>
-        <div className="h-[120px]" aria-hidden />
+        <div className="page-header-spacer h-[120px]" aria-hidden />
         <HeroSection />
         <WhatYouGetSection />
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">

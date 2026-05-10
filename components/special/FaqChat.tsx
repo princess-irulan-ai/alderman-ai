@@ -241,12 +241,12 @@ function FaqQuestionCta({
       type="button"
       onClick={onClick}
       onMouseEnter={onUserHover}
-      className={`faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color,transform] duration-200 hover:border-purple/60 hover:shadow-[0_0_28px_rgba(174,129,255,0.45)] font-mono text-[15px] font-medium text-ink leading-tight${
+      className={`faq-question-cta block w-full text-left rounded-tile border-2 border-ide-rule px-4 py-3 transition-[box-shadow,border-color,transform] duration-200 hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)] font-mono text-[15px] font-medium text-ink leading-tight${
         pulsed ? ' faq-cta-pulsed' : ''
       }`}
       style={{
         background:
-          'linear-gradient(to top right, #AE81FF 0%, #F6F4EE 40%, #F6F4EE 100%)',
+          'linear-gradient(to top right, #FD971F 0%, #F6F4EE 40%, #F6F4EE 100%)',
       }}
     >
       <span className="line-clamp-2">{q}</span>
