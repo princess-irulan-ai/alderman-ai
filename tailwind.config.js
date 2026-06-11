@@ -27,7 +27,12 @@ module.exports = {
         purple: '#AE81FF',
       },
       fontFamily: {
-        display: ['var(--font-barlow)', 'system-ui', 'sans-serif'],
+        // `--font-display-face` is an override hook for the paper-register
+        // enrichment ballot (/ballot/*, rebuild-t1t2): undefined everywhere
+        // by default, so every real route falls through to Barlow exactly
+        // as before. Ballot direction CSS defines it inside paper surfaces
+        // to audition a distinct display face without touching real pages.
+        display: ['var(--font-display-face, var(--font-barlow))', 'system-ui', 'sans-serif'],
         body: ['var(--font-barlow)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'Menlo', 'monospace'],
       },
