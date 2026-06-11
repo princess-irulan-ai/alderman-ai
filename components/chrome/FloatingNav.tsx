@@ -160,12 +160,15 @@ export function FloatingNav() {
               }}
             >
               <nav className="flex flex-col gap-2 p-[10px]">
-                  {/* Context-aware menu: shows the three pages that are
+                  {/* Context-aware menu: shows the pages that are
                       NOT the current one. Canonical order:
-                        Home → Pricing/FAQ → About Me → Talk to a HUMAN
+                        Home → Live Lessons → Pricing/FAQ → About Me →
+                        Talk to a HUMAN
+                      (`Live Lessons` added on rebuild-t1t2 — /course is
+                      the Tier-2 door and rides in the menu site-wide.)
                       `pathname !== item.href` filters out whatever
                       route the user is currently on, so the menu always
-                      surfaces three "elsewhere" destinations.
+                      surfaces only "elsewhere" destinations.
 
                       Per-item styling (not position-based):
                         - Talk to a HUMAN: purple gradient = primary CTA.
@@ -177,6 +180,14 @@ export function FloatingNav() {
                     {
                       href: '/',
                       label: <>Homepage</>,
+                      gradient:
+                        'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
+                      hover:
+                        'hover:border-orange/60 hover:shadow-[0_0_28px_rgba(253,151,31,0.45)]',
+                    },
+                    {
+                      href: '/course',
+                      label: <>Live Lessons</>,
                       gradient:
                         'linear-gradient(to top right, rgba(253, 151, 31, 0.65) 0%, rgba(253, 151, 31, 0.30) 25%, transparent 75%)',
                       hover:
