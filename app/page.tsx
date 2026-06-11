@@ -90,6 +90,44 @@ export default function HomePage() {
       <PageFrame>
         <div className="page-header-spacer h-[120px]" aria-hidden />
         <HeroSection />
+        {/* T1 OFFER MECHANICS — rebuild-t1t2. The homepage sells the
+            daily track end-to-end (Modified Candidate A). Claims from
+            claims-manifest.md §Tier 1, dictated 2026-06-10: daily 5-min
+            lesson / company channel / own ai tool / 500-person cap /
+            10K flat / monthly topic reporting for audits. Price shown
+            per manifest gap #2 default (show prices, T1 at 10K). */}
+        <section className="pt-8 pb-8 md:py-12">
+          <PaperApp width="wide">
+            <div className="space-y-5 max-w-[780px] mx-auto">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight text-center">
+                The daily lesson
+              </h2>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft text-center">
+                A 5-minute <span className="text-green">ai</span> lesson
+                lands in your company channel, daily. Everyone runs it in
+                their own <span className="text-green">ai</span> tool —
+                five minutes, hands on, then back to work.
+              </p>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft text-center">
+                Up to 500 people.{' '}
+                <span className="relative inline-block">
+                  <span
+                    aria-hidden
+                    className="absolute -inset-x-2 -inset-y-1 -rotate-1 rounded-md bg-purple/55"
+                  />
+                  <span className="relative">10.000 Kč a month</span>
+                </span>
+                , flat.
+              </p>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft text-center">
+                Monthly topic reporting included — documented evidence
+                your company is taking{' '}
+                <span className="text-green">ai</span> training measures,
+                the kind you file away for future audits.
+              </p>
+            </div>
+          </PaperApp>
+        </section>
         <WhatYouGetSection />
         <section className="pt-8 pb-8 md:pt-12 md:pb-10">
           <div className="grid">
@@ -119,6 +157,34 @@ export default function HomePage() {
               />
             </div>
           </div>
+        </section>
+        {/* T2 CO-EQUAL DOOR — own framing + own CTA, never an upsell
+            footnote (operator-dictated entry-point requirement + IA
+            verdict). Claims from claims-manifest.md §Tier 2: groups ≤6,
+            live coaching, A0 Orientation entry month. */}
+        <section className="pt-8 pb-8 md:py-12">
+          <PaperApp width="medium">
+            <div className="space-y-5">
+              <h2 className="font-display text-[28px] font-bold leading-[1.1] text-ink tracking-display-tight">
+                Rather have it live?
+              </h2>
+              <p className="font-display text-[18px] font-normal leading-snug text-ink-soft">
+                The other track: live small-group lessons — up to six
+                people, everyone hands-on, coached live. Every group
+                starts with a one-month orientation.
+              </p>
+              <div className="pt-6">
+                <SectionTile
+                  variant="app"
+                  accent="orange"
+                  eyebrow="live lessons"
+                  title="See the Course"
+                  href="/course"
+                  markerStyle="contained"
+                />
+              </div>
+            </div>
+          </PaperApp>
         </section>
         <section className="pt-8 pb-8 md:pt-16 md:pb-10">
           <SectionTile

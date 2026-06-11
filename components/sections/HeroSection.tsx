@@ -67,12 +67,18 @@ export function HeroSection() {
 
   return (
     <section className="homepage-top-section flex flex-col gap-6 pt-4 pb-8">
+      {/* H1 swapped on rebuild-t1t2: the homepage now sells the Tier-1
+          daily product instantly (Modified Candidate A — `/` = the T1
+          sales page). Old brand line "ai is a language your COMPANY
+          needs to learn" retired here; "AI is a language" stays a
+          droppable mnemonic per claims-manifest §Voice. */}
       <h1 className="font-display text-[40px] font-bold leading-[1.05] tracking-display-tight text-center text-ide-fg mb-10 md:mb-14">
-        <span className="text-green">ai</span> is a language
+        a 5-minute <span className="text-green">ai</span> lesson
         <br />
-        your <span className="text-orange">COMPANY</span>
+        every day<span className="text-purple">,</span> for your
         <br />
-        needs to learn<span className="text-purple">.</span>
+        whole <span className="text-orange">COMPANY</span>
+        <span className="text-purple">.</span>
       </h1>
 
       {/* Terminal line 1 — wrapped in a CSS grid alongside an invisible
