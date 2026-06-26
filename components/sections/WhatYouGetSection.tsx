@@ -7,7 +7,7 @@ import { PaperApp } from '@/components/paper/PaperApp'
 /**
  * WhatYouGetSection — H2.
  *
- * Ported into the holding site 2026-04-26 from `alderman-ai-full/`.
+ * Ported into the site 2026-04-26 from the earlier Cowork build.
  * Sits between the hero and TrialCTA on `/`. Title + subtitle on
  * cream paper, then a three-column illustrated triptych narrating
  * the offer: assess the team -> sort into ability cohorts -> run

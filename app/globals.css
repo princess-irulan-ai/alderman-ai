@@ -1244,57 +1244,5 @@
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   PAPER-REGISTER ENRICHMENT BALLOT (rebuild-t1t2, 2026-06-11)
-   Throwaway direction styling for /ballot/a|b|c — DELETE this block and
-   the /ballot routes after the operator picks a direction.
-
-   Constraint set (operator-dictated 06-11): same palette, same paper/ink
-   tokens, same meaning-bound color rules — no brand reinvention.
-   Directions span conservative (a, no new fonts) → bolder (c, distinct
-   display font). Scoped to paper surfaces only (.shadow-paper-glow =
-   every PaperApp); the IDE register is untouched in all directions.
-
-   The h2 selectors target only the 28px section headings (the T1/T2
-   sales blocks + credentials) via the arbitrary-size class — smaller
-   paper headings (hero perks 22px, nowrap) keep their size so narrow
-   paper-apps don't overflow.
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* Direction A — "ruled paper": Barlow only; hierarchy from size,
-   tracking, and a ruled underline; prose deepens ink-soft → ink. */
-.ballot-dir-a .shadow-paper-glow h2[class*="text-[28px]"] {
-  font-size: 34px;
-  letter-spacing: -0.03em;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(161, 159, 150, 0.5);
-}
-.ballot-dir-a .shadow-paper-glow p {
-  color: #1c1c1a;
-}
-
-/* Direction B — "condensed editorial": Barlow Semi Condensed display
-   voice (same superfamily — new voice, minimal brand drift), heavier
-   ruled underline. */
-.ballot-dir-b .shadow-paper-glow {
-  --font-display-face: var(--font-barlow-semi);
-}
-.ballot-dir-b .shadow-paper-glow h2[class*="text-[28px]"] {
-  font-size: 38px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  padding-bottom: 8px;
-  border-bottom: 2px solid rgba(28, 28, 26, 0.15);
-}
-
-/* Direction C — "serif display": Fraunces for paper headings — a
-   distinct typographic identity for the paper register; body prose
-   stays Barlow; no rules (the serif carries the identity alone). */
-.ballot-dir-c .shadow-paper-glow {
-  --font-display-face: var(--font-fraunces);
-}
-.ballot-dir-c .shadow-paper-glow h2[class*="text-[28px]"] {
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: 0;
-}
+/* (Paper-register enrichment ballot CSS removed 2026-06-26 along with the
+   /ballot/a|b|c routes — direction experiment concluded.) */

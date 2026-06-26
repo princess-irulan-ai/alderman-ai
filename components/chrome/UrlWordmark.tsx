@@ -1,15 +1,15 @@
 /**
- * Wordmark — the "alderman.ai" brand wordmark.
+ * UrlWordmark — the "alderman.ai" URL wordmark.
  *
  * Text-based (JetBrains Mono) rather than SVG, so it can share a single
  * font-size scale with the other nav items and stay optically aligned
- * without aspect-ratio gymnastics.
+ * without aspect-ratio gymnastics. Distinct from the stacked SVG logo
+ * mark — this is the URL itself rendered in the brand color chord.
  *
  * Color chord (locked 2026-04-21, text-based version):
  *   alder — purple · man — orange · . — purple · ai — green
  *
- * The `size` prop sets the font-size in px. 16px is the nav default
- * (≈80% of the TerminalCTA's 20px).
+ * The `size` prop sets the font-size in px. 16px is the nav default.
  *
  * Note: this chord differs from the previously-documented SVG chord
  * (`ald`/`erman`/`.` white/`ai`). The text-based chord here is the
@@ -18,11 +18,11 @@
  *
  * Spec: brand-guide-merged-v1.2.md § 2.1 (wordmark, IDE-mode inline, locked).
  */
-type WordmarkProps = {
+type UrlWordmarkProps = {
   size?: number
 }
 
-export function Wordmark({ size = 16 }: WordmarkProps) {
+export function UrlWordmark({ size = 16 }: UrlWordmarkProps) {
   return (
     <span
       aria-label="alderman.ai"
